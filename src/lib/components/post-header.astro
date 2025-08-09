@@ -1,0 +1,32 @@
+---
+const { post } = Astro.props;
+---
+
+<div class="w-full">
+    <div
+        class="flex flex-wrap gap-x-3 divide-dotted text-xl text-wrap opacity-70"
+    >
+        <span class="text-wrap">
+            {post.data.pubDate.toISOString().substring(0, 10)}
+        </span>
+        {
+            post.data.tags.map((t) => (
+                <>
+                    <span> • </span>
+
+                    <a href={`/tags#${t}`}>
+                        <span>#{t}</span>
+                    </a>
+                </>
+            ))
+        }
+    </div>
+    <h1 class="mb-0">
+        <a
+            href={`/${post.data.pubDate.toISOString().substring(0, 10)}/${post.id}`}
+        >
+            {post.data.title}
+        </a>
+    </h1>
+    <span class="italic">{post.data.subtitle}</span>
+</div>

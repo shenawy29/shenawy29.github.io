@@ -1,0 +1,45 @@
+/** @type {import('tailwindcss').Config} */
+export const theme = {
+    extend: {
+        typography: () => ({
+            kanagawa: {
+                css: {
+                    "--tw-prose-body": "var(--color-fuji-white)",
+                    "--tw-prose-headings": "var(--color-fuji-white)",
+                    "--tw-prose-lead": "var(--color-fuji-white)",
+                    "--tw-prose-kbd": "var(--color-fuji-white)",
+                    "--tw-prose-links": "var(--color-fuji-white)",
+                    "--tw-prose-bold": "var(--color-fuji-white)",
+                    "--tw-prose-counters": "var(--color-fuji-white)",
+                    "--tw-prose-bullets": "var(--color-fuji-white)",
+                    "--tw-prose-hr": "var(--color-fuji-white)",
+                    "--tw-prose-quotes": "var(--color-fuji-white)",
+                    "--tw-prose-quote-borders": "#727169",
+                    "--tw-prose-captions": "var(--color-fuji-white)",
+                    "--tw-prose-code": "var(--color-fuji-white)",
+                    "--tw-prose-pre-code": "var(--color-fuji-white)",
+                    "--tw-prose-pre-bg": "var(--color-fuji-white)",
+                    "--tw-prose-th-borders": "var(--color-fuji-white)",
+                    "--tw-prose-td-borders": "var(--color-fuji-white)",
+                    "--tw-prose-invert-body": "var(--color-fuji-white)",
+                    "--tw-prose-invert-headings": "var(--color-white)",
+                    "--tw-prose-invert-lead": "var(--color-fuji-white)",
+                    "--tw-prose-invert-links": "var(--color-white)",
+                    "--tw-prose-invert-bold": "var(--color-white)",
+                    "--tw-prose-invert-counters": "var(--color-fuji-white)",
+                    "--tw-prose-invert-bullets": "var(--color-fuji-white)",
+                    "--tw-prose-invert-hr": "var(--color-fuji-white)",
+                    "--tw-prose-invert-quotes": "var(--color-fuji-white)",
+                    "--tw-prose-invert-quote-borders":
+                        "var(--color-fuji-white)",
+                    "--tw-prose-invert-captions": "var(--color-fuji-white)",
+                    "--tw-prose-invert-code": "var(--color-white)",
+                    "--tw-prose-invert-pre-code": "var(--color-fuji-white)",
+                    "--tw-prose-invert-pre-bg": "rgb(0 0 0 / 50%)",
+                    "--tw-prose-invert-th-borders": "var(--color-fuji-white)",
+                    "--tw-prose-invert-td-borders": "var(--color-fuji-white)",
+                },
+            },
+        }),
+    },
+};

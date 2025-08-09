@@ -1,0 +1,69 @@
+---
+const { title = "Baz" } = Astro.props;
+---
+
+<link
+    rel="preload"
+    href="/fonts/Cairo.woff2"
+    as="font"
+    type="font/woff2"
+    crossorigin
+/>
+
+<link
+    rel="preload"
+    href="/fonts/FiraCode.woff2"
+    as="font"
+    type="font/woff2"
+    crossorigin
+/>
+
+<meta name="description" content="بلوج محمد الشناوي للبرمجة" />
+
+<style is:global>
+    .line {
+        display: inline;
+        padding-bottom: 0;
+    }
+
+    .diff {
+        display: inline-block;
+        width: 100%;
+        margin: 0 -12px;
+        padding: 0 12px;
+    }
+
+    .diff.add {
+        background-color: #2b3328;
+    }
+
+    .diff.remove {
+        background-color: #43242b;
+    }
+
+    .diff:before {
+        position: absolute;
+        left: 40px;
+    }
+
+    .line.highlighted {
+        display: inline-block;
+        width: 100%;
+        margin: 0 -12px;
+        padding: 0 12px;
+        background-color: #2a2a37;
+    }
+
+    .has-focused .line {
+        filter: blur(0.095rem);
+    }
+
+    .has-focused .focused {
+        filter: blur(0);
+    }
+</style>
+
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<meta name="viewport" content="width=device-width" />
+<meta name="generator" content={Astro.generator} />
+<title>{title}</title>

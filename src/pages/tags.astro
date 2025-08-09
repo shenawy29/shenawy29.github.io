@@ -1,0 +1,49 @@
+---
+import BaseLayout from "$lib/layouts/base_layout.astro";
+import { getCollection } from "astro:content";
+
+const pages = await getCollection("posts");
+
+const tagMap = new Map();
+
+for (const page of pages) {
+    for (const tag of page.data.tags) {
+        if (!tagMap.has(tag)) {
+            tagMap.set(tag, []);
+        }
+        tagMap.get(tag).push(page);
+    }
+}
+
+const uniqueTags = [...tagMap.keys()];
+---
+
+<BaseLayout>
+    <h1>تاجژ</h1>
+    {
+        uniqueTags.map((tag) => (
+            <div>
+                <h2 id={tag}>
+                    <span>#{tag}</span>
+                </h2>
+                <ul>
+                    {tagMap.get(tag).map((post) => (
+                        <li>
+                            <a
+                                href={`/${post.data.pubDate.toISOString().substring(0, 10)}/${post.id}`}
+                            >
+                                <span>
+                                    {post.data.pubDate
+                                        .toISOString()
+                                        .substring(0, 10)}
+                                </span>
+                                <span>-</span>
+                                <span>{post.data.title}</span>
+                            </a>
+                        </li>
+                    ))}
+                </ul>
+            </div>
+        ))
+    }
+</BaseLayout>

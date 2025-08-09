@@ -1,0 +1,41 @@
+@import "tailwindcss";
+
+@plugin "@tailwindcss/typography";
+@config "../../../tailwind.config.js";
+
+@font-face {
+    font-family: "Cairo";
+    src: url("/fonts/Cairo.woff2") format("woff2");
+    unicode-range: U+0600-06FF, U+FB50-FDFF, U+FE70-FEFF;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Fira Code";
+    src: url("/fonts/FiraCode.woff2") format("woff2");
+    font-style: normal;
+    font-display: swap;
+}
+
+pre,
+code {
+    direction: ltr;
+}
+
+@theme {
+    --font-display: "Cairo", "Fira Code", "monospace";
+    --font-mono: "Cairo", "Fira Code", "monospace";
+    --font-serif: "Cairo", "Fira Code", "monospace";
+    --font-sans: "Cairo", "Fira Code", "monospace";
+
+    --color-sumi-ink0: oklch(0.2035 0.0139 285.1);
+    --color-sumi-ink1: oklch(0.2433 0.017 285.06);
+    --color-sumi-ink2: oklch(0.2907 0.0236 284.84);
+    --color-sumi-ink3: oklch(0.3396 0.0279 284.82);
+    --color-sumi-ink4: oklch(0.4558 0.0405 284.68);
+    --color-fuji-white: oklch(0.8755 0.0391 99.09);
+    --color-old-white: oklch(0.8031 0.0608 99.15);
+    --color-spring-green: oklch(0.7477 0.1125 128.36);
+    --color-samurai-orange: oklch(0.7907 0.1351 51.14);
+}

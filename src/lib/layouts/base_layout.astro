@@ -1,0 +1,27 @@
+---
+import "$lib/styles/global.css";
+import Navigation from "$lib/components/navigation.astro";
+import Head from "$lib/components/head.astro";
+---
+
+<html lang="ar">
+    <head>
+        <meta charset="utf-8" />
+        <Head title="شناوي" />
+    </head>
+    <body
+        class="w-full overflow-y-scroll bg-sumi-ink2 font-display text-old-white"
+    >
+        <div
+            class="flex w-full flex-col items-center justify-end hover:decoration-samurai-orange lg:flex-row"
+        >
+            <Navigation />
+            <div
+                dir="rtl"
+                class="prose prose-base ml-0 flex w-full flex-col p-8 prose-kanagawa md:max-w-[60rem] lg:prose-lg lg:mr-72 lg:p-16 prose-headings:underline prose-headings:decoration-spring-green prose-h1:mb-0 prose-a:hover:decoration-samurai-orange prose-kbd:bg-sumi-ink1 prose-code:bg-sumi-ink1"
+            >
+                <slot />
+            </div>
+        </div>
+    </body>
+</html>
