@@ -22,7 +22,6 @@ export const getStaticPaths = (async () => {
 const { post } = Astro.params;
 let slug = post.split("/")[1];
 const postEntry = await getEntry("posts", slug)!;
-
 const { Content } = await render(postEntry);
 ---
 
