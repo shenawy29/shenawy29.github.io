@@ -3,7 +3,7 @@ layout: ../../lib/layouts/base_layout.astro
 title: هيللو وورلد!
 subtitle: طعم من استرو
 pubDate: 2025-08-09
-tags: []
+tags: [tech]
 slug: astro
 ---
 
