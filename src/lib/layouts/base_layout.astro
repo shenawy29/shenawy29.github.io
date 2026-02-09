@@ -8,6 +8,24 @@ import Head from "$lib/components/head.astro";
     <head>
         <meta charset="utf-8" />
         <Head title="شناوي" />
+        <script
+            is:inline
+            data-goatcounter="https://shenawy29.goatcounter.com/count"
+            data-goatcounter-settings='{"no_onload": true}'
+            async
+            src="//gc.zgo.at/count.js"></script>
+
+        <script is:inline>
+            window.addEventListener("astro:page-load", () => {
+                // Check if goatcounter is defined and has the count function
+                if (window.goatcounter && window.goatcounter.count) {
+                    window.goatcounter.count({
+                        path:
+                            location.pathname + location.search + location.hash,
+                    });
+                }
+            });
+        </script>
     </head>
     <body
         class="w-full overflow-y-scroll bg-sumi-ink2 font-display text-old-white"
