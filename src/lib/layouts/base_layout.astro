@@ -2,12 +2,18 @@
 import "$lib/styles/global.css";
 import Navigation from "$lib/components/navigation.astro";
 import Head from "$lib/components/head.astro";
+
+const title = Astro.props?.title
+    ? Astro.props.title + " · شناوي"
+    : Astro.props?.frontmatter?.title
+      ? Astro.props.frontmatter.title + " · شناوي"
+      : "شناوي";
 ---
 
 <html lang="ar">
     <head>
         <meta charset="utf-8" />
-        <Head title="شناوي" />
+        <Head title={title} />
         <script
             data-goatcounter="https://shenawy29.goatcounter.com/count"
             is:inline

@@ -1,5 +1,5 @@
 ---
-const { title = "Baz" } = Astro.props;
+const { title } = Astro.props;
 ---
 
 <link
@@ -67,3 +67,4 @@ const { title = "Baz" } = Astro.props;
 <meta name="viewport" content="width=device-width" />
 <meta name="generator" content={Astro.generator} />
 <title>{title}</title>
+<meta name="title" content={title} />

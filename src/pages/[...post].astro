@@ -25,7 +25,7 @@ const postEntry = await getEntry("posts", slug)!;
 const { Content } = await render(postEntry);
 ---
 
-<BaseLayout>
+<BaseLayout title={postEntry.data.title}>
     <div>
         <PostHeader post={postEntry} />
     </div>
