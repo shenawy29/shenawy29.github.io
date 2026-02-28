@@ -25,7 +25,7 @@ slug: astro
 
 ## سريع
 
-لو بتعمل Static Site، فانت غالباً مش محتاج JavaScript. او بمعنى اصح، الClient مش محتاج JavaScript.
+لو بتعمل Static Site، فانت غالباً مش محتاج JavaScript. او بمعنى اصح، الـClient مش محتاج JavaScript.
 
 استرو سريع عشان هو By default مش بيبعت اي JavaScript للClient. ولكن، استرو بيشتغل كCompiler. بتكتب كل كل ما تريد في ملفات `astro.`، وفالاخر دا بيتحول لملف HTML صغير يتبعت للClient.
 
@@ -87,17 +87,17 @@ const uniqueTags = [...tagMap.keys()];
 
 دي $ O(n \times t) $![^2] ازاي ممكن يكون سريع؟
 
-عندك حق... دا مش اكتر حاجة Efficient...لو دا بيتعمل At runtime. الفكرة ان استرو بيشوف الكود دا، وبيحول كل حاجة لStatic HTML. مالاخر، بيعمل Compile للJavaScript اللي بتكتبه، وبيحوله لHTML & CSS. بالطريقة دي، استرو بيحفظ الDX بأنه يسيبك تكتب لغة للScripting، وفنفس الوقت مبيعاقبش الClient بأنه يبعتله حاجات هو مش محتاجها!
+عندك حق... دا مش اكتر حاجة Efficient...لو دا بيتعمل At runtime. الفكرة ان استرو بيشوف الكود دا، وبيحول كل حاجة لStatic HTML. مالاخر، بيعمل Compile للJavaScript اللي بتكتبه، وبيحوله لHTML & CSS. بالطريقة دي، استرو بيحفظ الـDX بأنه يسيبك تكتب لغة للScripting، وفنفس الوقت مبيعاقبش الـClient بأنه يبعتله حاجات هو مش محتاجها!
 
-دا بيواجه الفكرة بتاعت الFrontend Frameworks المشهورة، صفحة واحدة HTML وJavaScript تغير الHTML بطريقة Dynamic (دي ال [Single-Page Applications](https://en.wikipedia.org/wiki/Single-page_application))
+دا بيواجه الفكرة بتاعت الـFrontend Frameworks المشهورة، صفحة واحدة HTML وJavaScript تغير الـHTML بطريقة Dynamic (دي ال [Single-Page Applications](https://en.wikipedia.org/wiki/Single-page_application))
 
-مش مصدقني؟ ادخل عالNetwork Tab في الChrome Devtools. مفيش ولا JavaScript Resource.
+مش مصدقني؟ ادخل عالـNetwork Tab في الـChrome Devtools. مفيش ولا JavaScript Resource.
 
 ## كتابة بوستس سهلة
 
-من اكتر اللغات السهلة اللي ممكن تتعملها [في ساعة حرفياً](https://www.markdownguide.org/basic-syntax/) هي Markdown. وهي برضو من اكتر اللغات اللي الناس متعرفهاش، مش عارف لية. تحس ان البني ادمين كلهم قرروا يكتبوا الReadMe بتاعتهم بالAI.
+من اكتر اللغات السهلة اللي ممكن تتعملها [في ساعة حرفياً](https://www.markdownguide.org/basic-syntax/) هي Markdown. وهي برضو من اكتر اللغات اللي الناس متعرفهاش، مش عارف لية. تحس ان البني ادمين كلهم قرروا يكتبوا الـReadMe بتاعتهم بالـAI.
 
-غالباً، الكونتنت بتاعتك هتكتبها بMarkdown في استرو، والMarkdown دا هيتحول لHTML فالاخر عشان الBrowser بتاعك يقدر يقراه.
+غالباً، الكونتنت بتاعتك هتكتبها بMarkdown في استرو، والـMarkdown دا هيتحول لHTML فالاخر عشان الـBrowser بتاعك يقدر يقراه.
 
 لية مكتبش بHTML على طول؟ انت ممكن تعمل كدا عادي، بس انت يعتبر بتعاقب نفسك. لو خيروك، هتحب تكتب دا:
 
@@ -125,9 +125,9 @@ const uniqueTags = [...tagMap.keys()];
 
 انا شخص مبحبش اعمل UI. بالنسبالي اكتر جزء مضجر في كتابة اي Software. فابستعمل ادوات بتسهللي الموضوع لو جاتلي الفرصة، اولهم غالباً هي [Tailwind](https://tailwindcss.com/).
 
-تاني حاجة ممكن استعملها هي اي Component Library بتستعمل Tailwind. لو كنت بستعمل React او Next، كنت غالباً هختار [ShadCn](https://ui.shadcn.com/) ، بس انا كان عندي نظره لشكل الBlog هيبقى عامل ازاي، وللأسف ملقتش حاجة بنفس الشكل اللي انا عايزه ومبتستعملش JavaScript، فاضطريت اكتب الComponents بتاعتي بايدي (رعب).
+تاني حاجة ممكن استعملها هي اي Component Library بتستعمل Tailwind. لو كنت بستعمل React او Next، كنت غالباً هختار [ShadCn](https://ui.shadcn.com/) ، بس انا كان عندي نظره لشكل الـBlog هيبقى عامل ازاي، وللأسف ملقتش حاجة بنفس الشكل اللي انا عايزه ومبتستعملش JavaScript، فاضطريت اكتب الـComponents بتاعتي بايدي (رعب).
 
-الموضوع مكنش صعب اوي، عشان استرو برضو بيتيحلك انك تعمل الComponents بتاعتك. اي ملف `astro.` يعتبر Component من وجهه نظر استرو.
+الموضوع مكنش صعب اوي، عشان استرو برضو بيتيحلك انك تعمل الـComponents بتاعتك. اي ملف `astro.` يعتبر Component من وجهه نظر استرو.
 
 دا مثلاً:
 
@@ -166,7 +166,7 @@ const { post } = Astro.props;
 </div>
 ```
 
-دا الكود اللي بيظهر الTitle - Subtitle - Date - Tags بتاعت كل بوست. الComponent بياخد Prop من النوع Post و بيRender دا على حسب كل بوست.
+دا الكود اللي بيظهر الـTitle - Subtitle - Date - Tags بتاعت كل بوست. الـComponent بياخد Prop من النوع Post و بيRender دا على حسب كل بوست.
 
 ممكن تستعمله كدا:
 
@@ -192,10 +192,10 @@ const allPosts = await getCollection("posts");
 
 ## الناهية
 
-استرو مش الStatic Site Generator الوحيد، في [Jekyll](https://jekyllrb.com/)، [11ty](https://www.11ty.dev/)، [Hugo](https://gohugo.io/) و غيرهم. طبعاً انا مستعملتهمش كلهم، ووارد جداً احب SSG غير استرو، ولكن صعب اتخيل DX اسهل من استرو.
+استرو مش الـStatic Site Generator الوحيد، في [Jekyll](https://jekyllrb.com/)، [11ty](https://www.11ty.dev/)، [Hugo](https://gohugo.io/) و غيرهم. طبعاً انا مستعملتهمش كلهم، ووارد جداً احب SSG غير استرو، ولكن صعب اتخيل DX اسهل من استرو.
 
 اتمنى اني اكون شجعتك انك تستعمل استرو في مشروع ما، ولو استعملته بسبب البوست دا ابعتلي لينك!
 
 [^1]: رياكت Library مش Framework....عارف...عارف.
 
-[^2]: حلو شكل الO صح؟ دي Plugins استرو [بيدعمها](https://docs.astro.build/en/guides/markdown-content/#markdown-plugins): [remark-math](https://github.com/remarkjs/remark-math/tree/main/packages/remark-math) و [rehype-katex](https://github.com/remarkjs/remark-math/tree/main/packages/rehype-katex). استرو برضو [بيدعم Syntax Highlighting](https://docs.astro.build/en/guides/syntax-highlighting/) في الكود ب [Shiki](https://shiki.style/) و [Prism](https://prismjs.com/).
+[^2]: حلو شكل الـO صح؟ دي Plugins استرو [بيدعمها](https://docs.astro.build/en/guides/markdown-content/#markdown-plugins): [remark-math](https://github.com/remarkjs/remark-math/tree/main/packages/remark-math) و [rehype-katex](https://github.com/remarkjs/remark-math/tree/main/packages/rehype-katex). استرو برضو [بيدعم Syntax Highlighting](https://docs.astro.build/en/guides/syntax-highlighting/) في الكود ب [Shiki](https://shiki.style/) و [Prism](https://prismjs.com/).
