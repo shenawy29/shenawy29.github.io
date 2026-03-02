@@ -1,7 +1,6 @@
 ---
 layout: ../../lib/layouts/base_layout.astro
 title: طرمبة الـMemory بتسرب
-subtitle: اصلحها ازاي؟
 pubDate: 2025-08-10
 tags: [concepts]
 slug: raii
