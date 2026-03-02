@@ -1,0 +1,13 @@
+---
+import { render } from "astro:content";
+let { post } = Astro.props;
+const { Content } = await render(post);
+---
+
+{
+    (
+        <div class="mb-10 line-clamp-10 mask-[linear-gradient(to_bottom,black_50%,transparent_100%)] leading-8 opacity-60">
+            <Content />
+        </div>
+    )
+}

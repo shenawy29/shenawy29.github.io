@@ -15,32 +15,48 @@ for (const page of pages) {
     }
 }
 
+for (const [tag, posts] of tagMap) {
+    tagMap.set(
+        tag,
+        posts.sort((a, b) => b.data.pubDate - a.data.pubDate),
+    );
+}
+
 const uniqueTags = [...tagMap.keys()];
 ---
 
 <BaseLayout title="تاجژ">
-    <h1>تاجژ</h1>
+    <h1>
+        <a href="#tags"> تاجژ </a>
+    </h1>
     {
         uniqueTags.map((tag) => (
             <div>
                 <h2 id={tag}>
-                    <span>#{tag}</span>
+                    <a href={`#${tag}`}>
+                        <span>#{tag}</span>
+                    </a>
                 </h2>
                 <ul>
                     {tagMap.get(tag).map((post) => (
-                        <li>
-                            <a
-                                href={`/${post.data.pubDate.toISOString().substring(0, 10)}/${post.id}`}
-                            >
-                                <span>
-                                    {post.data.pubDate
-                                        .toISOString()
-                                        .substring(0, 10)}
-                                </span>
-                                <span>-</span>
-                                <span>{post.data.title}</span>
-                            </a>
-                        </li>
+                        <div class="prose-p:m-0 prose-li:m-0">
+                            <li>
+                                <p class="flex">
+                                    <span class="opacity-60">
+                                        {post.data.pubDate
+                                            .toISOString()
+                                            .substring(0, 10)
+                                            .trim() + "\\"}
+                                    </span>
+
+                                    <a
+                                        href={`/${post.data.pubDate.toISOString().substring(0, 10)}/${post.id}`}
+                                    >
+                                        <span>{post.data.title}</span>
+                                    </a>
+                                </p>
+                            </li>
+                        </div>
                     ))}
                 </ul>
             </div>

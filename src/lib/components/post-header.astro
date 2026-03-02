@@ -1,21 +1,21 @@
 ---
-const { post } = Astro.props;
+import PostExcerpt from "./post-excerpt.astro";
+let { post } = Astro.props;
 ---
 
 <div class="w-full">
     <div
-        class="flex flex-wrap gap-x-3 divide-dotted text-xl text-wrap opacity-70"
+        class="flex flex-wrap gap-x-3 divide-dotted text-xl text-wrap opacity-60"
     >
-        <span class="text-wrap">
+        <span class="mb-1 text-wrap">
             {post.data.pubDate.toISOString().substring(0, 10)}
         </span>
         {
             post.data.tags.map((t) => (
                 <>
                     <span> • </span>
-
                     <a href={`/tags#${t}`}>
-                        <span>#{t}</span>
+                        <span>{t}#</span>
                     </a>
                 </>
             ))
@@ -28,5 +28,4 @@ const { post } = Astro.props;
             {post.data.title}
         </a>
     </h1>
-    <span class="italic">{post.data.subtitle}</span>
 </div>
