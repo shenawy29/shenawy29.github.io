@@ -27,12 +27,12 @@ const title = Astro.props?.title
             class="flex w-full flex-col items-center justify-end hover:decoration-samurai-orange lg:flex-row"
         >
             <Navigation />
-            <div
+            <main
                 dir="rtl"
-                class="prose ml-0 flex w-full flex-col p-8 prose-kanagawa md:max-w-240 lg:prose-lg lg:mr-72 lg:p-16 lg:text-lg prose-headings:underline prose-headings:decoration-spring-green prose-h1:mb-2 prose-a:hover:decoration-samurai-orange prose-kbd:bg-sumi-ink1 prose-code:bg-sumi-ink1"
+                class="prose ml-0 flex w-full flex-col p-8 prose-kanagawa md:max-w-240 lg:prose-lg lg:mr-72 lg:p-16 lg:text-lg prose-headings:underline prose-headings:decoration-spring-green prose-a:hover:decoration-samurai-orange prose-kbd:bg-sumi-ink1 prose-code:bg-sumi-ink1"
             >
                 <slot />
-            </div>
+            </main>
         </div>
     </body>
 </html>

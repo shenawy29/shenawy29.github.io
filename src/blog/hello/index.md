@@ -1,5 +1,4 @@
 ---
-layout: ../../lib/layouts/base_layout.astro
 title: هيللو وورلد!
 pubDate: 2025-08-09
 tags: [tech]
