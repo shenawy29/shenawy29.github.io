@@ -18,6 +18,15 @@
     font-display: swap;
 }
 
+@layer components {
+    math {
+        @apply text-2xl;
+    }
+    h1 math {
+        @apply text-6xl;
+    }
+}
+
 pre,
 code {
     direction: ltr;
