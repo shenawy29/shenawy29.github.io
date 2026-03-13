@@ -1,0 +1,313 @@
+<div
+    class="flex w-full flex-col overflow-hidden rounded-lg border border-[#2a2a37]"
+    dir="ltr"
+>
+    <div class="flex flex-col border-b border-[#2a2a37]">
+        <div
+            class="flex items-center justify-between border-b border-[#2a2a37] bg-[#16161d] px-3 py-1.5"
+        >
+            <div class="flex items-center gap-2">
+                <button
+                    id="btn-toggle-field"
+                    class="cursor-pointer rounded border border-[#7aa89f] bg-transparent px-2 py-0.5 font-mono text-xs text-[#7aa89f] transition-colors"
+                    data-active="true">field</button
+                >
+                <button
+                    id="btn-toggle-lines"
+                    class="cursor-pointer rounded border border-[#7aa89f] bg-transparent px-2 py-0.5 font-mono text-xs text-[#7aa89f] transition-colors"
+                    data-active="true">stream</button
+                >
+                <button
+                    id="btn-run"
+                    class="flex cursor-pointer items-center gap-1.5 rounded border border-[#2a2a37] bg-transparent px-2.5 py-1 font-mono text-xs text-[#dcd7ba] transition-colors hover:border-[#7aa89f] hover:text-[#7aa89f]"
+                >
+                    <svg
+                        width="8"
+                        height="10"
+                        viewBox="0 0 8 10"
+                        fill="currentColor"
+                    >
+                        <path d="M0 0L8 5L0 10V0Z"></path>
+                    </svg>
+                    Run
+                </button>
+            </div>
+        </div>
+        <div
+            class="flex flex-wrap items-center gap-1.5 border-b border-[#2a2a37] bg-[#1a1b26] px-3 py-1.5"
+        >
+            <span class="mr-1 font-mono text-xs text-[#727169]">presets</span>
+            <button
+                class="preset-btn cursor-pointer rounded border border-[#2a2a37] bg-transparent px-2 py-0.5 font-mono text-xs text-[#dcd7ba] transition-colors hover:border-[#7e9cd8] hover:text-[#7e9cd8]"
+                data-func="(x, y) => [-y, x]">rotation</button
+            >
+            <button
+                class="preset-btn cursor-pointer rounded border border-[#2a2a37] bg-transparent px-2 py-0.5 font-mono text-xs text-[#dcd7ba] transition-colors hover:border-[#7e9cd8] hover:text-[#7e9cd8]"
+                data-func="(x, y) => [-x, -y]">sink</button
+            >
+            <button
+                class="preset-btn cursor-pointer rounded border border-[#2a2a37] bg-transparent px-2 py-0.5 font-mono text-xs text-[#dcd7ba] transition-colors hover:border-[#7e9cd8] hover:text-[#7e9cd8]"
+                data-func="(x, y) => [x, -y]">saddle</button
+            >
+            <button
+                class="preset-btn cursor-pointer rounded border border-[#2a2a37] bg-transparent px-2 py-0.5 font-mono text-xs text-[#dcd7ba] transition-colors hover:border-[#7e9cd8] hover:text-[#7e9cd8]"
+                data-func="(x, y) => [x, y]">source</button
+            >
+            <button
+                class="preset-btn cursor-pointer rounded border border-[#2a2a37] bg-transparent px-2 py-0.5 font-mono text-xs text-[#dcd7ba] transition-colors hover:border-[#7e9cd8] hover:text-[#7e9cd8]"
+                data-func="(x, y) => [-y + 0.3*x, x + 0.3*y]">spiral out</button
+            >
+            <button
+                class="preset-btn cursor-pointer rounded border border-[#2a2a37] bg-transparent px-2 py-0.5 font-mono text-xs text-[#dcd7ba] transition-colors hover:border-[#7e9cd8] hover:text-[#7e9cd8]"
+                data-func="(x, y) => [Math.sin(y), Math.sin(x)]"
+                >sine waves</button
+            >
+            <button
+                class="preset-btn cursor-pointer rounded border border-[#2a2a37] bg-transparent px-2 py-0.5 font-mono text-xs text-[#dcd7ba] transition-colors hover:border-[#7e9cd8] hover:text-[#7e9cd8]"
+                data-func="(x, y) => { const r2 = x*x + y*y + 0.5; return [-x/r2, -y/r2]; }"
+                >gravity</button
+            >
+            <button
+                class="preset-btn cursor-pointer rounded border border-[#2a2a37] bg-transparent px-2 py-0.5 font-mono text-xs text-[#dcd7ba] transition-colors hover:border-[#7e9cd8] hover:text-[#7e9cd8]"
+                data-func="(x, y) => {
+  const dx1 = x, dy1 = y - 1.5;
+  const dx2 = x, dy2 = y + 1.5;
+  const r1 = dx1**2 + dy1**2 + 0.3;
+  const r2 = dx2**2 + dy2**2 + 0.3;
+  return [(-dy1/r1 + dy2/r2) - x*0.05, (dx1/r1 - dx2/r2) - y*0.05];
+}"
+                >two vortices</button
+            >
+        </div>
+        <div id="editor-container" class="overflow-y-auto"></div>
+    </div>
+
+    <div class="bg-[#2a2a37]">
+        <div dir="ltr" id="cartesian" class="aspect-video w-full"></div>
+    </div>
+</div>
+
+<style>
+    .cm-editor {
+        font-size: 11px;
+    }
+    .cm-scroller {
+        font-family:
+            ui-monospace, "Cascadia Code", "Fira Code", monospace !important;
+        overflow: visible !important;
+    }
+</style>
+
+<script>
+    import { EditorView, basicSetup } from "codemirror";
+    import { javascript } from "@codemirror/lang-javascript";
+    import { HighlightStyle, syntaxHighlighting } from "@codemirror/language";
+    import { tags as t } from "@lezer/highlight";
+    import { ArrowVectorField, Scene, StreamLines } from "manim-web";
+
+    const kanagawaTheme = EditorView.theme(
+        {
+            "&": { color: "#dcd7ba", backgroundColor: "#1f1f28" },
+            ".cm-content": { caretColor: "#c8c093" },
+            ".cm-cursor": { borderLeftColor: "#c8c093" },
+            ".cm-gutters": {
+                backgroundColor: "#1f1f28",
+                color: "#727169",
+                border: "none",
+                borderRight: "1px solid #2a2a37",
+            },
+            ".cm-activeLineGutter": { backgroundColor: "#2a2a37" },
+            ".cm-activeLine": { backgroundColor: "#2a2a3780" },
+            ".cm-selectionBackground, ::selection": {
+                backgroundColor: "#2d4f67",
+            },
+            ".cm-focused .cm-selectionBackground": {
+                backgroundColor: "#2d4f67",
+            },
+            ".cm-matchingBracket": {
+                color: "#ffa066",
+                outline: "1px solid #ffa066",
+            },
+            ".cm-lineNumbers": { minWidth: "3em" },
+        },
+        { dark: true },
+    );
+
+    const kanagawaHighlight = HighlightStyle.define([
+        { tag: t.keyword, color: "#957fb8" },
+        { tag: [t.name, t.deleted], color: "#dcd7ba" },
+        { tag: t.variableName, color: "#dcd7ba" },
+        { tag: t.definition(t.variableName), color: "#7e9cd8" },
+        { tag: t.function(t.variableName), color: "#7aa89f" },
+        { tag: t.function(t.definition(t.variableName)), color: "#7aa89f" },
+        { tag: t.propertyName, color: "#7fb4ca" },
+        { tag: t.string, color: "#98bb6c" },
+        { tag: t.special(t.string), color: "#e46876" },
+        { tag: t.number, color: "#d27e99" },
+        { tag: t.bool, color: "#d27e99" },
+        { tag: t.null, color: "#d27e99" },
+        { tag: t.operator, color: "#c0a36e" },
+        { tag: t.punctuation, color: "#9cabca" },
+        { tag: t.comment, color: "#727169", fontStyle: "italic" },
+        { tag: t.meta, color: "#727169" },
+        { tag: t.typeName, color: "#7e9cd8" },
+        { tag: t.className, color: "#7e9cd8" },
+        { tag: t.tagName, color: "#e46876" },
+        { tag: t.attributeName, color: "#7fb4ca" },
+        { tag: t.regexp, color: "#ffa066" },
+    ]);
+
+    const DEFAULT_CODE = `(x, y) => [-y, x]`;
+
+    const container = document.getElementById("cartesian")!;
+    let scene: Scene | null = null;
+    let showField = true;
+    let showLines = true;
+
+    async function buildScene(fn: (x: number, y: number) => [number, number]) {
+        scene?.dispose();
+
+        scene = new Scene(container, {
+            width: container.clientWidth,
+            height: container.clientHeight,
+            frameHeight: 8,
+            frameWidth: 14,
+            backgroundColor: "BLACK",
+        });
+
+        const toAdd = [];
+
+        const field = new ArrowVectorField({
+            func: fn,
+            xRange: [-7.0, 7.0, 1.4],
+            yRange: [-4.5, 4.5, 1.4],
+            strokeWidth: 7,
+            tipLength: 0.5,
+            opacity: showField ? 1 : 0,
+            maxArrowLength: 0.7,
+            normalizeArrows: true,
+        });
+        toAdd.push(field);
+
+        const lines = new StreamLines({
+            func: fn,
+            xRange: [-7, 7, 0.4],
+            yRange: [-4.5, 4.5, 0.4],
+            numLines: 10,
+            color: "#58C4DD",
+            strokeWidth: 2,
+            stepSize: 0.09,
+            opacity: showLines ? 0.9 : 0,
+        });
+        toAdd.push(lines);
+
+        scene.add(...toAdd);
+
+        lines.startAnimation({
+            warmUp: false,
+            flowSpeed: 1,
+            timeWidth: 1,
+        });
+
+        await scene.wait(Infinity);
+    }
+
+    function run() {
+        const code = view.state.doc.toString().trim();
+        let fn: ((x: number, y: number) => [number, number]) | null = null;
+
+        try {
+            fn = new Function(`return (${code})`)() as (
+                x: number,
+                y: number,
+            ) => [number, number];
+        } catch (_) {
+            const editorLines = code.split("\n");
+            const lastLine = editorLines.pop()!.trim();
+            const preamble = editorLines.join("\n");
+            try {
+                fn = new Function(`${preamble}\nreturn (${lastLine})`)() as (
+                    x: number,
+                    y: number,
+                ) => [number, number];
+            } catch (e) {
+                console.error("Invalid function:", e);
+                return;
+            }
+        }
+        buildScene(fn).catch(console.error);
+    }
+
+    const view = new EditorView({
+        doc: DEFAULT_CODE,
+        extensions: [
+            basicSetup,
+            javascript(),
+            kanagawaTheme,
+            syntaxHighlighting(kanagawaHighlight),
+        ],
+        parent: document.getElementById("editor-container")!,
+    });
+
+    document.getElementById("btn-run")!.addEventListener("click", run);
+
+    document.querySelectorAll(".preset-btn").forEach((btn) => {
+        btn.addEventListener("click", () => {
+            const func = btn.getAttribute("data-func")!;
+            view.dispatch({
+                changes: { from: 0, to: view.state.doc.length, insert: func },
+            });
+            run();
+        });
+    });
+
+    function updateToggleStyle(btn: HTMLButtonElement, active: boolean) {
+        if (active) {
+            btn.style.borderColor = "#7aa89f";
+            btn.style.color = "#7aa89f";
+        } else {
+            btn.style.borderColor = "#2a2a37";
+            btn.style.color = "#727169";
+        }
+    }
+
+    const btnField = document.getElementById(
+        "btn-toggle-field",
+    ) as HTMLButtonElement;
+    const btnLines = document.getElementById(
+        "btn-toggle-lines",
+    ) as HTMLButtonElement;
+
+    btnField.addEventListener("click", () => {
+        showField = !showField;
+        updateToggleStyle(btnField, showField);
+        run();
+    });
+
+    btnLines.addEventListener("click", () => {
+        showLines = !showLines;
+        updateToggleStyle(btnLines, showLines);
+        run();
+    });
+
+    run();
+
+    const resizeObserver = new ResizeObserver((entries) => {
+        for (const entry of entries) {
+            const { width, height } = entry.contentRect;
+            scene?.resize(width, height);
+            scene?.camera.setAspectRatio(width / height);
+        }
+    });
+    resizeObserver.observe(container);
+
+    const intersectionObserver = new IntersectionObserver(
+        (entries) => {
+            for (const entry of entries) {
+                entry.isIntersecting ? scene?.play() : scene?.pause();
+            }
+        },
+        { threshold: 1 },
+    );
+    intersectionObserver.observe(container);
+</script>
