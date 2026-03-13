@@ -25,7 +25,12 @@ const postEntry = await getEntry("posts", slug)!;
 const { Content } = await render(postEntry);
 ---
 
-<BaseLayout title={postEntry.data.title}>
+<BaseLayout
+    title={postEntry.data.title}
+    ogImage={`/og/${slug}.png`}
+    description={postEntry.data.description}
+    type="article"
+>
     <div>
         <PostHeader post={postEntry} />
     </div>

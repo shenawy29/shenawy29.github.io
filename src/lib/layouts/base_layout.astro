@@ -8,12 +8,25 @@ const title = Astro.props?.title
     : Astro.props?.frontmatter?.title
       ? Astro.props.frontmatter.title + " · شناوي"
       : "شناوي";
+
+const description =
+    Astro.props?.description ??
+    "بلوج محمد الشناوي للبرمجة، التكنولوجيا، وأشياء طريفة أخرى.";
+
+const { ogImage, type } = Astro.props;
+
+const site = Astro.url.origin;
 ---
 
 <html lang="ar">
     <head>
-        <meta charset="utf-8" />
-        <Head title={title} />
+        <Head
+            title={title}
+            description={description}
+            type={type}
+            site={site}
+            ogImage={ogImage}
+        />
         <script
             data-goatcounter="https://shenawy29.goatcounter.com/count"
             is:inline

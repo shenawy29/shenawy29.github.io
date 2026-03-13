@@ -123,3 +123,44 @@ code {
 .markdown-alert-caution .markdown-alert-title {
     color: var(--github-alert-caution-color);
 }
+
+.line {
+    display: inline;
+    padding-bottom: 0;
+}
+
+.diff {
+    display: inline-block;
+    width: 100%;
+    margin: 0 -12px;
+    padding: 0 12px;
+}
+
+.diff.add {
+    background-color: #2b3328;
+}
+
+.diff.remove {
+    background-color: #43242b;
+}
+
+.diff:before {
+    position: absolute;
+    left: 40px;
+}
+
+.line.highlighted {
+    display: inline-block;
+    width: 100%;
+    margin: 0 -12px;
+    padding: 0 12px;
+    background-color: #2a2a37;
+}
+
+.has-focused .line {
+    filter: blur(0.095rem);
+}
+
+.has-focused .focused {
+    filter: blur(0);
+}

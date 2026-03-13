@@ -1,7 +1,6 @@
 ---
 import { getCollection } from "astro:content";
 import PostHeader from "./post-header.astro";
-import PostExcerpt from "./post-excerpt.astro";
 const allPosts = await getCollection("posts");
 ---
 
@@ -13,9 +12,6 @@ const allPosts = await getCollection("posts");
                 return (
                     <div class="flex flex-col">
                         <PostHeader post={post} />
-                        <!-- <div class="pr-5"> -->
-                        <!--     <PostExcerpt post={post} /> -->
-                        <!-- </div> -->
                     </div>
                 );
             })

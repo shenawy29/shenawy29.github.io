@@ -1,5 +1,4 @@
 import { defineCollection, z } from "astro:content";
-
 import { glob } from "astro/loaders";
 
 const posts = defineCollection({
@@ -10,6 +9,7 @@ const posts = defineCollection({
         pubDate: z.date(),
         tags: z.array(z.string()),
         slug: z.string(),
+        description: z.string().optional(),
     }),
 });
 
