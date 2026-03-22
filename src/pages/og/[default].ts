@@ -19,13 +19,13 @@ export const { getStaticPaths, GET } = await OGImageRoute({
         font: {
             title: {
                 color: [255, 160, 102],
-                families: ["Cairo"],
+                families: ["Cairo", "Fira Code"],
                 size: 70,
                 lineHeight: 1.4,
             },
             description: {
                 color: [200, 192, 147],
-                families: ["Cairo"],
+                families: ["Cairo", "Fira Code"],
                 size: 40,
             },
         },
@@ -36,6 +36,6 @@ export const { getStaticPaths, GET } = await OGImageRoute({
             width: 10,
         },
 
-        fonts: ["./public/fonts/Cairo.woff2"],
+        fonts: ["./public/fonts/Cairo.woff2", "./public/fonts/FiraCode.woff2"],
     }),
 });

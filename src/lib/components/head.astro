@@ -29,7 +29,7 @@ const { title, type, site, description, ogImage } = Astro.props;
         basic: {
             title: title,
             type: type ?? "website",
-            image: site + (Astro.props.ogImage ?? "/og/default.png"),
+            image: site + (ogImage ?? "/og/default.png"),
             url: site + Astro.url.pathname,
         },
         optional: {

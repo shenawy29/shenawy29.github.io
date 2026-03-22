@@ -10,6 +10,7 @@ const posts = defineCollection({
         tags: z.array(z.string()),
         slug: z.string(),
         description: z.string().optional(),
+        custom: z.boolean().optional().default(false),
     }),
 });
 

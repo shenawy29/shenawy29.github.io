@@ -1,0 +1,796 @@
+<div dir="ltr" id="threeD"></div>
+
+<style>
+    #threeD {
+        width: 100%;
+        aspect-ratio: 16 / 9;
+        display: block;
+        min-height: 200px;
+        background: #000000;
+    }
+
+    @media (max-width: 768px) {
+        #threeD {
+            aspect-ratio: 4 / 3;
+        }
+    }
+
+    #controls {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        padding: 10px 14px;
+        background: #1a1a1a;
+        border-radius: 8px;
+        margin-top: 10px;
+    }
+
+    .slice-row {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        flex: 1;
+    }
+
+    .slice-toggle {
+        width: 28px;
+        height: 28px;
+        border-radius: 6px;
+        border: 1.5px solid;
+        background: transparent;
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: bold;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        transition: background 0.15s;
+    }
+
+    .slice-toggle.x-toggle {
+        border-color: #4488ff;
+        color: #4488ff;
+    }
+
+    .slice-toggle.x-toggle.active {
+        background: #4488ff22;
+    }
+
+    .slice-toggle.y-toggle {
+        border-color: #ff4444;
+        color: #ff4444;
+    }
+
+    .slice-toggle.y-toggle.active {
+        background: #ff444422;
+    }
+
+    .slice-label {
+        font-size: 13px;
+        font-style: italic;
+        font-family: serif;
+        white-space: nowrap;
+        width: 16px;
+        text-align: center;
+    }
+
+    .slice-label.x-label {
+        color: #4488ff;
+    }
+    .slice-label.y-label {
+        color: #ff4444;
+    }
+
+    .slider-wrap {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+    }
+
+    .slider-wrap input[type="range"] {
+        width: 100%;
+    }
+
+    .num-input {
+        width: 60px;
+        font-size: 13px;
+        font-family: monospace;
+        background: #222;
+        color: #eee;
+        border: 1px solid #444;
+        border-radius: 6px;
+        padding: 4px 6px;
+        text-align: center;
+    }
+
+    .num-input:focus {
+        outline: none;
+    }
+
+    #xNumInput:focus {
+        border-color: #4488ff;
+    }
+    #yNumInput:focus {
+        border-color: #ff4444;
+    }
+
+    #eqBox {
+        color: #eee;
+        background: #222;
+        border: 1px solid #333;
+        border-radius: 6px;
+        padding: 8px 14px;
+        overflow-x: auto;
+        margin-top: 6px;
+        text-align: center;
+        min-height: 40px;
+    }
+
+    #hint {
+        font-size: 12px;
+        color: #666;
+        padding: 6px 2px;
+        display: flex;
+        gap: 16px;
+        flex-wrap: wrap;
+    }
+
+    #hint .root-hint {
+        color: #ffff00;
+    }
+</style>
+
+<div id="controls">
+    <div class="slice-row">
+        <button class="slice-toggle x-toggle active" id="xToggle">x</button>
+        <span class="slice-label x-label">x</span>
+        <div class="slider-wrap">
+            <input
+                type="range"
+                id="xSlider"
+                min="-200"
+                max="200"
+                value="0"
+                step="1"
+                list="xTicks"
+            />
+            <datalist id="xTicks">
+                <option value="-50" label="-4"></option>
+                <option value="-100" label="-3"></option>
+                <option value="-150" label="-2"></option>
+                <option value="-200" label="-1"></option>
+                <option value="0" label="0"></option>
+                <option value="50" label="1"></option>
+                <option value="100" label="2"></option>
+                <option value="150" label="3"></option>
+                <option value="200" label="4"></option>
+            </datalist>
+        </div>
+        <input
+            type="number"
+            id="xNumInput"
+            class="num-input"
+            value="0"
+            min="-2"
+            max="2"
+            step="0.01"
+        />
+    </div>
+    <div class="slice-row">
+        <button class="slice-toggle y-toggle active" id="yToggle">y</button>
+        <span class="slice-label y-label">y</span>
+        <div class="slider-wrap">
+            <input
+                type="range"
+                id="ySlider"
+                min="-200"
+                max="200"
+                value="50"
+                step="1"
+                list="yTicks"
+            />
+            <datalist id="yTicks">
+                <option value="-50" label="-4"></option>
+                <option value="-100" label="-3"></option>
+                <option value="-150" label="-2"></option>
+                <option value="-200" label="-1"></option>
+                <option value="0" label="0"></option>
+                <option value="50" label="1"></option>
+                <option value="100" label="2"></option>
+                <option value="150" label="3"></option>
+                <option value="200" label="4"></option>
+            </datalist>
+        </div>
+        <input
+            type="number"
+            id="yNumInput"
+            class="num-input"
+            value="1"
+            min="-2"
+            max="2"
+            step="0.01"
+        />
+    </div>
+</div>
+<div id="eqBox"></div>
+
+<div id="hint">
+    <span class="root-hint">● Roots</span>
+</div>
+
+<script>
+    import * as THREE from "three";
+    import { OrbitControls } from "three/addons/controls/OrbitControls.js";
+    import katex from "katex";
+
+    const container = document.getElementById("threeD")!;
+    const xSlider = document.getElementById("xSlider") as HTMLInputElement;
+    const ySlider = document.getElementById("ySlider") as HTMLInputElement;
+    const xNumInput = document.getElementById("xNumInput") as HTMLInputElement;
+    const yNumInput = document.getElementById("yNumInput") as HTMLInputElement;
+    const xToggle = document.getElementById("xToggle") as HTMLButtonElement;
+    const yToggle = document.getElementById("yToggle") as HTMLButtonElement;
+    const eqBox = document.getElementById("eqBox")!;
+
+    const initScene = () => {
+        const width = container.clientWidth;
+        const height = container.clientHeight;
+
+        if (width === 0 || height === 0) {
+            requestAnimationFrame(initScene);
+            return;
+        }
+
+        const renderer = new THREE.WebGLRenderer({ antialias: true });
+
+        renderer.setSize(width, height);
+        renderer.setPixelRatio(window.devicePixelRatio);
+        renderer.setClearColor(0x000000, 1);
+        container.appendChild(renderer.domElement);
+
+        const scene = new THREE.Scene();
+
+        const camera = new THREE.PerspectiveCamera(
+            40,
+            width / height,
+            0.1,
+            100,
+        );
+        camera.position.set(0, 4, 10);
+        camera.lookAt(0, 1, 0);
+
+        const controls = new OrbitControls(camera, renderer.domElement);
+        controls.enableDamping = true;
+        controls.dampingFactor = 0.05;
+        controls.target.set(0, 1, 0);
+        controls.minDistance = 4;
+        controls.maxDistance = 20;
+
+        const getMag = (x: number, y: number) => {
+            const re = x * x - y * y + 1;
+            const im = 2 * x * y;
+            return Math.sqrt(re * re + im * im);
+        };
+
+        const softenMag = (mag: number) => {
+            const MAX = 4;
+            return MAX * (1 - Math.exp(-mag / MAX));
+        };
+
+        const magToColor = (mag: number): THREE.Color => {
+            const t = Math.min(mag / 4, 1);
+            const color = new THREE.Color();
+            color.setHSL(0.66 * (1 - t), 1.0, 0.5);
+            return color;
+        };
+
+        const STEPS = 120;
+        const RANGE = 4.0;
+        const RANGE_MAX = 200;
+
+        const geometry = new THREE.BufferGeometry();
+        const positions: number[] = [];
+        const colors: number[] = [];
+        const indices: number[] = [];
+
+        for (let i = 0; i <= STEPS; i++) {
+            for (let j = 0; j <= STEPS; j++) {
+                const x = -RANGE + (i / STEPS) * RANGE * 2;
+                const y = -RANGE + (j / STEPS) * RANGE * 2;
+                const mag = softenMag(getMag(x, y));
+                const color = magToColor(mag);
+                positions.push(x, mag, -y);
+                colors.push(color.r, color.g, color.b);
+            }
+        }
+
+        for (let i = 0; i < STEPS; i++) {
+            for (let j = 0; j < STEPS; j++) {
+                const a = i * (STEPS + 1) + j;
+                const b = a + 1;
+                const c = a + (STEPS + 1);
+                const d = c + 1;
+                indices.push(a, c, b);
+                indices.push(b, c, d);
+            }
+        }
+
+        geometry.setIndex(indices);
+        geometry.setAttribute(
+            "position",
+            new THREE.Float32BufferAttribute(positions, 3),
+        );
+        geometry.setAttribute(
+            "color",
+            new THREE.Float32BufferAttribute(colors, 3),
+        );
+        geometry.computeVertexNormals();
+
+        scene.add(
+            new THREE.Mesh(
+                geometry,
+                new THREE.MeshPhongMaterial({
+                    vertexColors: true,
+                    side: THREE.DoubleSide,
+                    shininess: 60,
+                    specular: new THREE.Color(0x333333),
+                    transparent: true,
+                    opacity: 0.85,
+                }),
+            ),
+        );
+
+        const axisMat = (color: number) =>
+            new THREE.MeshBasicMaterial({
+                color,
+                depthTest: false,
+                depthWrite: false,
+            });
+
+        const makeArrow = (
+            dir: THREE.Vector3,
+            origin: THREE.Vector3,
+            length: number,
+            color: number,
+        ) => {
+            const d = dir.clone().normalize();
+            const end = origin.clone().addScaledVector(d, length);
+            const shaftEnd = origin.clone().addScaledVector(d, length - 0.4);
+            const mat = axisMat(color);
+
+            const tube = new THREE.Mesh(
+                new THREE.TubeGeometry(
+                    new THREE.LineCurve3(origin, shaftEnd),
+                    1,
+                    0.04,
+                    8,
+                    false,
+                ),
+                mat,
+            );
+            tube.renderOrder = 999;
+            scene.add(tube);
+
+            const cap = new THREE.Mesh(new THREE.CircleGeometry(0.04, 8), mat);
+            cap.position.copy(origin);
+            cap.quaternion.setFromUnitVectors(
+                new THREE.Vector3(0, 0, 1),
+                d.clone().negate(),
+            );
+            cap.renderOrder = 999;
+            scene.add(cap);
+
+            const cone = new THREE.Mesh(
+                new THREE.ConeGeometry(0.1, 0.4, 16),
+                mat,
+            );
+            cone.position.copy(end.clone().addScaledVector(d, -0.2));
+            cone.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), d);
+            cone.renderOrder = 999;
+            scene.add(cone);
+        };
+
+        makeArrow(
+            new THREE.Vector3(1, 0, 0),
+            new THREE.Vector3(-3.5, 0, 0),
+            8.0,
+            0x4488ff,
+        );
+        makeArrow(
+            new THREE.Vector3(0, 0, -1),
+            new THREE.Vector3(0, 0, 3.5),
+            8.0,
+            0xff4444,
+        );
+        makeArrow(
+            new THREE.Vector3(0, 1, 0),
+            new THREE.Vector3(0, 0, 0),
+            6.5,
+            0x44cc88,
+        );
+
+        scene.add(new THREE.GridHelper(10, 10, 0x333333, 0x222222));
+
+        const makeLabel = (
+            lines: { text: string; font: string; color: string; y: number }[],
+            position: THREE.Vector3,
+            scaleX: number = 1.6,
+            scaleY: number = 0.4,
+        ) => {
+            const canvas = document.createElement("canvas");
+            canvas.width = 512;
+            canvas.height = 128;
+            const ctx = canvas.getContext("2d")!;
+            ctx.clearRect(0, 0, 512, 128);
+            for (const line of lines) {
+                ctx.font = line.font;
+                ctx.fillStyle = line.color;
+                ctx.textAlign = "center";
+                ctx.textBaseline = "middle";
+                ctx.fillText(line.text, 256, line.y);
+            }
+            const sprite = new THREE.Sprite(
+                new THREE.SpriteMaterial({
+                    map: new THREE.CanvasTexture(canvas),
+                    transparent: true,
+                }),
+            );
+            sprite.position.copy(position);
+            sprite.scale.set(scaleX, scaleY, 1);
+            scene.add(sprite);
+        };
+
+        makeLabel(
+            [
+                {
+                    text: "x",
+                    font: "italic bold 64px serif",
+                    color: "#4488ff",
+                    y: 48,
+                },
+                {
+                    text: "حقيقي (Real)",
+                    font: "bold 32px sans-serif",
+                    color: "#3366cc",
+                    y: 96,
+                },
+            ],
+            new THREE.Vector3(3.6, 0.5, 0),
+            2.0,
+            0.6,
+        );
+        makeLabel(
+            [
+                {
+                    text: "y",
+                    font: "italic bold 64px serif",
+                    color: "#ff4444",
+                    y: 48,
+                },
+                {
+                    text: "تخيلي (Imaginary)",
+                    font: "bold 28px sans-serif",
+                    color: "#cc3333",
+                    y: 96,
+                },
+            ],
+            new THREE.Vector3(0.3, 0.5, -3.9),
+            2.4,
+            0.6,
+        );
+        makeLabel(
+            [
+                {
+                    text: "f(z) = |z² + 1|",
+                    font: "italic bold 60px serif",
+                    color: "#44cc88",
+                    y: 64,
+                },
+            ],
+            new THREE.Vector3(-1.5, 5.5, 0),
+            2.6,
+            0.45,
+        );
+
+        const rootMat = new THREE.MeshBasicMaterial({ color: 0xffff00 });
+        const makeRoot = (z: number, label: string) => {
+            const dot = new THREE.Mesh(
+                new THREE.SphereGeometry(0.1, 16, 16),
+                rootMat,
+            );
+            dot.position.set(0, 0.01, -z);
+            scene.add(dot);
+            const ring = new THREE.Mesh(
+                new THREE.RingGeometry(0.15, 0.2, 32),
+                new THREE.MeshBasicMaterial({
+                    color: 0xffff00,
+                    side: THREE.DoubleSide,
+                    transparent: true,
+                    opacity: 0.6,
+                }),
+            );
+            ring.rotation.x = -Math.PI / 2;
+            ring.position.set(0, 0.01, -z);
+            scene.add(ring);
+            makeLabel(
+                [
+                    {
+                        text: label,
+                        font: "italic bold 90px serif",
+                        color: "#ffff00",
+                        y: 64,
+                    },
+                ],
+                new THREE.Vector3(0.5, 0.1, -z),
+                1.4,
+                0.4,
+            );
+        };
+        makeRoot(1, "+i");
+        makeRoot(-1, "-i");
+
+        let sliceX = 0,
+            sliceY = 1;
+        let xActive = true,
+            yActive = true;
+        let xCurve: THREE.Line | null = null;
+        let yCurve: THREE.Line | null = null;
+        let intersectDot: THREE.Mesh | null = null;
+
+        const SS = 200;
+
+        const buildXSlice = (x0: number) => {
+            if (xCurve) scene.remove(xCurve);
+            if (!xActive) {
+                xCurve = null;
+                return;
+            }
+            const pts: THREE.Vector3[] = [];
+            for (let i = 0; i <= SS; i++) {
+                const y = -RANGE + (i / SS) * RANGE * 2;
+                const mag = softenMag(getMag(x0, y));
+                pts.push(new THREE.Vector3(x0, mag, -y));
+            }
+            xCurve = new THREE.Line(
+                new THREE.BufferGeometry().setFromPoints(pts),
+                new THREE.LineBasicMaterial({ color: 0x4488ff, linewidth: 2 }),
+            );
+            scene.add(xCurve);
+        };
+
+        const buildYSlice = (y0: number) => {
+            if (yCurve) scene.remove(yCurve);
+            if (!yActive) {
+                yCurve = null;
+                return;
+            }
+            const pts: THREE.Vector3[] = [];
+            for (let i = 0; i <= SS; i++) {
+                const x = -RANGE + (i / SS) * RANGE * 2;
+                const mag = softenMag(getMag(x, y0));
+                pts.push(new THREE.Vector3(x, mag, -y0));
+            }
+            yCurve = new THREE.Line(
+                new THREE.BufferGeometry().setFromPoints(pts),
+                new THREE.LineBasicMaterial({ color: 0xff4444, linewidth: 2 }),
+            );
+            scene.add(yCurve);
+        };
+
+        const buildIntersect = () => {
+            if (intersectDot) scene.remove(intersectDot);
+            if (!xActive || !yActive) {
+                intersectDot = null;
+                return;
+            }
+            const mag = softenMag(getMag(sliceX, sliceY));
+            intersectDot = new THREE.Mesh(
+                new THREE.SphereGeometry(0.12, 16, 16),
+                new THREE.MeshBasicMaterial({
+                    color: 0x44cc88,
+                    depthTest: false,
+                }),
+            );
+            intersectDot.position.set(sliceX, mag, -sliceY);
+            intersectDot.renderOrder = 1000;
+            scene.add(intersectDot);
+        };
+
+        const fmt = (n: number) => {
+            const r = Math.round(n * 100) / 100;
+            return Number.isInteger(r)
+                ? String(r)
+                : r.toFixed(2).replace(/\.?0+$/, "");
+        };
+
+        const updateEquation = () => {
+            const x = String.raw`\textcolor{#4488ff}{x}`;
+            const xi = fmt(sliceX);
+            const yi = fmt(Math.abs(sliceY));
+            const ySign = sliceY >= 0 ? "+" : "-";
+            const xCol = `\\textcolor{#4488ff}{${xi}}`;
+            const yCol = `\\textcolor{#ff4444}{${yi}i}`;
+            const yv = String.raw`\textcolor{#ff4444}{y}`;
+
+            const reConst = Math.round((1 - sliceY * sliceY) * 100) / 100;
+            const twoY = Math.round(2 * Math.abs(sliceY) * 100) / 100;
+            const reX2 =
+                Math.round((sliceX * sliceX - sliceY * sliceY + 1) * 100) / 100;
+            const imVal = Math.round(2 * sliceX * sliceY * 100) / 100;
+            const mag = Math.round(getMag(sliceX, sliceY) * 100) / 100;
+            const reX2Col = `\\textcolor{#4488ff}{${fmt(reX2)}}`;
+            const imSign = imVal >= 0 ? "+" : "-";
+            const absIm = fmt(Math.abs(imVal));
+            const absImCol = `\\textcolor{#ff4444}{${absIm}}`;
+
+            let steps: string[];
+
+            const header = String.raw`f(z) = |z^2 + 1|`;
+
+            if (!xActive && !yActive) {
+                steps = [header, String.raw`f(${x} + ${yv}i)`];
+            } else if (xActive && !yActive) {
+                const xiSq = Math.round(sliceX * sliceX * 100) / 100;
+                const xiSqCol = `\\textcolor{#4488ff}{${fmt(xiSq)}}`;
+                const twoXCol = `\\textcolor{#4488ff}{${fmt(2 * sliceX)}}`;
+                steps = [
+                    header,
+                    String.raw`f(${xCol} + ${yv}i)`,
+                    String.raw`= |(${xCol} + ${yv}i)^2 + 1|`,
+                    String.raw`= \sqrt{(${xiSqCol} - ${yv}^2 + 1)^2 + (${twoXCol}${yv})^2}`,
+                ];
+            } else if (!xActive && yActive) {
+                const reStr =
+                    Math.abs(reConst) < 0.01
+                        ? String.raw`${x}^2`
+                        : reConst > 0
+                          ? String.raw`${x}^2 + \textcolor{#ff4444}{${fmt(reConst)}}`
+                          : String.raw`${x}^2 - \textcolor{#ff4444}{${fmt(Math.abs(reConst))}}`;
+                const twoYCol = `\\textcolor{#ff4444}{${fmt(twoY)}}`;
+                steps = [
+                    header,
+                    String.raw`f(${x} ${ySign} ${yCol})`,
+                    String.raw`= |(${x} ${ySign} ${yCol})^2 + 1|`,
+                    String.raw`= \sqrt{(${reStr})^2 + (${twoYCol}${x})^2}`,
+                ];
+            } else {
+                steps = [
+                    header,
+                    String.raw`f(${xCol} ${ySign} ${yCol})`,
+                    String.raw`= |(${xCol} ${ySign} ${yCol})^2 + 1|`,
+                    String.raw`= |${reX2Col} ${imSign} ${absImCol}i|`,
+                    String.raw`= \sqrt{${reX2Col}^2 + ${absImCol}^2}`,
+                    String.raw`= ${fmt(mag)}`,
+                ];
+            }
+
+            eqBox.innerHTML = "";
+            for (const step of steps) {
+                const line = document.createElement("div");
+                katex.render(step, line, {
+                    throwOnError: false,
+                    displayMode: false,
+                });
+                eqBox.appendChild(line);
+            }
+        };
+
+        const rebuild = () => {
+            buildXSlice(sliceX);
+            buildYSlice(sliceY);
+            buildIntersect();
+            updateEquation();
+        };
+
+        const setX = (v: number) => {
+            sliceX = Math.max(-RANGE, Math.min(RANGE, v));
+            xSlider.value = String(Math.round((sliceX / RANGE) * RANGE_MAX));
+            xNumInput.value = sliceX.toFixed(2);
+            rebuild();
+        };
+
+        const setY = (v: number) => {
+            sliceY = Math.max(-RANGE, Math.min(RANGE, v));
+            ySlider.value = String(Math.round((sliceY / RANGE) * RANGE_MAX));
+            yNumInput.value = sliceY.toFixed(2);
+            rebuild();
+        };
+
+        xToggle.addEventListener("click", () => {
+            xActive = !xActive;
+            xToggle.classList.toggle("active", xActive);
+            rebuild();
+        });
+        yToggle.addEventListener("click", () => {
+            yActive = !yActive;
+            yToggle.classList.toggle("active", yActive);
+            rebuild();
+        });
+
+        xSlider.addEventListener("input", () =>
+            setX((parseInt(xSlider.value) / RANGE_MAX) * RANGE),
+        );
+        ySlider.addEventListener("input", () =>
+            setY((parseInt(ySlider.value) / RANGE_MAX) * RANGE),
+        );
+
+        xNumInput.addEventListener("input", () => {
+            const v = parseFloat(xNumInput.value);
+            if (!isNaN(v)) setX(v);
+        });
+        yNumInput.addEventListener("input", () => {
+            const v = parseFloat(yNumInput.value);
+            if (!isNaN(v)) setY(v);
+        });
+        xNumInput.addEventListener("keydown", (e) => {
+            if (e.key === "ArrowUp") {
+                e.preventDefault();
+                setX(sliceX + 0.1);
+            }
+            if (e.key === "ArrowDown") {
+                e.preventDefault();
+                setX(sliceX - 0.1);
+            }
+        });
+        yNumInput.addEventListener("keydown", (e) => {
+            if (e.key === "ArrowUp") {
+                e.preventDefault();
+                setY(sliceY + 0.1);
+            }
+            if (e.key === "ArrowDown") {
+                e.preventDefault();
+                setY(sliceY - 0.1);
+            }
+        });
+
+        rebuild();
+
+        scene.add(new THREE.AmbientLight(0xffffff, 0.4));
+        const keyLight = new THREE.DirectionalLight(0xffffff, 1.2);
+        keyLight.position.set(-3, 6, 4);
+        scene.add(keyLight);
+        const fillLight = new THREE.DirectionalLight(0xffffff, 0.4);
+        fillLight.position.set(4, 2, -3);
+        scene.add(fillLight);
+
+        new ResizeObserver((entries) => {
+            for (const entry of entries) {
+                const { width, height } = entry.contentRect;
+                renderer.setSize(width, height);
+                camera.aspect = width / height;
+                camera.updateProjectionMatrix();
+            }
+        }).observe(container);
+
+        (window as any).captureCanvas = (scale = 4) => {
+            const w = renderer.domElement.width * scale;
+            const h = renderer.domElement.height * scale;
+            const offscreen = new THREE.WebGLRenderer({
+                antialias: true,
+                preserveDrawingBuffer: true,
+            });
+            offscreen.setSize(w, h);
+            offscreen.setClearColor(0x000000, 1);
+            offscreen.setPixelRatio(1);
+            offscreen.render(scene, camera);
+            offscreen.domElement.toBlob((blob) => {
+                const a = document.createElement("a");
+                a.href = URL.createObjectURL(blob!);
+                a.download = "screenshot.png";
+                a.click();
+                offscreen.dispose();
+            }, "image/png");
+        };
+
+        const animate = () => {
+            requestAnimationFrame(animate);
+            controls.update();
+            renderer.render(scene, camera);
+        };
+        animate();
+    };
+
+    initScene();
+</script>

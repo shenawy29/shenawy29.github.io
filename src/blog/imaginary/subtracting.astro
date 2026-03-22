@@ -1,0 +1,175 @@
+<div dir="ltr" id="sub"></div>
+
+<style>
+    #sub {
+        width: 100%;
+        aspect-ratio: 16 / 9;
+        background: #2a2a37;
+    }
+    @media (max-width: 768px) {
+        #sub {
+            aspect-ratio: 4 / 3;
+        }
+    }
+</style>
+
+<script>
+    import {
+        Dot,
+        FadeIn,
+        FadeOut,
+        MathTex,
+        NumberPlane,
+        Player,
+        Transform,
+        UP,
+        UR,
+    } from "manim-web";
+
+    const container = document.getElementById("sub")!;
+
+    let isInView = false;
+
+    const resizeObserver = new ResizeObserver((entries) => {
+        for (const entry of entries) {
+            const { width, height } = entry.contentRect;
+            player.scene.resize(width, height);
+            player.scene.camera.setAspectRatio(width / height);
+        }
+    });
+
+    resizeObserver.observe(container);
+
+    const intersectionObserver = new IntersectionObserver(
+        (entries) => {
+            for (const entry of entries) {
+                isInView = entry.isIntersecting;
+                if (isInView) {
+                    player.play();
+                } else {
+                    player.pause();
+                }
+            }
+        },
+        { threshold: 1 },
+    );
+
+    intersectionObserver.observe(container);
+
+    const player = new Player(container, {
+        width: container.clientWidth,
+        height: container.clientHeight,
+        frameHeight: 8 / 0.8,
+        frameWidth: 14 / 0.8,
+        backgroundColor: "BLACK",
+        autoPlay: true,
+        loop: true,
+    });
+
+    const plane = new NumberPlane({
+        includeBackgroundLines: true,
+        backgroundLineStyle: {
+            color: "WHITE",
+            opacity: 0.2,
+        },
+        xRange: [-7 * 2, 7 * 2],
+        xLength: 14 * 2,
+        yRange: [-4 * 2, 4 * 2],
+        yLength: 8 * 2,
+        axisConfig: {
+            includeNumbers: true,
+            includeTicks: true,
+            tickSize: 0.1,
+        },
+        yAxisConfig: { numbersToInclude: [] },
+    });
+
+    plane.shift([-6, -3, 0]);
+
+    const yLabels = [
+        new MathTex({ latex: "-8i", fontSize: 30 }),
+        new MathTex({ latex: "-7i", fontSize: 30 }),
+        new MathTex({ latex: "-6i", fontSize: 30 }),
+        new MathTex({ latex: "-5i", fontSize: 30 }),
+        new MathTex({ latex: "-4i", fontSize: 30 }),
+        new MathTex({ latex: "-3i", fontSize: 30 }),
+        new MathTex({ latex: "-2i", fontSize: 30 }),
+        new MathTex({ latex: "-i", fontSize: 30 }),
+        new MathTex({ latex: "", fontSize: 30 }),
+        new MathTex({ latex: "i", fontSize: 30 }),
+        new MathTex({ latex: "2i", fontSize: 30 }),
+        new MathTex({ latex: "3i", fontSize: 30 }),
+        new MathTex({ latex: "4i", fontSize: 30 }),
+        new MathTex({ latex: "5i", fontSize: 30 }),
+        new MathTex({ latex: "6i", fontSize: 30 }),
+        new MathTex({ latex: "7i", fontSize: 30 }),
+        new MathTex({ latex: "8i", fontSize: 30 }),
+    ];
+
+    const point1 = new Dot({
+        point: [5, 4, 0],
+        color: "YELLOW",
+    });
+
+    const tex1 = new MathTex({ latex: "5 + 4i", fontSize: 50 }).nextTo(
+        point1,
+        UR,
+        0.4,
+    );
+
+    const point2 = new Dot({
+        point: [3, 2, 0],
+        color: "YELLOW",
+    });
+
+    const tex2 = new MathTex({ latex: "3 + 2i", fontSize: 50 }).nextTo(
+        point2,
+        UR,
+        0.4,
+    );
+
+    point1.shift([-6, -3, 0]);
+    point2.shift([-6, -3, 0]);
+
+    tex1.shift([-6, -3, 0]);
+    tex2.shift([-6, -3, 0]);
+
+    player.sequence(async (scene) => {
+        scene.add(plane);
+
+        for (let i = 0; i < yLabels.length; i++) {
+            yLabels[i].nextTo([-0.5, -6 + 1 * i, 0], UP, 2);
+            yLabels[i].shift([-6, -7, 0]);
+            scene.add(yLabels[i]);
+        }
+
+        await scene.play(new FadeIn(point1), new FadeIn(tex1));
+        await scene.play(new FadeIn(point2), new FadeIn(tex2));
+        await scene.play(new FadeOut(tex1), new FadeOut(tex2));
+
+        const result = new Dot({ point: [2, 2, 0], color: "GREEN" });
+        result.shift([-6, -3, 0]);
+
+        await scene.play(
+            new Transform(point1, result),
+            new Transform(point2, result),
+        );
+
+        const texResult = new MathTex({ latex: "2 + 2i", fontSize: 50 }).nextTo(
+            result,
+            UR,
+            0.4,
+        );
+
+        await scene.play(new FadeIn(result), new FadeIn(texResult));
+        await scene.play(new FadeOut(result), new FadeOut(point2));
+
+        const texSummary = new MathTex({
+            latex: "(5+4i)-(3+2i) = 2+2i",
+            position: [4, 4, 0],
+            fontSize: 50,
+        });
+
+        await scene.play(new FadeIn(texSummary));
+    });
+</script>

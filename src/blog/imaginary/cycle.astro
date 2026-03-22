@@ -1,0 +1,148 @@
+<div dir="ltr" id="cycle"></div>
+
+<style>
+    #cycle {
+        width: 100%;
+        aspect-ratio: 16 / 9;
+        background: #2a2a37;
+    }
+    @media (max-width: 768px) {
+        #cycle {
+            aspect-ratio: 4 / 3;
+        }
+    }
+</style>
+
+<script>
+    import {
+        Arc,
+        Dot,
+        FadeIn,
+        FadeOut,
+        MathTex,
+        MoveAlongPath,
+        NumberPlane,
+        Player,
+        UP,
+    } from "manim-web";
+
+    const container = document.getElementById("cycle")!;
+
+    let isInView = false;
+
+    const resizeObserver = new ResizeObserver((entries) => {
+        for (const entry of entries) {
+            const { width, height } = entry.contentRect;
+            player.scene.resize(width, height);
+            player.scene.camera.setAspectRatio(width / height);
+        }
+    });
+
+    resizeObserver.observe(container);
+
+    const intersectionObserver = new IntersectionObserver(
+        (entries) => {
+            for (const entry of entries) {
+                isInView = entry.isIntersecting;
+                if (isInView) {
+                    player.play();
+                } else {
+                    player.pause();
+                }
+            }
+        },
+        { threshold: 1 },
+    );
+
+    intersectionObserver.observe(container);
+
+    const player = new Player(container, {
+        width: container.clientWidth,
+        height: container.clientHeight,
+        frameHeight: 8,
+        frameWidth: 14,
+        backgroundColor: "BLACK",
+        autoPlay: true,
+        loop: true,
+    });
+
+    const plane = new NumberPlane({
+        includeBackgroundLines: true,
+        backgroundLineStyle: { color: "WHITE", opacity: 0.2 },
+        axisConfig: {
+            includeNumbers: true,
+            includeTicks: true,
+            tickSize: 0.1,
+        },
+        yAxisConfig: { numbersToInclude: [] },
+    });
+
+    const yLabels = [
+        new MathTex({ latex: "-4i", fontSize: 30 }),
+        new MathTex({ latex: "-3i", fontSize: 30 }),
+        new MathTex({ latex: "-2i", fontSize: 30 }),
+        new MathTex({ latex: "-i", fontSize: 30 }),
+        new MathTex({ latex: "", fontSize: 30 }),
+        new MathTex({ latex: "i", fontSize: 30 }),
+        new MathTex({ latex: "2i", fontSize: 30 }),
+        new MathTex({ latex: "3i", fontSize: 30 }),
+        new MathTex({ latex: "4i", fontSize: 30 }),
+    ];
+    const dot = new Dot({
+        point: [1, 0, 0],
+        color: "YELLOW",
+        radius: 0.1,
+    });
+
+    player.sequence(async (scene) => {
+        scene.add(plane);
+
+        for (let i = 0; i < yLabels.length; i++) {
+            yLabels[i].nextTo([-0.5, -6 + 1 * i, 0], UP, 2);
+            scene.add(yLabels[i]);
+        }
+
+        let tex1 = new MathTex({ latex: "1", position: [4, 2, 0] });
+        let tex2 = new MathTex({ latex: "1 \\times i", position: [4, 2, 0] });
+        let tex3 = new MathTex({ latex: "i", position: [4, 2, 0] });
+        let tex4 = new MathTex({ latex: "i \\times i", position: [4, 2, 0] });
+        let tex5 = new MathTex({ latex: "-1", position: [4, 2, 0] });
+        let tex6 = new MathTex({ latex: "-1 \\times i", position: [4, 2, 0] });
+        let tex7 = new MathTex({ latex: "-i", position: [4, 2, 0] });
+        let tex8 = new MathTex({ latex: "-i \\times i", position: [4, 2, 0] });
+        let tex9 = new MathTex({ latex: "1", position: [4, 2, 0] });
+
+        const q1 = new Arc({ angle: Math.PI / 2 });
+        const q2 = new Arc({ angle: Math.PI / 2, startAngle: Math.PI / 2 });
+        const q3 = new Arc({ angle: Math.PI / 2, startAngle: Math.PI });
+        const q4 = new Arc({
+            angle: Math.PI / 2,
+            startAngle: Math.PI + Math.PI / 2,
+        });
+
+        scene.add(q1, q2, q3, q4);
+
+        await scene.play(new FadeIn(tex1), new FadeIn(dot));
+        await scene.play(new FadeOut(tex1));
+        await scene.play(new FadeIn(tex2));
+        await scene.play(new MoveAlongPath(dot, { path: q1 }));
+        await scene.play(new FadeOut(tex2));
+        await scene.play(new FadeIn(tex3));
+        await scene.play(new FadeOut(tex3));
+        await scene.play(new FadeIn(tex4));
+        await scene.play(new MoveAlongPath(dot, { path: q2 }));
+        await scene.play(new FadeOut(tex4));
+        await scene.play(new FadeIn(tex5));
+        await scene.play(new FadeOut(tex5));
+        await scene.play(new FadeIn(tex6));
+        await scene.play(new MoveAlongPath(dot, { path: q3 }));
+        await scene.play(new FadeOut(tex6));
+        await scene.play(new FadeIn(tex7));
+        await scene.play(new FadeOut(tex7));
+        await scene.play(new FadeIn(tex8));
+        await scene.play(new MoveAlongPath(dot, { path: q4 }));
+        await scene.play(new FadeOut(tex8));
+        await scene.play(new FadeIn(tex9));
+        await scene.play(new FadeOut(tex9), new FadeOut(dot));
+    });
+</script>
