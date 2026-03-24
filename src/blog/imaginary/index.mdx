@@ -14,6 +14,7 @@ import Cartesian from "./cartesian.astro";
 import Cycle from "./cycle.astro";
 import Point from "./point.astro";
 import ThreeD from "./3d.astro";
+import ThreeD2 from "./3d2.astro";
 
 الـMath كعلم موجودة من بداية التاريخ. من اول مالبشرية بدأت تعمل حضارة، الارقام شيء موجود ولكن مكنش كل الارقام اللي احنا عارفينها دلوقت موجودة. الاول بدأنا بالاعداد الصحيحة: $ 1, 2, 3, 4, 5, ... $
 
@@ -248,7 +249,7 @@ $ = -4 + 7i $
 
 ## الفيل في الغرفة
 
-احنا فهمنا دلوقت العمليات البسيطة على الـComplex Numbers. سؤال بقا: هي فين الـRoots اللي كنا بنتكلم عنها فوق؟ لو الـRoots موجودة يبقى لازم نشوفها على الـComplex Plane بتاعنا لكنهم حتى الان مش موجودين.
+احنا فهمنا دلوقت العمليات البسيطة على الـComplex Numbers. سؤال بقا: هي فين الـRoots اللي كنا بنتكلم عنها [هنا](#eq)؟ لو المعادلة بتاعتنا لازم تساوي صفر عند نقطتين, فين النقطتين دول؟
 
 بص على الـEquation بتاعتنا:
 
@@ -258,17 +259,79 @@ $ f(x) = x^2 + 1 $
 
 </div>
 
-في كام Variable في الـEquation بتاعتنا دي؟ عندنا $ x $ اللي هو الـInput بتاعنا، وعندنا $ f(x) $ اللي هو الـOutput بتاعنا. لو $ x $ يساوي 2 مثلاً، يبقى $ f(x) $ هيساوي $ 2^2 + 1 $ يعني 5. احنا لو دخلنا الـImaginary Numbers بتاعتنا، يبقى لازم نحط Dimension جديد، يعني يبقى عندنا تلاتة Variables. واحد للـReal Numbers، واحد للـImaginary Numbers، وواحد للـOutput بتاعنا.
+في كام Variable في الـEquation بتاعتنا دي؟ عندنا واحد $ x $ اللي هو الـInput بتاعنا، وعندنا $ f(x) $ اللي هو الـOutput بتاعنا. لو $ x $ يساوي 2 مثلاً، يبقى $ f(x) $ هيساوي $ 2^2 + 1 $ يعني $ 5 $.
 
-فاحنا هيبقى عندنا تلاتة Variables. اتنين منهم عبارة عن Input والتالت Output. الـEquation بتاعتنا هتبقى عاملة ازاي؟ هناخد اتنين Input وهنرجع Output واحد. يبقى هتتكتب كدا:
+احنا لو دخلنا الـImaginary Numbers بتاعتنا، يبقى احنا كدا عندنا Variable زيادة. يبقى عدد الـVariables اللي عندنا بقا 3. اتنين منهم Input وواحد بس Output.
 
-<div style="text-align:center">
+الـFunction بتاعتنا دلوقت هيبقى اسمها Complex Function, لأنها بتاخد عدد Complex مش Real.
 
-$ f(z) = z^2 + 1 $
+عشان نفهم الفكرة, هناخد Function ابسط شوية كمثال:
+
+<div class="text-center">
+
+$ f(x + iy) = x + 5 $
 
 </div>
 
-بس دلوقت $ z $ مش رقم عادي دا عدد مركب. يعني $ z = x + iy $. فلو استبدلنا:
+لاحظ ان الجزء الـImaginary بتاعنا دلوقت هو الـ$ y $ مش الـ$ x $.
+
+كدا احنا لو عايزين نرسم الـFunction دي هنرسمها ازاي؟ الأول هنعمل Plug-in لشوية ارقام.
+
+$$
+\begin{aligned}
+f(\textcolor{#4488ff}{0} + \textcolor{#ff4444}{0i}) &= \textcolor{#4488ff}{1} + 5 = \textcolor{#44cc88}{6} \\
+f(\textcolor{#4488ff}{1} + \textcolor{#ff4444}{1i}) &= \textcolor{#4488ff}{2} + 5 = \textcolor{#44cc88}{7}  \\
+f(\textcolor{#4488ff}{2} + \textcolor{#ff4444}{2i}) &= \textcolor{#4488ff}{3} + 5 = \textcolor{#44cc88}{8}   \\
+f(\textcolor{#4488ff}{3} + \textcolor{#ff4444}{3i}) &= \textcolor{#4488ff}{4} + 5 = \textcolor{#44cc88}{9}
+\end{aligned}
+$$
+
+فانت زي مانت شايف, احنا عندنا 3 ارقام بتتغير, 3 Variables. لو عايزين نرسم الـFunction بتاعتنا دي, هنحتاج نرسمها كرسمة 3D, وشكلها هيبقى كدا:
+
+<div dir="ltr">
+
+<ThreeD2 />
+
+</div>
+
+لاحظ ان الـOutput بتاعنا في الـFunction دي يعتمد بس على الجزء الحقيقي اللي هو الـ$ x $, مهما غيرت في $ y $ الـOutput مش هيتغير, لأن طبيعة الـOutput بتاع الـFunction دي انها تعتمد على الجزء الحقيقي فقط, رغم انها بتاخد الجزء التخيلي كـInput.
+
+نرجع للـFunction الأصلية بتاعتنا, اللي اتفقنا انها هتبقى $ f(x + iy) = (x + iy)^2 + 1 $.
+
+هنيجي نعمل Plug-in بنفس الشكل اللي عملناه فالـFunction القديمة, بس المرادي بأرقام Random شوية.
+
+$$
+\begin{alignedat}{2}
+f(\textcolor{#4488ff}{2} + \textcolor{#ff4444}{1i}) &= (\textcolor{#4488ff}{2} + \textcolor{#ff4444}{1i})^2 + 1 &&= (\textcolor{#44cc88}{4} + \textcolor{#ffcc00}{4i}) \\
+f(\textcolor{#4488ff}{1} + \textcolor{#ff4444}{3i}) &= (\textcolor{#4488ff}{1} + \textcolor{#ff4444}{3i})^2 + 1 &&= (\textcolor{#44cc88}{-7} + \textcolor{#ffcc00}{6i}) \\
+f(\textcolor{#4488ff}{3} + \textcolor{#ff4444}{2i}) &= (\textcolor{#4488ff}{3} + \textcolor{#ff4444}{2i})^2 + 1 &&= (\textcolor{#44cc88}{6} + \textcolor{#ffcc00}{12i}) \\
+f(\textcolor{#4488ff}{5} + \textcolor{#ff4444}{4i}) &= (\textcolor{#4488ff}{5} + \textcolor{#ff4444}{4i})^2 + 1 &&= (\textcolor{#44cc88}{10} + \textcolor{#ffcc00}{40i})
+\end{alignedat}
+$$
+
+دلوقت احنا عندنا مشكلة. الـOutput بتاعنا عبارة عن رقمين, والـInput عبارة عن رقمين برضو. يبقى دول يعتبروا كدا 4 Variables. يعني محتاجين 4 ابعاد عشان نرسم الـEquation دي. بما أننا عايشين في عالم ثلاثي الابعاد, فاحنا مش هنعرف نرسم الـOutput بتاعنا دا في رسمه واحدة.
+
+الحل عندنا اننا "نمذج" الـOutput بتاعنا دا جوا رقم واحد بيمثل المسافة من الـOrigin.
+
+يعني بدل مالـEquation بالـOutput بتاعها تبقى كدا:
+
+$$
+\begin{alignedat}{2}
+f(\textcolor{#4488ff}{1} + \textcolor{#ff4444}{3i}) &= (\textcolor{#4488ff}{1} + \textcolor{#ff4444}{3i})^2 + 1 &&= (\textcolor{#44cc88}{-7} + \textcolor{#ffcc00}{6i}) \\
+\end{alignedat}
+$$
+
+هتبقى كدا:
+
+$$
+\begin{alignedat}{2}
+f(\textcolor{#4488ff}{1} + \textcolor{#ff4444}{3i}) &= (\textcolor{#4488ff}{1} + \textcolor{#ff4444}{3i})^2 + 1 &&= \sqrt{\textcolor{#44cc88}{-7}^2 + \textcolor{#ffcc00}{6}^2} = \textcolor{#44cc88}{\sqrt{85}} \\
+\end{alignedat}
+$$
+
+وبكدا, الـOutput بتاعنا فيه رقم واحد بس, ويبقى عندنا 3 Variables نقدر نرسمهم.
+
+تعديل بسيط بس, احنا عندنا Standard ان بدل مالـFunction تتكتب كدا:
 
 <div style="text-align:center">
 
@@ -276,31 +339,25 @@ $ f(x + iy) = (x + iy)^2 + 1 $
 
 </div>
 
-اللي لو بسطناه هيبقى:
+هنعرف $ z = x + iy$ ونكتبها كدا:
 
 <div style="text-align:center">
 
-$ f(x + iy) = (x^2 - y^2 + 1) + i(2xy) $
+$ f(z) = z^2 + 1 $
 
 </div>
 
-المشكلة دلوقت إن الـOutput بتاعنا نفسه عدد مركب فيه جزء حقيقي وجزء تخيلي. ومينفعش نرسم عدد مركب على محور واحد، احنا محتاجينة يبقى عدد واحد بس.
+وبما ان الـOutput بتاع الـFunction هو الطول, هنحط الـSymbol بتاع الـMagnitude:
 
-الحل اللي اختارناه: بدل ما نرسم الـOutput نفسه، نرسم **طوله**. يعني $ |f(z)| $، المسافة من الأصل للـOutput على الـComplex Plane. ده بيديك رقم حقيقي واحد ممكن تحطه على محور.
+$$
+|f(z)| = |z^2 + 1|
+$$
 
-<div style="text-align:center">
-
-$ |f(z)| = \sqrt{(x^2 - y^2 + 1)^2 + (2xy)^2} $
-
-</div>
-
-ودا بالظبط اللي بيتعرض على الـGraph: ارتفاع كل نقطة على السطح هو $ |f(z)| $ عند الـInput $ z = x + iy $. والـRoots؟ هما النقطتين اللي السطح بيلمس فيهم الصفر. يعني النقطتين اللي $ |f(z)| = 0 $، اللي بتحصل بس لما $ z = \pm i $.
-
-فاحنا مكناش شايفين الـRoots لأننا كنا بنبص في Dimension اقل من اللي احنا محتاجينة.
+دا التحويل الكامل للـFunction بتاعتنا.
 
 لاحظ دلوقتي ان الـImaginary axis بتاعنا هو الـ$ y $ مش الـ$ x $ زي فالمعادلة الأصلية.
 
-لاحظ برضو ان الـEquation بتاعتنا كلها بتساوي صفر لما الجزء الحقيقي بتاعنا اللي هو $ x $ يساوي صفر، والـImaginary اللي هو $ y $ يساوي $ i $، يعني عند النقطة $0 + i$.
+لاحظ برضو ان الـEquation بتاعتنا كلها بتساوي صفر لما الجزء الحقيقي بتاعنا اللي هو $ x $ يساوي صفر، والـImaginary اللي هو $ y $ يساوي $ i $ او $ -i $، يعني عند النقطة $ 0 + i $ و $ 0 -i $
 
 <div dir="ltr">
 

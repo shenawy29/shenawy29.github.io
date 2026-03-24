@@ -1,7 +1,7 @@
-<div dir="ltr" id="threeD"></div>
+<div dir="ltr" id="threeD3"></div>
 
 <style>
-    #threeD {
+    #threeD3 {
         width: 100%;
         aspect-ratio: 16 / 9;
         display: block;
@@ -10,12 +10,12 @@
     }
 
     @media (max-width: 768px) {
-        #threeD {
+        #threeD3 {
             aspect-ratio: 4 / 3;
         }
     }
 
-    #controls {
+    #controls3 {
         display: flex;
         flex-direction: column;
         gap: 8px;
@@ -25,14 +25,14 @@
         margin-top: 10px;
     }
 
-    .slice-row {
+    .slice-row3 {
         display: flex;
         align-items: center;
         gap: 10px;
         flex: 1;
     }
 
-    .slice-toggle {
+    .slice-toggle3 {
         width: 28px;
         height: 28px;
         border-radius: 6px;
@@ -48,22 +48,22 @@
         transition: background 0.15s;
     }
 
-    .slice-toggle.x-toggle {
+    .slice-toggle3.x-toggle3 {
         border-color: #4488ff;
         color: #4488ff;
     }
-    .slice-toggle.x-toggle.active {
+    .slice-toggle3.x-toggle3.active {
         background: #4488ff22;
     }
-    .slice-toggle.y-toggle {
+    .slice-toggle3.y-toggle3 {
         border-color: #ff4444;
         color: #ff4444;
     }
-    .slice-toggle.y-toggle.active {
+    .slice-toggle3.y-toggle3.active {
         background: #ff444422;
     }
 
-    .slice-label {
+    .slice-label3 {
         font-size: 13px;
         font-style: italic;
         font-family: serif;
@@ -72,24 +72,24 @@
         text-align: center;
     }
 
-    .slice-label.x-label {
+    .slice-label3.x-label3 {
         color: #4488ff;
     }
-    .slice-label.y-label {
+    .slice-label3.y-label3 {
         color: #ff4444;
     }
 
-    .slider-wrap {
+    .slider-wrap3 {
         flex: 1;
         display: flex;
         flex-direction: column;
         gap: 2px;
     }
-    .slider-wrap input[type="range"] {
+    .slider-wrap3 input[type="range"] {
         width: 100%;
     }
 
-    .num-input {
+    .num-input3 {
         width: 60px;
         font-size: 13px;
         font-family: monospace;
@@ -101,17 +101,17 @@
         text-align: center;
     }
 
-    .num-input:focus {
+    .num-input3:focus {
         outline: none;
     }
-    #xNumInput:focus {
+    #xNumInput3:focus {
         border-color: #4488ff;
     }
-    #yNumInput:focus {
+    #yNumInput3:focus {
         border-color: #ff4444;
     }
 
-    #eqBox {
+    #eqBox3 {
         color: #eee;
         background: #222;
         border: 1px solid #333;
@@ -123,7 +123,7 @@
         min-height: 40px;
     }
 
-    #hint {
+    #hint3 {
         font-size: 12px;
         color: #666;
         padding: 6px 2px;
@@ -131,103 +131,87 @@
         gap: 16px;
         flex-wrap: wrap;
     }
-
-    #hint .root-hint {
-        color: #ffff00;
-    }
 </style>
 
-<div id="controls">
-    <div class="slice-row">
-        <button class="slice-toggle x-toggle active" id="xToggle">x</button>
-        <span class="slice-label x-label">x</span>
-        <div class="slider-wrap">
+<div id="controls3">
+    <div class="slice-row3">
+        <button class="slice-toggle3 x-toggle3 active" id="xToggle3">x</button>
+        <span class="slice-label3 x-label3">x</span>
+        <div class="slider-wrap3">
             <input
                 type="range"
-                id="xSlider"
+                id="xSlider3"
                 min="-200"
                 max="200"
                 value="0"
                 step="1"
-                list="xTicks"
+                list="xTicks3"
             />
-            <datalist id="xTicks">
-                <option value="-50" label="-4"></option>
-                <option value="-100" label="-3"></option>
-                <option value="-150" label="-2"></option>
-                <option value="-200" label="-1"></option>
+            <datalist id="xTicks3">
+                <option value="-200" label="-4"></option>
+                <option value="-100" label="-2"></option>
                 <option value="0" label="0"></option>
-                <option value="50" label="1"></option>
                 <option value="100" label="2"></option>
-                <option value="150" label="3"></option>
                 <option value="200" label="4"></option>
             </datalist>
         </div>
         <input
             type="number"
-            id="xNumInput"
-            class="num-input"
+            id="xNumInput3"
+            class="num-input3"
             value="0"
-            min="-2"
-            max="2"
+            min="-4"
+            max="4"
             step="0.01"
         />
     </div>
-    <div class="slice-row">
-        <button class="slice-toggle y-toggle active" id="yToggle">y</button>
-        <span class="slice-label y-label">y</span>
-        <div class="slider-wrap">
+    <div class="slice-row3">
+        <button class="slice-toggle3 y-toggle3 active" id="yToggle3">y</button>
+        <span class="slice-label3 y-label3">y</span>
+        <div class="slider-wrap3">
             <input
                 type="range"
-                id="ySlider"
+                id="ySlider3"
                 min="-200"
                 max="200"
                 value="50"
                 step="1"
-                list="yTicks"
+                list="yTicks3"
             />
-            <datalist id="yTicks">
-                <option value="-50" label="-4"></option>
-                <option value="-100" label="-3"></option>
-                <option value="-150" label="-2"></option>
-                <option value="-200" label="-1"></option>
+            <datalist id="yTicks3">
+                <option value="-200" label="-4"></option>
+                <option value="-100" label="-2"></option>
                 <option value="0" label="0"></option>
-                <option value="50" label="1"></option>
                 <option value="100" label="2"></option>
-                <option value="150" label="3"></option>
                 <option value="200" label="4"></option>
             </datalist>
         </div>
         <input
             type="number"
-            id="yNumInput"
-            class="num-input"
+            id="yNumInput3"
+            class="num-input3"
             value="1"
-            min="-2"
-            max="2"
+            min="-4"
+            max="4"
             step="0.01"
         />
     </div>
 </div>
-<div id="eqBox"></div>
-
-<div id="hint">
-    <span class="root-hint">● Roots</span>
-</div>
+<div id="eqBox3"></div>
 
 <script>
     import * as THREE from "three";
     import { OrbitControls } from "three/addons/controls/OrbitControls.js";
     import katex from "katex";
 
-    const container = document.getElementById("threeD")!;
-    const xSlider = document.getElementById("xSlider") as HTMLInputElement;
-    const ySlider = document.getElementById("ySlider") as HTMLInputElement;
-    const xNumInput = document.getElementById("xNumInput") as HTMLInputElement;
-    const yNumInput = document.getElementById("yNumInput") as HTMLInputElement;
-    const xToggle = document.getElementById("xToggle") as HTMLButtonElement;
-    const yToggle = document.getElementById("yToggle") as HTMLButtonElement;
-    const eqBox = document.getElementById("eqBox")!;
+    const container = document.getElementById("threeD3")!;
+    const xSlider = document.getElementById("xSlider3") as HTMLInputElement;
+    const ySlider = document.getElementById("ySlider3") as HTMLInputElement;
+    const xNumInput = document.getElementById("xNumInput3") as HTMLInputElement;
+    const yNumInput = document.getElementById("yNumInput3") as HTMLInputElement;
+    const xToggle = document.getElementById("xToggle3") as HTMLButtonElement;
+    const yToggle = document.getElementById("yToggle3") as HTMLButtonElement;
+    const eqBox = document.getElementById("eqBox3")!;
 
     const initScene = () => {
         const width = container.clientWidth;
@@ -250,29 +234,25 @@
             0.1,
             100,
         );
-        camera.position.set(0, 4, 10);
-        camera.lookAt(0, 1, 0);
+        camera.position.set(0, 6, 12);
+        camera.lookAt(0, 2, 0);
 
         const controls = new OrbitControls(camera, renderer.domElement);
         controls.enableDamping = true;
         controls.dampingFactor = 0.05;
-        controls.target.set(0, 1, 0);
+        controls.target.set(0, 2, 0);
         controls.minDistance = 4;
         controls.maxDistance = 20;
 
-        const getMag = (x: number, y: number) => {
-            const re = x * x - y * y + 1;
-            const im = 2 * x * y;
-            return Math.sqrt(re * re + im * im);
+        const getVal = (x: number, _y: number) => x + 5;
+
+        const softenVal = (v: number) => {
+            const MAX = 10;
+            return MAX * (1 - Math.exp(-Math.abs(v) / MAX)) * Math.sign(v);
         };
 
-        const softenMag = (mag: number) => {
-            const MAX = 4;
-            return MAX * (1 - Math.exp(-mag / MAX));
-        };
-
-        const magToColor = (mag: number): THREE.Color => {
-            const t = Math.min(mag / 4, 1);
+        const valToColor = (v: number): THREE.Color => {
+            const t = Math.min(Math.max((v - 1) / 8, 0), 1);
             const color = new THREE.Color();
             color.setHSL(0.66 * (1 - t), 1.0, 0.5);
             return color;
@@ -291,9 +271,9 @@
             for (let j = 0; j <= STEPS; j++) {
                 const x = -RANGE + (i / STEPS) * RANGE * 2;
                 const y = -RANGE + (j / STEPS) * RANGE * 2;
-                const mag = softenMag(getMag(x, y));
-                const color = magToColor(mag);
-                positions.push(x, mag, -y);
+                const v = softenVal(getVal(x, y));
+                const color = valToColor(v);
+                positions.push(x, v, -y);
                 colors.push(color.r, color.g, color.b);
             }
         }
@@ -396,7 +376,7 @@
         makeArrow(
             new THREE.Vector3(0, 1, 0),
             new THREE.Vector3(0, 0, 0),
-            6.5,
+            10.0,
             0x44cc88,
         );
 
@@ -429,6 +409,7 @@
             sprite.position.copy(position);
             sprite.scale.set(scaleX, scaleY, 1);
             scene.add(sprite);
+            return sprite;
         };
 
         makeLabel(
@@ -472,53 +453,16 @@
         makeLabel(
             [
                 {
-                    text: "f(z) = |z² + 1|",
+                    text: "f(x + iy) = x + 5",
                     font: "italic bold 60px serif",
                     color: "#44cc88",
                     y: 64,
                 },
             ],
-            new THREE.Vector3(-1.5, 5.5, 0),
-            2.6,
+            new THREE.Vector3(-1.5, 8.5, 0),
+            3.2,
             0.45,
         );
-
-        const rootMat = new THREE.MeshBasicMaterial({ color: 0xffff00 });
-        const makeRoot = (z: number, label: string) => {
-            const dot = new THREE.Mesh(
-                new THREE.SphereGeometry(0.1, 16, 16),
-                rootMat,
-            );
-            dot.position.set(0, 0.01, -z);
-            scene.add(dot);
-            const ring = new THREE.Mesh(
-                new THREE.RingGeometry(0.15, 0.2, 32),
-                new THREE.MeshBasicMaterial({
-                    color: 0xffff00,
-                    side: THREE.DoubleSide,
-                    transparent: true,
-                    opacity: 0.6,
-                }),
-            );
-            ring.rotation.x = -Math.PI / 2;
-            ring.position.set(0, 0.01, -z);
-            scene.add(ring);
-            makeLabel(
-                [
-                    {
-                        text: label,
-                        font: "italic bold 90px serif",
-                        color: "#ffff00",
-                        y: 64,
-                    },
-                ],
-                new THREE.Vector3(0.5, 0.1, -z),
-                1.4,
-                0.4,
-            );
-        };
-        makeRoot(1, "+i");
-        makeRoot(-1, "-i");
 
         const makeDynamicLabel = (
             text: string,
@@ -528,16 +472,16 @@
             scaleY: number,
         ) => {
             const canvas = document.createElement("canvas");
-            canvas.width = 320;
+            canvas.width = 256;
             canvas.height = 64;
             const ctx = canvas.getContext("2d")!;
             const draw = (t: string) => {
-                ctx.clearRect(0, 0, 320, 64);
-                ctx.font = "bold 32px monospace";
+                ctx.clearRect(0, 0, 256, 64);
+                ctx.font = "bold 36px monospace";
                 ctx.fillStyle = color;
                 ctx.textAlign = "center";
                 ctx.textBaseline = "middle";
-                ctx.fillText(t, 160, 32);
+                ctx.fillText(t, 128, 32);
             };
             draw(text);
             const tex = new THREE.CanvasTexture(canvas);
@@ -571,7 +515,7 @@
             });
             const geo = new THREE.BufferGeometry().setFromPoints([
                 new THREE.Vector3(0, 0, 0),
-                new THREE.Vector3(0, 0, 0),
+                new THREE.Vector3(0, -1, 0),
             ]);
             const line = new THREE.Line(geo, mat);
             line.computeLineDistances();
@@ -580,38 +524,13 @@
             return {
                 line,
                 update: (from: THREE.Vector3, to: THREE.Vector3) => {
-                    line.geometry.setFromPoints([from, to]);
+                    const pts = [from, to];
+                    line.geometry.setFromPoints(pts);
                     line.computeLineDistances();
                     line.geometry.attributes.position.needsUpdate = true;
                 },
-                hide: () => {
-                    line.geometry.setFromPoints([
-                        new THREE.Vector3(0, -999, 0),
-                        new THREE.Vector3(0, -999, 0),
-                    ]);
-                    line.computeLineDistances();
-                },
             };
         };
-
-        const dropLineVertical = makeDashedLine(0x888888);
-        const dropLineX = makeDashedLine(0x4488ff);
-        const dropLineY = makeDashedLine(0xff4444);
-
-        const xLabel = makeDynamicLabel(
-            "",
-            "#4488ff",
-            new THREE.Vector3(0, 0, 0),
-            1.4,
-            0.3,
-        );
-        const yLabel = makeDynamicLabel(
-            "",
-            "#ff4444",
-            new THREE.Vector3(0, 0, 0),
-            1.4,
-            0.3,
-        );
 
         let sliceX = 0,
             sliceY = 1;
@@ -621,7 +540,9 @@
         let yCurve: THREE.Line | null = null;
         let intersectDot: THREE.Mesh | null = null;
 
-        const SS = 200;
+        const dropLineX = makeDashedLine(0x4488ff);
+        const dropLineY = makeDashedLine(0xff4444);
+        const pathLine = makeDashedLine(0x888888);
 
         const fmt = (n: number) => {
             const r = Math.round(n * 100) / 100;
@@ -629,6 +550,23 @@
                 ? String(r)
                 : r.toFixed(2).replace(/\.?0+$/, "");
         };
+
+        const xLabel = makeDynamicLabel(
+            "x=0",
+            "#4488ff",
+            new THREE.Vector3(0, 0, 0),
+            1.2,
+            0.3,
+        );
+        const yLabel = makeDynamicLabel(
+            "y=1",
+            "#ff4444",
+            new THREE.Vector3(0, 0, 0),
+            1.2,
+            0.3,
+        );
+
+        const SS = 200;
 
         const buildXSlice = (x0: number) => {
             if (xCurve) scene.remove(xCurve);
@@ -639,8 +577,8 @@
             const pts: THREE.Vector3[] = [];
             for (let i = 0; i <= SS; i++) {
                 const y = -RANGE + (i / SS) * RANGE * 2;
-                const mag = softenMag(getMag(x0, y));
-                pts.push(new THREE.Vector3(x0, mag, -y));
+                const v = softenVal(getVal(x0, y));
+                pts.push(new THREE.Vector3(x0, v, -y));
             }
             xCurve = new THREE.Line(
                 new THREE.BufferGeometry().setFromPoints(pts),
@@ -658,8 +596,8 @@
             const pts: THREE.Vector3[] = [];
             for (let i = 0; i <= SS; i++) {
                 const x = -RANGE + (i / SS) * RANGE * 2;
-                const mag = softenMag(getMag(x, y0));
-                pts.push(new THREE.Vector3(x, mag, -y0));
+                const v = softenVal(getVal(x, y0));
+                pts.push(new THREE.Vector3(x, v, -y0));
             }
             yCurve = new THREE.Line(
                 new THREE.BufferGeometry().setFromPoints(pts),
@@ -670,17 +608,24 @@
 
         const buildIntersect = () => {
             if (intersectDot) scene.remove(intersectDot);
+
+            const offPos = new THREE.Vector3(0, -999, 0);
             if (!xActive || !yActive) {
                 intersectDot = null;
-                dropLineVertical.hide();
-                dropLineX.hide();
-                dropLineY.hide();
-                xLabel.update("", new THREE.Vector3(0, -999, 0));
-                yLabel.update("", new THREE.Vector3(0, -999, 0));
+                dropLineX.update(offPos, offPos);
+                dropLineY.update(offPos, offPos);
+                pathLine.update(offPos, offPos);
+                xLabel.update("", offPos);
+                yLabel.update("", offPos);
                 return;
             }
 
-            const mag = softenMag(getMag(sliceX, sliceY));
+            const v = softenVal(getVal(sliceX, sliceY));
+            const floorPos = new THREE.Vector3(sliceX, 0, -sliceY);
+            const xAnchor = new THREE.Vector3(sliceX, 0, 0);
+            const yAnchor = new THREE.Vector3(0, 0, -sliceY);
+            const dotPos = new THREE.Vector3(sliceX, v, -sliceY);
+
             intersectDot = new THREE.Mesh(
                 new THREE.SphereGeometry(0.12, 16, 16),
                 new THREE.MeshBasicMaterial({
@@ -688,93 +633,40 @@
                     depthTest: false,
                 }),
             );
-            intersectDot.position.set(sliceX, mag, -sliceY);
+            intersectDot.position.copy(dotPos);
             intersectDot.renderOrder = 1000;
             scene.add(intersectDot);
 
-            const cornerPos = new THREE.Vector3(sliceX, 0, 0);
-            const yAxisProjected = new THREE.Vector3(0, 0, -sliceY);
-            const floorPos = new THREE.Vector3(sliceX, 0, -sliceY);
+            dropLineX.update(new THREE.Vector3(0, 0, 0), xAnchor);
+            dropLineY.update(new THREE.Vector3(0, 0, 0), yAnchor);
+            pathLine.update(floorPos, dotPos);
+            dropLineX.update(yAnchor, floorPos);
+            dropLineY.update(xAnchor, floorPos);
 
-            dropLineX.update(yAxisProjected, floorPos);
-
-            dropLineY.update(cornerPos, floorPos);
-
-            const dotPos = new THREE.Vector3(sliceX, mag, -sliceY);
-
-            dropLineVertical.update(dotPos, floorPos);
-            xLabel.update(
-                `x = ${fmt(sliceX)}`,
-                new THREE.Vector3(sliceX / 2, 0.3, -sliceY),
-            );
-            yLabel.update(
-                `y = ${fmt(sliceY)}`,
-                new THREE.Vector3(
-                    sliceX + (sliceX >= 0 ? 0.6 : -0.6),
-                    0.3,
-                    -sliceY / 2,
-                ),
-            );
+            const xMid = new THREE.Vector3(sliceX / 2, 0.2, -sliceY);
+            const yMid = new THREE.Vector3(sliceX, 0.2, -sliceY / 2);
+            xLabel.update(`x = ${fmt(sliceX)}`, xMid);
+            yLabel.update(`y = ${fmt(sliceY)}`, yMid);
         };
 
         const updateEquation = () => {
-            const x = String.raw`\textcolor{#4488ff}{x}`;
-            const xi = fmt(sliceX);
-            const yi = fmt(Math.abs(sliceY));
+            const xCol = `\\textcolor{#4488ff}{${fmt(sliceX)}}`;
+            const yCol = `\\textcolor{#ff4444}{${fmt(Math.abs(sliceY))}i}`;
             const ySign = sliceY >= 0 ? "+" : "-";
-            const xCol = `\\textcolor{#4488ff}{${xi}}`;
-            const yCol = `\\textcolor{#ff4444}{${yi}i}`;
-            const yv = String.raw`\textcolor{#ff4444}{y}`;
+            const val = Math.round((sliceX + 5) * 100) / 100;
 
-            const reConst = Math.round((1 - sliceY * sliceY) * 100) / 100;
-            const twoY = Math.round(2 * Math.abs(sliceY) * 100) / 100;
-            const reX2 =
-                Math.round((sliceX * sliceX - sliceY * sliceY + 1) * 100) / 100;
-            const imVal = Math.round(2 * sliceX * sliceY * 100) / 100;
-            const mag = Math.round(getMag(sliceX, sliceY) * 100) / 100;
-            const reX2Col = `\\textcolor{#4488ff}{${fmt(reX2)}}`;
-            const imSign = imVal >= 0 ? "+" : "-";
-            const absIm = fmt(Math.abs(imVal));
-            const absImCol = `\\textcolor{#ff4444}{${absIm}}`;
+            const steps: string[] = [String.raw`f(x + iy) = x + 5`];
 
-            let steps: string[];
-            const header = String.raw`f(z) = |z^2 + 1|`;
-
-            if (!xActive && !yActive) {
-                steps = [header, String.raw`f(${x} + ${yv}i)`];
+            if (xActive && yActive) {
+                steps.push(
+                    String.raw`f(${xCol} ${ySign} ${yCol}) = ${xCol} + 5`,
+                );
+                steps.push(String.raw`= \textcolor{#44cc88}{${fmt(val)}}`);
             } else if (xActive && !yActive) {
-                const xiSq = Math.round(sliceX * sliceX * 100) / 100;
-                const xiSqCol = `\\textcolor{#4488ff}{${fmt(xiSq)}}`;
-                const twoXCol = `\\textcolor{#4488ff}{${fmt(2 * sliceX)}}`;
-                steps = [
-                    header,
-                    String.raw`f(${xCol} + ${yv}i)`,
-                    String.raw`= |(${xCol} + ${yv}i)^2 + 1|`,
-                    String.raw`= \sqrt{(${xiSqCol} - ${yv}^2 + 1)^2 + (${twoXCol}${yv})^2}`,
-                ];
+                steps.push(String.raw`f(${xCol} + iy) = ${xCol} + 5`);
+                steps.push(String.raw`= \textcolor{#44cc88}{${fmt(val)}}`);
             } else if (!xActive && yActive) {
-                const reStr =
-                    Math.abs(reConst) < 0.01
-                        ? String.raw`${x}^2`
-                        : reConst > 0
-                          ? String.raw`${x}^2 + \textcolor{#ff4444}{${fmt(reConst)}}`
-                          : String.raw`${x}^2 - \textcolor{#ff4444}{${fmt(Math.abs(reConst))}}`;
-                const twoYCol = `\\textcolor{#ff4444}{${fmt(twoY)}}`;
-                steps = [
-                    header,
-                    String.raw`f(${x} ${ySign} ${yCol})`,
-                    String.raw`= |(${x} ${ySign} ${yCol})^2 + 1|`,
-                    String.raw`= \sqrt{(${reStr})^2 + (${twoYCol}${x})^2}`,
-                ];
-            } else {
-                steps = [
-                    header,
-                    String.raw`f(${xCol} ${ySign} ${yCol})`,
-                    String.raw`= |(${xCol} ${ySign} ${yCol})^2 + 1|`,
-                    String.raw`= |${reX2Col} ${imSign} ${absImCol}i|`,
-                    String.raw`= \sqrt{${reX2Col}^2 + ${absImCol}^2}`,
-                    String.raw`= \textcolor{#44cc88}{${fmt(mag)}}`,
-                ];
+                steps.push(String.raw`f(x + ${ySign} ${yCol}) = x + 5`);
             }
 
             eqBox.innerHTML = "";
@@ -874,26 +766,6 @@
                 camera.updateProjectionMatrix();
             }
         }).observe(container);
-
-        (window as any).captureCanvas = (scale = 4) => {
-            const w = renderer.domElement.width * scale;
-            const h = renderer.domElement.height * scale;
-            const offscreen = new THREE.WebGLRenderer({
-                antialias: true,
-                preserveDrawingBuffer: true,
-            });
-            offscreen.setSize(w, h);
-            offscreen.setClearColor(0x000000, 1);
-            offscreen.setPixelRatio(1);
-            offscreen.render(scene, camera);
-            offscreen.domElement.toBlob((blob) => {
-                const a = document.createElement("a");
-                a.href = URL.createObjectURL(blob!);
-                a.download = "screenshot.png";
-                a.click();
-                offscreen.dispose();
-            }, "image/png");
-        };
 
         const animate = () => {
             requestAnimationFrame(animate);
