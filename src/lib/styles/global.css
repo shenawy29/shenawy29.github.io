@@ -20,7 +20,7 @@
 
 @layer components {
     math {
-        @apply text-2xl;
+        @apply text-xl lg:text-2xl;
     }
     h1 math {
         @apply text-6xl;
