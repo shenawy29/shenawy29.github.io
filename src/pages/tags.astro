@@ -22,7 +22,7 @@ for (const [tag, posts] of tagMap) {
     );
 }
 
-const uniqueTags = [...tagMap.keys()];
+const uniqueTags = [...tagMap.keys()].sort((a, b) => a.localeCompare(b));
 ---
 
 <BaseLayout title="تاجژ">
@@ -34,7 +34,7 @@ const uniqueTags = [...tagMap.keys()];
             <div>
                 <h2 id={tag}>
                     <a href={`#${tag}`}>
-                        <span>#{tag}</span>
+                        <span>{tag}#</span>
                     </a>
                 </h2>
                 <ul>

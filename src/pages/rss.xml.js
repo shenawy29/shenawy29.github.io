@@ -8,7 +8,10 @@ import rss from "@astrojs/rss";
 export async function GET(context) {
     const renderers = await loadRenderers([getMDXRenderer()]);
     const container = await AstroContainer.create({ renderers });
-    const posts = await getCollection("posts");
+
+    const posts = await getCollection("posts").sort(
+        (a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime(),
+    );
 
     const items = [];
     for (const post of posts) {
