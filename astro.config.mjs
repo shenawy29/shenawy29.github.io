@@ -5,6 +5,7 @@ import remarkMath from "remark-math";
 import tailwindcss from "@tailwindcss/vite";
 import mdx from "@astrojs/mdx";
 import rehypeKatex from "rehype-katex";
+import robotsTxt from "astro-robots-txt";
 
 import {
     transformerNotationDiff,
@@ -16,6 +17,8 @@ import {
     transformerMetaWordHighlight,
 } from "@shikijs/transformers";
 
+import sitemap from "@astrojs/sitemap";
+
 // https://astro.build/config
 export default defineConfig({
     site: "https://shenawy29.github.io",
@@ -24,7 +27,7 @@ export default defineConfig({
         plugins: [tailwindcss()],
     },
 
-    integrations: [mdx()],
+    integrations: [mdx(), sitemap(), robotsTxt()],
 
     markdown: {
         syntaxHighlight: "shiki",
