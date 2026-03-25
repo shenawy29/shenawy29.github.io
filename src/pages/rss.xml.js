@@ -8,8 +8,8 @@ import rss from "@astrojs/rss";
 export async function GET(context) {
     const renderers = await loadRenderers([getMDXRenderer()]);
     const container = await AstroContainer.create({ renderers });
-
-    const posts = await getCollection("posts").sort(
+    const allPosts = await getCollection("posts");
+    const posts = allPosts.sort(
         (a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime(),
     );
 
@@ -75,7 +75,7 @@ export async function GET(context) {
 
         customData: `
 <language>ar</language>
-<atom:link href="${context.site}rss.xml" rel="self" type="application/rss+xml" xmlns:atom="http://www.w3.org/2005/Atom" />,
+<atom:link href="${context.site}rss.xml" rel="self" type="application/rss+xml" xmlns:atom="http://www.w3.org/2005/Atom" />
     `,
     });
 }
