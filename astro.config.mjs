@@ -1,5 +1,5 @@
 // @ts-check
-import { defineConfig } from "astro/config";
+import { defineConfig, fontProviders } from "astro/config";
 import remarkEmoji from "remark-emoji";
 import remarkMath from "remark-math";
 import tailwindcss from "@tailwindcss/vite";
@@ -19,15 +19,60 @@ import {
 
 import sitemap from "@astrojs/sitemap";
 
-// https://astro.build/config
 export default defineConfig({
     site: "https://shenawy29.github.io",
 
+    fonts: [
+        {
+            provider: fontProviders.local(),
+            name: "Cairo",
+            cssVariable: "--font-cairo",
+            options: {
+                variants: [
+                    {
+                        src: ["./public/fonts/Cairo.woff2"],
+                        unicodeRange: [
+                            "U+0600-06FF",
+                            "U+FB50-FDFF",
+                            "U+FE70-FEFF",
+                        ],
+                    },
+                ],
+            },
+        },
+
+        {
+            provider: fontProviders.local(),
+            name: "FiraCode",
+            cssVariable: "--font-fira",
+            options: {
+                variants: [
+                    {
+                        src: ["./public/fonts/FiraCode.woff2"],
+                    },
+                ],
+            },
+        },
+    ],
+
+    security: { csp: true },
+
     vite: {
+        build: {
+            sourcemap: true,
+        },
         plugins: [tailwindcss()],
     },
 
     integrations: [mdx(), sitemap(), robotsTxt()],
+
+    i18n: {
+        locales: ["en", "eg-ar"],
+        defaultLocale: "en",
+        routing: {
+            prefixDefaultLocale: false,
+        },
+    },
 
     markdown: {
         syntaxHighlight: "shiki",
