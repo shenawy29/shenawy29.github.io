@@ -25,17 +25,14 @@ export default defineConfig({
     fonts: [
         {
             provider: fontProviders.local(),
-            name: "Cairo",
-            cssVariable: "--font-cairo",
+            name: "Vazirmatn",
+            cssVariable: "--font-vazirmatn",
             options: {
                 variants: [
                     {
-                        src: ["./public/fonts/Cairo.woff2"],
-                        unicodeRange: [
-                            "U+0600-06FF",
-                            "U+FB50-FDFF",
-                            "U+FE70-FEFF",
-                        ],
+                        weight: "100 900",
+                        style: "normal",
+                        src: ["./public/fonts/Vazirmatn.woff2"],
                     },
                 ],
             },
@@ -48,14 +45,45 @@ export default defineConfig({
             options: {
                 variants: [
                     {
+                        weight: "400",
+                        style: "normal",
                         src: ["./public/fonts/FiraCode.woff2"],
+                    },
+                ],
+            },
+        },
+        {
+            provider: fontProviders.local(),
+            name: "Cairo",
+            cssVariable: "--font-cairo",
+            options: {
+                variants: [
+                    {
+                        weight: "700",
+                        style: "normal",
+                        src: ["./public/fonts/Cairo.woff2"],
+                    },
+                ],
+            },
+        },
+
+        {
+            provider: fontProviders.local(),
+            name: "Rokkitt",
+            cssVariable: "--font-rokkitt",
+            options: {
+                variants: [
+                    {
+                        weight: "100 900",
+                        style: "normal",
+                        src: ["./public/fonts/Rokkitt.woff2"],
                     },
                 ],
             },
         },
     ],
 
-    security: { csp: true },
+    security: { csp: false },
 
     vite: {
         build: {

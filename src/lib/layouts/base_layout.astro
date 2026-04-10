@@ -34,16 +34,14 @@ const site = Astro.url.origin;
             src="/count.js"></script>
     </head>
 
-    <body
-        class="w-full overflow-y-scroll bg-sumi-ink2 font-display text-old-white"
-    >
+    <body class="w-full overflow-y-scroll bg-sumi-ink2 text-old-white">
         <div
             class="flex w-full flex-col items-center justify-end hover:decoration-samurai-orange lg:flex-row"
         >
             <Navigation />
             <main
                 dir="rtl"
-                class="prose ml-0 flex w-full flex-col p-8 prose-kanagawa md:max-w-240 lg:prose-lg lg:mr-72 lg:p-16 lg:text-lg prose-headings:underline prose-headings:decoration-spring-green prose-a:hover:decoration-samurai-orange prose-kbd:bg-sumi-ink1 prose-code:bg-sumi-ink1"
+                class="prose ml-0 flex w-full flex-col p-8 font-sans prose-kanagawa md:max-w-240 lg:prose-lg lg:mr-72 lg:p-16 lg:text-lg prose-headings:underline prose-headings:decoration-spring-green prose-a:hover:decoration-samurai-orange prose-kbd:bg-sumi-ink1 prose-code:bg-sumi-ink1"
             >
                 <slot />
             </main>

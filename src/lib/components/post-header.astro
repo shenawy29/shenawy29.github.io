@@ -2,9 +2,9 @@
 let { post } = Astro.props;
 ---
 
-<div class="w-full">
+<div class="h-min w-full">
     <div
-        class="flex flex-wrap gap-x-3 divide-dotted text-xl text-wrap opacity-60"
+        class="flex flex-wrap gap-x-3 divide-dotted font-mono text-xl text-wrap opacity-60"
     >
         <span class="mb-1 text-wrap">
             {post.data.pubDate.toISOString().substring(0, 10)}
@@ -20,7 +20,7 @@ let { post } = Astro.props;
             ))
         }
     </div>
-    <h1 class="">
+    <h1>
         <a
             href={`/${post.data.pubDate.toISOString().substring(0, 10)}/${post.id}`}
         >

@@ -5,7 +5,7 @@
 
 @layer components {
     math {
-        @apply text-xl lg:text-2xl;
+        @apply text-xl;
     }
 }
 
@@ -31,10 +31,29 @@ code {
 }
 
 @theme inline {
-    --font-display: var(--font-fira), var(--font-cairo);
-    --font-mono: var(--font-fira), var(--font-cairo);
-    --font-serif: var(--font-fira), var(--font-cairo);
-    --font-sans: var(--font-fira), var(--font-cairo);
+    --font-sans: var(--font-rokkitt), var(--font-vazirmatn), ui-sans-serif, system-ui;
+    --font-mono: var(--font-fira), monospace;
+    --font-display: var(--font-rokkitt), var(--font-cairo);
+}
+
+body {
+    @apply font-sans;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+h1 a {
+    @apply font-display font-bold;
+}
+
+code,
+pre,
+kbd {
+    @apply font-mono;
 }
 
 .line {

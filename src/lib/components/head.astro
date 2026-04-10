@@ -1,27 +1,21 @@
 ---
 import { SEO } from "astro-seo";
 const { title, type, site, description, ogImage } = Astro.props;
+import { Font } from "astro:assets";
 ---
 
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width" />
 <meta name="generator" content={Astro.generator} />
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-<link
-    rel="preload"
-    href="/fonts/Cairo.woff2"
-    as="font"
-    type="font/woff2"
-    crossorigin
-/>
-<link
-    rel="preload"
-    href="/fonts/FiraCode.woff2"
-    as="font"
-    type="font/woff2"
-    crossorigin
-/>
+
+<Font cssVariable="--font-vazirmatn" preload />
+<Font cssVariable="--font-rokkitt" preload />
+<Font cssVariable="--font-fira" preload />
+<Font cssVariable="--font-cairo" preload />
+
 <link rel="sitemap" href="/sitemap-index.xml" />
+
 <SEO
     title={title}
     description={description}
