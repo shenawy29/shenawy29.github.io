@@ -33,6 +33,11 @@ export default defineConfig({
                         weight: "100 900",
                         style: "normal",
                         src: ["./public/fonts/Vazirmatn.woff2"],
+                        unicodeRange: [
+                            "U+0600-06FF",
+                            "U+FB50-FDFF",
+                            "U+FE70-FEFF",
+                        ],
                     },
                 ],
             },
@@ -62,6 +67,11 @@ export default defineConfig({
                         weight: "700",
                         style: "normal",
                         src: ["./public/fonts/Cairo.woff2"],
+                        unicodeRange: [
+                            "U+0600-06FF",
+                            "U+FB50-FDFF",
+                            "U+FE70-FEFF",
+                        ],
                     },
                 ],
             },
