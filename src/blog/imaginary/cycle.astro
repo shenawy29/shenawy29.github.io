@@ -21,7 +21,7 @@
         FadeOut,
         MathTex,
         MoveAlongPath,
-        NumberPlane,
+        ComplexPlane,
         Player,
         UP,
     } from "manim-web";
@@ -66,7 +66,7 @@
         loop: true,
     });
 
-    const plane = new NumberPlane({
+    const plane = new ComplexPlane({
         includeBackgroundLines: true,
         backgroundLineStyle: { color: "WHITE", opacity: 0.2 },
         axisConfig: {
@@ -77,17 +77,6 @@
         yAxisConfig: { numbersToInclude: [] },
     });
 
-    const yLabels = [
-        new MathTex({ latex: "-4i", fontSize: 30 }),
-        new MathTex({ latex: "-3i", fontSize: 30 }),
-        new MathTex({ latex: "-2i", fontSize: 30 }),
-        new MathTex({ latex: "-i", fontSize: 30 }),
-        new MathTex({ latex: "", fontSize: 30 }),
-        new MathTex({ latex: "i", fontSize: 30 }),
-        new MathTex({ latex: "2i", fontSize: 30 }),
-        new MathTex({ latex: "3i", fontSize: 30 }),
-        new MathTex({ latex: "4i", fontSize: 30 }),
-    ];
     const dot = new Dot({
         point: [1, 0, 0],
         color: "YELLOW",
@@ -96,11 +85,6 @@
 
     player.sequence(async (scene) => {
         scene.add(plane);
-
-        for (let i = 0; i < yLabels.length; i++) {
-            yLabels[i].nextTo([-0.5, -6 + 1 * i, 0], UP, 2);
-            scene.add(yLabels[i]);
-        }
 
         let tex1 = new MathTex({ latex: "1", position: [4, 2, 0] });
         let tex2 = new MathTex({ latex: "1 \\times i", position: [4, 2, 0] });

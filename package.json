@@ -21,7 +21,7 @@
         "@astrojs/sitemap": "3.7.2",
         "astro-og-canvas": "^0.10.1",
         "astro-robots-txt": "^1.0.0",
-        "manim-web": "^0.3.19",
+        "manim-web": "0.3.16",
         "@codemirror/lang-javascript": "^6.2.5",
         "@codemirror/language": "^6.12.3",
         "@eslint/js": "^9.39.4",

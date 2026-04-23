@@ -14,7 +14,7 @@
 </style>
 
 <script>
-    import { Dot, MathTex, NumberPlane, Scene, UP, UR } from "manim-web";
+    import { Dot, MathTex, ComplexPlane, Scene, UP, UR } from "manim-web";
 
     const container = document.getElementById("point")!;
 
@@ -54,7 +54,7 @@
         backgroundColor: "BLACK",
     });
 
-    const plane = new NumberPlane({
+    const plane = new ComplexPlane({
         includeBackgroundLines: true,
         backgroundLineStyle: { color: "WHITE", opacity: 0.2 },
         axisConfig: {
@@ -65,24 +65,7 @@
         yAxisConfig: { numbersToInclude: [] },
     });
 
-    const yLabels = [
-        new MathTex({ latex: "-4i", fontSize: 30 }),
-        new MathTex({ latex: "-3i", fontSize: 30 }),
-        new MathTex({ latex: "-2i", fontSize: 30 }),
-        new MathTex({ latex: "-1i", fontSize: 30 }),
-        new MathTex({ latex: "", fontSize: 30 }),
-        new MathTex({ latex: "1i", fontSize: 30 }),
-        new MathTex({ latex: "2i", fontSize: 30 }),
-        new MathTex({ latex: "3i", fontSize: 30 }),
-        new MathTex({ latex: "4i", fontSize: 30 }),
-    ];
-
     scene.add(plane);
-
-    for (let i = 0; i < yLabels.length; i++) {
-        yLabels[i].nextTo([-0.5, -6 + 1 * i, 0], UP, 2);
-        scene.add(yLabels[i]);
-    }
 
     const point = new Dot({
         point: [2, 3, 0],

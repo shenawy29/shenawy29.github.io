@@ -19,7 +19,7 @@
         FadeIn,
         FadeOut,
         MathTex,
-        NumberPlane,
+        ComplexPlane,
         Player,
         Transform,
         UP,
@@ -66,7 +66,7 @@
         loop: true,
     });
 
-    const plane = new NumberPlane({
+    const plane = new ComplexPlane({
         includeBackgroundLines: true,
         backgroundLineStyle: {
             color: "WHITE",
@@ -85,26 +85,6 @@
     });
 
     plane.shift([-6, -3, 0]);
-
-    const yLabels = [
-        new MathTex({ latex: "-8i", fontSize: 30 }),
-        new MathTex({ latex: "-7i", fontSize: 30 }),
-        new MathTex({ latex: "-6i", fontSize: 30 }),
-        new MathTex({ latex: "-5i", fontSize: 30 }),
-        new MathTex({ latex: "-4i", fontSize: 30 }),
-        new MathTex({ latex: "-3i", fontSize: 30 }),
-        new MathTex({ latex: "-2i", fontSize: 30 }),
-        new MathTex({ latex: "-i", fontSize: 30 }),
-        new MathTex({ latex: "", fontSize: 30 }),
-        new MathTex({ latex: "i", fontSize: 30 }),
-        new MathTex({ latex: "2i", fontSize: 30 }),
-        new MathTex({ latex: "3i", fontSize: 30 }),
-        new MathTex({ latex: "4i", fontSize: 30 }),
-        new MathTex({ latex: "5i", fontSize: 30 }),
-        new MathTex({ latex: "6i", fontSize: 30 }),
-        new MathTex({ latex: "7i", fontSize: 30 }),
-        new MathTex({ latex: "8i", fontSize: 30 }),
-    ];
 
     const point1 = new Dot({
         point: [2, 3, 0],
@@ -136,12 +116,6 @@
 
     player.sequence(async (scene) => {
         scene.add(plane);
-
-        for (let i = 0; i < yLabels.length; i++) {
-            yLabels[i].nextTo([-0.5, -6 + 1 * i, 0], UP, 2);
-            yLabels[i].shift([-6, -7, 0]);
-            scene.add(yLabels[i]);
-        }
 
         await scene.play(new FadeIn(point1), new FadeIn(tex1));
         await scene.play(new FadeIn(point2), new FadeIn(tex2));
