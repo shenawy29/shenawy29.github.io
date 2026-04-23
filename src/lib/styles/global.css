@@ -31,14 +31,13 @@ code {
 }
 
 @theme inline {
-    --font-sans:
-        var(--font-rokkitt), var(--font-vazirmatn), ui-sans-serif, system-ui;
+    --font-write: var(--font-rokkitt), var(--font-vazirmatn), ui-sans-serif, system-ui;
     --font-mono: var(--font-fira), monospace;
     --font-display: var(--font-rokkitt), var(--font-cairo);
 }
 
 body {
-    @apply font-sans;
+    @apply font-write;
 }
 
 h1,
