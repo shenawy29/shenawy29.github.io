@@ -14,11 +14,8 @@ function stripImports(body: string): string {
         .join("\n");
 }
 
-function truncateBody(
-    body: string,
-    maxLen: number,
-): { text: string; truncated: boolean } {
-    if (body.length <= maxLen) return { text: body, truncated: false };
+function truncateBody(body: string, maxLen: number): { text: string } {
+    if (body.length <= maxLen) return { text: body };
 
     const lines = body.split("\n");
     let result = "";
@@ -34,10 +31,10 @@ function truncateBody(
             lastSpace > 0
                 ? lines[0].slice(0, lastSpace)
                 : lines[0].slice(0, maxLen);
-        return { text: cut, truncated: true };
+        return { text: cut };
     }
 
-    return { text: result, truncated: true };
+    return { text: result };
 }
 
 function renderLatex(text: string): string {
@@ -66,12 +63,12 @@ function renderLatex(text: string): string {
     return text;
 }
 
-function renderExcerpt(body: string): { html: string; truncated: boolean } {
+function renderExcerpt(body: string): { html: string } {
     const clean = stripImports(body);
-    const { text, truncated } = truncateBody(clean, 600);
+    const { text } = truncateBody(clean, 600);
     const withLatex = renderLatex(text);
     const html = marked.parse(withLatex, { async: false }) as string;
-    return { html, truncated };
+    return { html };
 }
 
 const postEntries = posts
