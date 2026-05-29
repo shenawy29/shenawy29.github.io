@@ -37,26 +37,24 @@ const uniqueTags = [...tagMap.keys()].sort((a, b) => a.localeCompare(b));
                         <span>{tag}#</span>
                     </a>
                 </h2>
-                <ul>
+                <ul class="prose-p:m-0 prose-li:m-0">
                     {tagMap.get(tag).map((post) => (
-                        <div class="prose-p:m-0 prose-li:m-0">
-                            <li>
-                                <p class="flex">
-                                    <span class="opacity-60">
-                                        {post.data.pubDate
-                                            .toISOString()
-                                            .substring(0, 10)
-                                            .trim() + "\\"}
-                                    </span>
+                        <li>
+                            <p class="flex">
+                                <span class="opacity-60">
+                                    {post.data.pubDate
+                                        .toISOString()
+                                        .substring(0, 10)
+                                        .trim() + "\\"}
+                                </span>
 
-                                    <a
-                                        href={`/${post.data.pubDate.toISOString().substring(0, 10)}/${post.id}`}
-                                    >
-                                        <span>{post.data.title}</span>
-                                    </a>
-                                </p>
-                            </li>
-                        </div>
+                                <a
+                                    href={`/${post.data.pubDate.toISOString().substring(0, 10)}/${post.id}`}
+                                >
+                                    <span>{post.data.title}</span>
+                                </a>
+                            </p>
+                        </li>
                     ))}
                 </ul>
             </div>
