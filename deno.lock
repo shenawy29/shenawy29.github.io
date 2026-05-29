@@ -25,6 +25,7 @@
     "npm:eslint@^10.4.0": "10.4.0",
     "npm:katex@~0.16.47": "0.16.47",
     "npm:manim-web@0.3.16": "0.3.16",
+    "npm:marked@^18.0.4": "18.0.4",
     "npm:prettier-plugin-astro@~0.14.1": "0.14.1",
     "npm:prettier-plugin-tailwindcss@0.8": "0.8.0_prettier@3.8.3_prettier-plugin-astro@0.14.1",
     "npm:rehype-katex@^7.0.1": "7.0.1",
@@ -2704,6 +2705,10 @@
     "markdown-table@3.0.4": {
       "integrity": "sha512-wiYz4+JrLyb/DqW2hkFJxP7Vd7JuTDm77fvbM8VfEQdmSMqcImWeeRbHwZjBjIFki/VaMK2BhFi7oUUZeM5bqw=="
     },
+    "marked@18.0.4": {
+      "integrity": "sha512-c/BTaKzg0G6ezQx97DAkYU7k0HM6ys0FqYeKBL6hlBByZwy+ycA1+f0vDdjMHKKeEjdgkx0GOv9Il6D+85cOqA==",
+      "bin": true
+    },
     "mdast-util-definitions@6.0.0": {
       "integrity": "sha512-scTllyX6pnYNZH/AIp/0ePz6s4cZtARxImwoPJ7kS42n+MnVsI4XbnG6d4ibehRIldYMWM2LD7ImQblVhUejVQ==",
       "dependencies": [
@@ -4498,6 +4503,7 @@
         "npm:eslint@^10.4.0",
         "npm:katex@~0.16.47",
         "npm:manim-web@0.3.16",
+        "npm:marked@^18.0.4",
         "npm:prettier-plugin-astro@~0.14.1",
         "npm:prettier-plugin-tailwindcss@0.8",
         "npm:rehype-katex@^7.0.1",
