@@ -1,8 +1,13 @@
 // @ts-check
-import { defineConfig, fontProviders } from "astro/config";
+import {
+    defineConfig,
+    fontProviders,
+    passthroughImageService,
+} from "astro/config";
 import remarkEmoji from "remark-emoji";
 import remarkMath from "remark-math";
 import tailwindcss from "@tailwindcss/vite";
+import { unified } from "@astrojs/markdown-remark";
 import mdx from "@astrojs/mdx";
 import rehypeKatex from "rehype-katex";
 import robotsTxt from "astro-robots-txt";
@@ -21,7 +26,9 @@ import sitemap from "@astrojs/sitemap";
 
 export default defineConfig({
     site: "https://shenawy29.github.io",
-
+    image: {
+        service: passthroughImageService(),
+    },
     fonts: [
         {
             provider: fontProviders.local(),
@@ -99,7 +106,7 @@ export default defineConfig({
         locales: ["en", "eg-ar"],
         defaultLocale: "en",
         routing: {
-            prefixDefaultLocale: false,
+            prefixDefaultLocale: true,
         },
     },
 
@@ -118,7 +125,12 @@ export default defineConfig({
             ],
         },
 
-        remarkPlugins: [remarkMath, remarkEmoji],
-        rehypePlugins: [[rehypeKatex, { output: "mathml" }]],
+        processor: unified({
+            remarkPlugins: [
+                remarkMath,
+                remarkEmoji,
+                [rehypeKatex, { output: "mathml" }],
+            ],
+        }),
     },
 });
