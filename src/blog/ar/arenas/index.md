@@ -95,7 +95,7 @@ Disassembly of <code object three at 0x5676616f8980, file "example.py", line 1>:
 
 حتى لو استعملت الـAPI صح 100%، لسه فيه تكلفة بتدفعها. الـ ممكن يضطر يطلب Memory جديدة من الـOS، ودا بيكون مكلف لأنه غالباً بيتضمن System Call. لكن معظم الـAllocators الحديثة مبتعملش Syscall لكل `malloc`. بدل كدا، بتطلب Chunk كبيرة من الـMemory مرة واحدة، وبعدها تقسمها بنفسها على الـAllocations الصغيرة اللي برنامجك بيطلبها.
 
-### 300,00 Rats
+### 300,000 Rats
 
 تخيل انك بتعمل لعبة. لعبة زي مثلاً A Plague Tale: Requiem. [بيكون موجود اكتر من 300,000 فار عالـScreen](https://en.wikipedia.org/wiki/A_Plague_Tale:_Requiem#:~:text=The%20release%20of%20a%20new%20generation%20of%20consoles%20allowed%20the%20game%20to%20render%20more%20than%20300%2C000%20rats%20at%20once.). بعيداً عن صعوبة الـRendering اصلاً على الـGPU, الـCPU محتاج يـTrack الـObject نفسها عشان الـLogic بتاع الفار نفسه. هو بالتأكيد ان مش كل فار Object لوحده, بيحصل Merging لكن نفترض ان في اللعبة الخيالية بتاعتنا دي ان احنا مضطرين نخلي كل فار Object لوحده.
 
