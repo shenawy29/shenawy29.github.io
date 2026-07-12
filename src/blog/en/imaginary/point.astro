@@ -1,0 +1,81 @@
+<div dir="ltr" id="point"></div>
+
+<style>
+    #point {
+        width: 100%;
+        aspect-ratio: 16 / 9;
+        background: #2a2a37;
+    }
+    @media (max-width: 768px) {
+        #point {
+            aspect-ratio: 4 / 3;
+        }
+    }
+</style>
+
+<script>
+    import { Dot, MathTex, ComplexPlane, Scene, UP, UR } from "manim-web";
+
+    const container = document.getElementById("point")!;
+
+    let isInView = false;
+
+    const resizeObserver = new ResizeObserver((entries) => {
+        for (const entry of entries) {
+            const { width, height } = entry.contentRect;
+            scene.resize(width, height);
+            scene.camera.setAspectRatio(width / height);
+        }
+    });
+
+    resizeObserver.observe(container);
+
+    const intersectionObserver = new IntersectionObserver(
+        (entries) => {
+            for (const entry of entries) {
+                isInView = entry.isIntersecting;
+                if (isInView) {
+                    scene.play();
+                } else {
+                    scene.pause();
+                }
+            }
+        },
+        { threshold: 1 },
+    );
+
+    intersectionObserver.observe(container);
+
+    const scene = new Scene(container, {
+        width: container.clientWidth,
+        height: container.clientHeight,
+        frameHeight: 8 / 0.99,
+        frameWidth: 14 / 0.99,
+        backgroundColor: "BLACK",
+    });
+
+    const plane = new ComplexPlane({
+        includeBackgroundLines: true,
+        backgroundLineStyle: { color: "WHITE", opacity: 0.2 },
+        axisConfig: {
+            includeNumbers: true,
+            includeTicks: true,
+            tickSize: 0.1,
+        },
+        yAxisConfig: { numbersToInclude: [] },
+    });
+
+    scene.add(plane);
+
+    const point = new Dot({
+        point: [2, 3, 0],
+        color: "YELLOW",
+    });
+
+    const tex = new MathTex({ latex: "2 + 3i", fontSize: 28 }).nextTo(
+        point,
+        UR,
+        0.4,
+    );
+    scene.add(point, tex);
+</script>

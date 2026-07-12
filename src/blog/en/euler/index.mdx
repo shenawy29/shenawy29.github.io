@@ -1,0 +1,50 @@
+---
+title: Euler's Number
+pubDate: 2026-03-06
+tags: [math]
+slug: euler
+---
+
+import Euler from "./euler.astro";
+
+Imagine you have a coin, and I tell you, "Give me this coin, and in a year I’ll give you $100\%$ of the value you put in." That means in a year, you’ll get another coin.
+
+So after a year, you’ll have $ 1 + 1 $ coins. Now, if I told you I wouldn’t give you the full $ 100\% $ right away, but would give you $ 50\% $ after 6 months, and another $ 50\% $ after another 6 months, how much would you have after a year?
+
+After 6 months, you’ll have
+
+$ 1 \times 1.5 = 1.5 $
+
+And after the next 6 months, you’ll have
+
+$ 1.5 \times 1.5 = 2.25 $
+
+Okay, what if I said 3 months? That means you’ll get $ 25\% $ every 3 months until a year is up. How much will you have?
+
+After 3 months, you’ll have $ 1 \times 1.25 $
+
+After 6 months, you’ll have $ 1\times 1.25 \times 1.25 $
+
+After 9 months, it will be $1 \times 1.25 \times 1.25 \times 1.25$
+
+After 12 months, it will be $1 \times 1.25 \times 1.25 \times 1.25 \times 1.25$
+
+We can see a pattern. Ultimately, the number will equal $1.25^4$
+
+We can express $1.25$ as $1 + 1.25$, which is $(1 + \frac{1}{4})^4$, and that equals $2.44140625$. Notice that our amount grows every time we calculate our interest over a longer period.
+
+Suppose we want to do the same thing every month, every week, or every day, all the way down to every second and nanosecond, to get the largest possible value?
+
+Our formula will be $ (1 + \frac{1}{n})^n $.
+
+If we keep doing this forever and use a very large number—$ (1 + \frac{1}{100000})^{100000} $, for example—we’ll notice that our number approaches a specific value: $ 2.71828 $.
+
+It turns out that this number is so important that we’ve given it a special symbol: $ e $.
+
+One of the most interesting things about this number is that it has no end. As proof of this, I’d like to introduce you to Euler’s number.
+
+<h1 dir="ltr" style="text-align: center">
+    $ e $
+</h1>
+
+<Euler />

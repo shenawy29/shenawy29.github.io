@@ -1,6 +1,7 @@
 ---
 import { SEO } from "astro-seo";
-const { title, type, site, description, ogImage } = Astro.props;
+const { title, type, site, description, ogImage, locale } = Astro.props;
+const ogLocale = locale === "ar" ? "ar_EG" : "en_US";
 import { Font } from "astro:assets";
 ---
 
@@ -24,19 +25,19 @@ import { Font } from "astro:assets";
         basic: {
             title: title,
             type: type ?? "website",
-            image: site + (ogImage ?? "/og/default.png"),
+            image: site + (ogImage ?? "/og/default-ar.png"),
             url: site + Astro.url.pathname,
         },
         optional: {
             description: description,
             siteName: "شناوي",
-            locale: "ar_EG",
+            locale: ogLocale,
         },
     }}
     twitter={{
         card: "summary_large_image",
         title: title,
         description: description,
-        image: site + (ogImage ?? "/og/default.png"),
+        image: site + (ogImage ?? "/og/default-ar.png"),
     }}
 />

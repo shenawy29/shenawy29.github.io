@@ -2,23 +2,33 @@
 import "$lib/styles/global.css";
 import Navigation from "$lib/components/navigation.astro";
 import Head from "$lib/components/head.astro";
+import { getLocale, useTranslations } from "$lib/i18n/utils";
+
+const locale = getLocale(Astro.url.pathname);
+const t = useTranslations(locale);
+
+const siteTitle = t("site.title");
+const siteDescription = t("site.description");
 
 const title = Astro.props?.title
-    ? Astro.props.title + " · شناوي"
+    ? Astro.props.title + " · " + siteTitle
     : Astro.props?.frontmatter?.title
-      ? Astro.props.frontmatter.title + " · شناوي"
-      : "شناوي";
+      ? Astro.props.frontmatter.title + " · " + siteTitle
+      : siteTitle;
 
-const description =
-    Astro.props?.description ??
-    "بلوج محمد الشناوي للبرمجة، التكنولوجيا، وأشياء طريفة أخرى.";
+const description = Astro.props?.description ?? Astro.props?.frontmatter?.description ?? siteDescription;
 
-const { ogImage, type } = Astro.props;
+const ogImage = Astro.props?.ogImage ?? Astro.props?.frontmatter?.ogImage;
+const type = Astro.props?.type ?? Astro.props?.frontmatter?.type;
 
 const site = Astro.url.origin;
+const htmlDir = locale === "ar" ? "rtl" : "ltr";
+const mainDir = locale === "ar" ? "rtl" : "ltr";
+const htmlLang = locale === "ar" ? "ar" : "en";
+const sidebarMargin = locale === "ar" ? "lg:mr-72" : "lg:ml-72";
 ---
 
-<html lang="ar">
+<html lang={htmlLang} dir={htmlDir}>
     <head>
         <Head
             title={title}
@@ -26,6 +36,7 @@ const site = Astro.url.origin;
             type={type}
             site={site}
             ogImage={ogImage}
+            locale={locale}
         />
         <script
             data-goatcounter="https://shenawy29.goatcounter.com/count"
@@ -36,12 +47,12 @@ const site = Astro.url.origin;
 
     <body class="w-full overflow-y-scroll bg-sumi-ink2 text-old-white">
         <div
-            class="flex w-full flex-col items-center justify-end hover:decoration-samurai-orange lg:flex-row"
+            class="flex w-full flex-col items-center lg:flex-row"
         >
-            <Navigation />
+            <Navigation locale={locale} />
             <main
-                dir="rtl"
-                class="prose ml-0 flex w-full flex-col p-8 font-write prose-kanagawa md:max-w-240 lg:prose-lg lg:mr-72 lg:p-16 lg:text-lg prose-headings:underline prose-headings:decoration-spring-green prose-a:hover:decoration-samurai-orange prose-kbd:bg-sumi-ink1 prose-code:bg-sumi-ink1"
+                dir={mainDir}
+                class={`prose ml-0 flex flex-col p-8 font-write prose-kanagawa md:max-w-240 lg:prose-lg ${sidebarMargin} lg:p-16 lg:text-lg prose-headings:underline prose-headings:decoration-spring-green prose-a:hover:decoration-samurai-orange prose-kbd:bg-sumi-ink1 prose-code:bg-sumi-ink1`}
             >
                 <slot />
             </main>

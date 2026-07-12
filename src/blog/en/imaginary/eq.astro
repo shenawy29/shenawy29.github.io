@@ -1,0 +1,80 @@
+<div dir="ltr" id="eq"></div>
+
+<style>
+    #eq {
+        width: 100%;
+        aspect-ratio: 16 / 9;
+        background: #2a2a37;
+    }
+    @media (max-width: 768px) {
+        #eq {
+            aspect-ratio: 4 / 3;
+        }
+    }
+</style>
+
+<script>
+    import { Create, NumberPlane, Player, Uncreate } from "manim-web";
+
+    const container = document.getElementById("eq")!;
+
+    let isInView = false;
+
+    const resizeObserver = new ResizeObserver((entries) => {
+        for (const entry of entries) {
+            const { width, height } = entry.contentRect;
+            player.scene.resize(width, height);
+            player.scene.camera.setAspectRatio(width / height);
+        }
+    });
+
+    resizeObserver.observe(container);
+
+    const intersectionObserver = new IntersectionObserver(
+        (entries) => {
+            for (const entry of entries) {
+                isInView = entry.isIntersecting;
+                if (isInView) {
+                    player.play();
+                } else {
+                    player.pause();
+                }
+            }
+        },
+        { threshold: 1 },
+    );
+
+    intersectionObserver.observe(container);
+
+    const player = new Player(container, {
+        width: container.clientWidth,
+        height: container.clientHeight,
+        frameHeight: 8,
+        frameWidth: 14,
+        backgroundColor: "BLACK",
+        loop: true,
+        autoPlay: true,
+    });
+
+    player.sequence(async (scene) => {
+        const plane = new NumberPlane({
+            includeBackgroundLines: true,
+            backgroundLineStyle: { color: "WHITE" },
+            axisConfig: {
+                includeNumbers: true,
+                includeTicks: true,
+                tickSize: 0.1,
+            },
+        });
+
+        scene.add(plane);
+
+        const graph = plane.plot((x) => 1 + x * x, {
+            xRange: [-2, 2],
+            strokeWidth: 8,
+        });
+
+        await scene.play(new Create(graph, { duration: 2 }));
+        await scene.play(new Uncreate(graph, { duration: 2 }));
+    });
+</script>

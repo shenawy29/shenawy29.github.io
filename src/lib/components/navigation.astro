@@ -1,6 +1,18 @@
+---
+import {
+    useTranslations,
+    getLocalizedPath,
+    getAlternateLocalePath,
+} from "$lib/i18n/utils";
+const { locale } = Astro.props;
+const t = useTranslations(locale);
+const currentPath = Astro.url.pathname;
+const altPath = getAlternateLocalePath(currentPath, locale);
+---
+
 <aside
     id="default-sidebar"
-    class="top-0 right-0 hidden h-full lg:fixed lg:block"
+    class={`top-0 ${locale === "ar" ? "right-0" : "left-0"} hidden h-full lg:fixed lg:block`}
     aria-label="Sidebar"
 >
     <div
@@ -9,17 +21,17 @@
         <h1
             class="text-[3.8rem] text-[#C34043] underline decoration-double decoration-4"
         >
-            <a href="/">
-                <h1>شناوي</h1>
+            <a href={getLocalizedPath("/", locale)}>
+                <h1>{t("site.title")}</h1>
             </a>
         </h1>
         <ul class="flex w-full flex-col items-center justify-center gap-y-2">
             <li>
                 <a
-                    href="/"
+                    href={getLocalizedPath("/", locale)}
                     class="flex items-center p-2 hover:underline hover:decoration-samurai-orange"
                 >
-                    <span>العمومي</span>
+                    <span>{t("nav.home")}</span>
                 </a>
             </li>
             <li>
@@ -27,33 +39,33 @@
                     href="https://drive.google.com/file/d/1Z166OXTG-p3laaaV1cmjP9T91GG3_R_e/view?usp=sharing"
                     class="flex items-center p-2 hover:underline hover:decoration-samurai-orange"
                 >
-                    <span>سي ڤي</span>
+                    <span>{t("nav.cv")}</span>
                 </a>
             </li>
             <li>
                 <a
-                    href="/syllabus/"
+                    href={getLocalizedPath("/syllabus", locale)}
                     class="flex items-center p-2 hover:underline hover:decoration-samurai-orange"
                 >
-                    <span>منهج</span>
-                </a>
-            </li>
-
-            <li>
-                <a
-                    href="/about/"
-                    class="flex items-center p-2 hover:underline hover:decoration-samurai-orange"
-                >
-                    <span>عني</span>
+                    <span>{t("nav.syllabus")}</span>
                 </a>
             </li>
 
             <li>
                 <a
-                    href="/tags/"
+                    href={getLocalizedPath("/about", locale)}
                     class="flex items-center p-2 hover:underline hover:decoration-samurai-orange"
                 >
-                    <span>تاجژ</span>
+                    <span>{t("nav.about")}</span>
+                </a>
+            </li>
+
+            <li>
+                <a
+                    href={getLocalizedPath("/tags", locale)}
+                    class="flex items-center p-2 hover:underline hover:decoration-samurai-orange"
+                >
+                    <span>{t("nav.tags")}</span>
                 </a>
             </li>
 
@@ -62,7 +74,16 @@
                     href="https://shenawy29.goatcounter.com/"
                     class="flex items-center p-2 hover:underline hover:decoration-samurai-orange"
                 >
-                    <span>أناليتكس</span>
+                    <span>{t("nav.analytics")}</span>
+                </a>
+            </li>
+
+            <li>
+                <a
+                    href={altPath}
+                    class="flex items-center p-2 text-spring-green hover:underline hover:decoration-samurai-orange"
+                >
+                    <span>{t("lang_switch")}</span>
                 </a>
             </li>
 
@@ -86,7 +107,10 @@
                     </li>
 
                     <li class="w-6">
-                        <a aria-label="RSS Feed" href="/rss.xml">
+                        <a
+                            aria-label="RSS Feed"
+                            href={getLocalizedPath("/rss.xml", locale)}
+                        >
                             <svg
                                 fill="#c8c093"
                                 version="1.1"
@@ -121,18 +145,18 @@
         <div
             class="pt-2 text-[3.5rem] text-[#C34043] underline decoration-double decoration-4"
         >
-            <a href="/">
-                <h1>شناوي</h1>
+            <a href={getLocalizedPath("/", locale)}>
+                <h1>{t("site.title")}</h1>
             </a>
         </div>
         <div class="flex w-full flex-col gap-y-4 pb-2">
             <ul class="flex w-full items-center justify-around text-center">
                 <li class="flex items-center justify-center">
                     <a
-                        href="/"
+                        href={getLocalizedPath("/", locale)}
                         class="flex items-center hover:underline hover:decoration-samurai-orange"
                     >
-                        <span>العمومي</span>
+                        <span>{t("nav.home")}</span>
                     </a>
                 </li>
                 <li class="flex items-center justify-center">
@@ -140,24 +164,24 @@
                         href="https://drive.google.com/file/d/1Z166OXTG-p3laaaV1cmjP9T91GG3_R_e/view?usp=sharing"
                         class="flex items-center hover:underline hover:decoration-samurai-orange"
                     >
-                        <span>سي ڤي</span>
+                        <span>{t("nav.cv")}</span>
                     </a>
                 </li>
                 <li class="flex items-center justify-center">
                     <a
-                        href="/syllabus"
+                        href={getLocalizedPath("/syllabus", locale)}
                         class="flex items-center hover:underline hover:decoration-samurai-orange"
                     >
-                        <span>منهج</span>
+                        <span>{t("nav.syllabus")}</span>
                     </a>
                 </li>
 
                 <li class="flex items-center justify-center">
                     <a
-                        href="/about"
+                        href={getLocalizedPath("/about", locale)}
                         class="flex items-center hover:underline hover:decoration-samurai-orange"
                     >
-                        <span>عني</span>
+                        <span>{t("nav.about")}</span>
                     </a>
                 </li>
             </ul>
@@ -167,10 +191,10 @@
             >
                 <li class="flex items-center justify-center">
                     <a
-                        href="/tags"
+                        href={getLocalizedPath("/tags", locale)}
                         class="hover:underline hover:decoration-samurai-orange"
                     >
-                        <span>تاجژ</span>
+                        <span>{t("nav.tags")}</span>
                     </a>
                 </li>
 
@@ -179,7 +203,16 @@
                         href="https://shenawy29.goatcounter.com/"
                         class="hover:underline hover:decoration-samurai-orange"
                     >
-                        <span>أناليتكس</span>
+                        <span>{t("nav.analytics")}</span>
+                    </a>
+                </li>
+
+                <li class="flex items-center justify-center">
+                    <a
+                        href={altPath}
+                        class="text-spring-green hover:underline hover:decoration-samurai-orange"
+                    >
+                        <span>{t("lang_switch")}</span>
                     </a>
                 </li>
 
@@ -204,7 +237,10 @@
                 </li>
 
                 <li class="w-6">
-                    <a aria-label="RSS Feed" href="/rss.xml">
+                    <a
+                        aria-label="RSS Feed"
+                        href={getLocalizedPath("/rss.xml", locale)}
+                    >
                         <svg
                             fill="#c8c093"
                             version="1.1"

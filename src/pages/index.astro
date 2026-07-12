@@ -1,8 +1,18 @@
 ---
-import BaseLayout from "$lib/layouts/base_layout.astro";
-import Posts from "$lib/components/posts.astro";
+const target = `/ar/`;
 ---
 
-<BaseLayout>
-    <Posts />
-</BaseLayout>
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>شناوي</title>
+        <meta http-equiv="refresh" content={`0; url=${target}`} />
+        <link rel="canonical" href={target} />
+    </head>
+    <body>
+        <script>
+            location.href = "/ar/";
+        </script>
+    </body>
+</html>

@@ -12,6 +12,7 @@
 pre,
 code {
     direction: ltr;
+    unicode-bidi: embed;
 }
 
 :root {
@@ -31,7 +32,8 @@ code {
 }
 
 @theme inline {
-    --font-write: var(--font-rokkitt), var(--font-vazirmatn), ui-sans-serif, system-ui;
+    --font-write:
+        var(--font-rokkitt), var(--font-vazirmatn), ui-sans-serif, system-ui;
     --font-mono: var(--font-fira), monospace;
     --font-display: var(--font-rokkitt), var(--font-cairo);
 }

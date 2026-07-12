@@ -126,11 +126,8 @@ export default defineConfig({
         },
 
         processor: unified({
-            remarkPlugins: [
-                remarkMath,
-                remarkEmoji,
-                [rehypeKatex, { output: "mathml" }],
-            ],
+            remarkPlugins: [remarkMath, remarkEmoji],
+            rehypePlugins: [[rehypeKatex, { output: "mathml" }]],
         }),
     },
 });

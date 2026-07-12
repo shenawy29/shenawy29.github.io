@@ -5,7 +5,9 @@ import katex from "katex";
 import PostHeader from "./post-header.astro";
 import PostExcerpt from "./post-excerpt.astro";
 
-const posts = await getCollection("posts");
+const { locale = "ar" } = Astro.props;
+const collectionName = locale === "ar" ? "posts-ar" : "posts-en";
+const posts = await getCollection(collectionName);
 
 function stripImports(body: string): string {
     return body
@@ -86,7 +88,7 @@ const postEntries = posts
     {
         postEntries.map(({ entry, excerpt }) => (
             <article class="m-0 flex flex-col">
-                <PostHeader post={entry} />
+                <PostHeader post={entry} locale={locale} />
                 <PostExcerpt html={excerpt} />
             </article>
         ))

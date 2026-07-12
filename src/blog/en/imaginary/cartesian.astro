@@ -1,0 +1,69 @@
+<div dir="ltr" id="cartesian"></div>
+
+<style>
+    #cartesian {
+        width: 100%;
+        aspect-ratio: 16 / 9;
+        background: #2a2a37;
+    }
+    @media (max-width: 768px) {
+        #cartesian {
+            aspect-ratio: 4 / 3;
+        }
+    }
+</style>
+
+<script>
+    import { MathTex, ComplexPlane, Scene, UP } from "manim-web";
+
+    const container = document.getElementById("cartesian")!;
+
+    let isInView = false;
+
+    const resizeObserver = new ResizeObserver((entries) => {
+        for (const entry of entries) {
+            const { width, height } = entry.contentRect;
+            scene.resize(width, height);
+            scene.camera.setAspectRatio(width / height);
+        }
+    });
+
+    resizeObserver.observe(container);
+
+    const intersectionObserver = new IntersectionObserver(
+        (entries) => {
+            for (const entry of entries) {
+                isInView = entry.isIntersecting;
+                if (isInView) {
+                    scene.play();
+                } else {
+                    scene.pause();
+                }
+            }
+        },
+        { threshold: 1 },
+    );
+
+    intersectionObserver.observe(container);
+
+    const scene = new Scene(container, {
+        width: container.clientWidth,
+        height: container.clientHeight,
+        frameHeight: 8 / 0.99,
+        frameWidth: 14 / 0.99,
+        backgroundColor: "BLACK",
+    });
+
+    const plane = new ComplexPlane({
+        includeBackgroundLines: true,
+        backgroundLineStyle: { color: "WHITE", opacity: 0.2 },
+        axisConfig: {
+            includeNumbers: true,
+            includeTicks: true,
+            tickSize: 0.1,
+        },
+        yAxisConfig: { numbersToInclude: [] },
+    });
+
+    scene.add(plane);
+</script>

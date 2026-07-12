@@ -1,0 +1,51 @@
+<div id="euler-root">
+    <p id="digit-display" style="word-break: break-all; font-size: 30px;"></p>
+    <div id="sentinel"></div>
+</div>
+
+<script>
+    function computeEDigits(numDigits: number): string {
+        const scale = numDigits + 20;
+        const BIG = BigInt(10) ** BigInt(scale);
+        let sum = 0n;
+        let term = BIG;
+        let k = 1;
+        while (term > 0n) {
+            sum += term;
+            term = term / BigInt(k);
+            k++;
+        }
+        return sum.toString().slice(0, numDigits);
+    }
+
+    const BATCH = 200;
+    let totalDigits = 0;
+    let rendered = 0;
+
+    const display = document.getElementById("digit-display")!;
+
+    function growAndRender() {
+        totalDigits += BATCH;
+        const digits = computeEDigits(totalDigits + 20);
+        const chunk = digits.slice(rendered, totalDigits);
+        if (rendered === 0) {
+            display.textContent = "2." + chunk.slice(1);
+        } else {
+            display.textContent += chunk;
+        }
+        rendered = totalDigits;
+    }
+
+    const sentinel = document.getElementById("sentinel")!;
+    const observer = new IntersectionObserver(
+        (entries) => {
+            if (entries[0].isIntersecting) {
+                growAndRender();
+            }
+        },
+        { threshold: 0.1 },
+    );
+
+    observer.observe(sentinel);
+    growAndRender();
+</script>

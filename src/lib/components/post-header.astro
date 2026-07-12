@@ -1,5 +1,5 @@
 ---
-let { post } = Astro.props;
+let { post, locale = "ar" } = Astro.props;
 ---
 
 <div class="h-min w-full">
@@ -13,8 +13,8 @@ let { post } = Astro.props;
             post.data.tags.map((t) => (
                 <>
                     <span> • </span>
-                    <a href={`/tags#${t}`}>
-                        <span>{t}#</span>
+                    <a href={`/${locale}/tags#${t}`}>
+                        <span>{locale === "ar" ? `${t}#` : `#${t}`}</span>
                     </a>
                 </>
             ))
@@ -22,7 +22,7 @@ let { post } = Astro.props;
     </div>
     <h1>
         <a
-            href={`/${post.data.pubDate.toISOString().substring(0, 10)}/${post.id}`}
+            href={`/${locale}/${post.data.pubDate.toISOString().substring(0, 10)}/${post.id}`}
         >
             {post.data.title}
         </a>

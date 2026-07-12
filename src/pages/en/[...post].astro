@@ -1,0 +1,39 @@
+---
+import PostHeader from "$lib/components/post-header.astro";
+import BaseLayout from "$lib/layouts/base_layout.astro";
+import type { GetStaticPaths } from "astro";
+import { render } from "astro:content";
+import { getEntry } from "astro:content";
+import { getCollection } from "astro:content";
+
+export const getStaticPaths = (async () => {
+    const posts = await getCollection("posts-en");
+
+    return posts.map((p) => ({
+        params: {
+            post: `${p.data.pubDate.toISOString().substring(0, 10)}/${p.id}/`,
+        },
+        props: { locale: "en" },
+    }));
+}) satisfies GetStaticPaths;
+
+const { locale } = Astro.props;
+const { post } = Astro.params;
+let slug = post.split("/")[1];
+const postEntry = await getEntry("posts-en", slug)!;
+const { Content } = await render(postEntry);
+---
+
+<BaseLayout
+    title={postEntry.data.title}
+    ogImage={`/og/en/${slug}.png`}
+    description={postEntry.data.description}
+    type="article"
+>
+    <div>
+        <PostHeader post={postEntry} locale={locale} />
+    </div>
+    <div class="leading-8 lg:pr-5">
+        <Content />
+    </div>
+</BaseLayout>

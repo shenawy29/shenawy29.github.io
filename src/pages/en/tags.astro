@@ -1,0 +1,67 @@
+---
+import BaseLayout from "$lib/layouts/base_layout.astro";
+import { getCollection } from "astro:content";
+import { getLocale } from "$lib/i18n/utils";
+
+const locale = getLocale(Astro.url.pathname);
+const collectionName = locale === "ar" ? "posts-ar" : "posts-en";
+
+const pages = await getCollection(collectionName);
+
+const tagMap = new Map();
+
+for (const page of pages) {
+    for (const tag of page.data.tags) {
+        if (!tagMap.has(tag)) {
+            tagMap.set(tag, []);
+        }
+        tagMap.get(tag).push(page);
+    }
+}
+
+for (const [tag, posts] of tagMap) {
+    tagMap.set(
+        tag,
+        posts.sort((a, b) => b.data.pubDate - a.data.pubDate),
+    );
+}
+
+const uniqueTags = [...tagMap.keys()].sort((a, b) => a.localeCompare(b));
+---
+
+<BaseLayout title={locale === "ar" ? "تاجژ" : "Tags"} ogImage="/og/default-en.png">
+    <h1>
+        <a href="#tags">{locale === "ar" ? "تاجژ" : "Tags"}</a>
+    </h1>
+    {
+        uniqueTags.map((tag) => (
+            <div>
+                <h2 id={tag}>
+                    <a href={`#${tag}`}>
+                        <span>#{tag}</span>
+                    </a>
+                </h2>
+                <ul class="prose-p:m-0 prose-li:m-0">
+                    {tagMap.get(tag).map((post) => (
+                        <li>
+                            <p class="flex">
+                                <span class="opacity-60">
+                                    {post.data.pubDate
+                                        .toISOString()
+                                        .substring(0, 10)
+                                        .trim() + "\\"}
+                                </span>
+
+                                <a
+                                    href={`/${locale}/${post.data.pubDate.toISOString().substring(0, 10)}/${post.id}`}
+                                >
+                                    <span>{post.data.title}</span>
+                                </a>
+                            </p>
+                        </li>
+                    ))}
+                </ul>
+            </div>
+        ))
+    }
+</BaseLayout>
