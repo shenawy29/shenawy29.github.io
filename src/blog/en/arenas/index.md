@@ -416,9 +416,9 @@ Writing this code out is a bit annoying, so we can make a macro to make it easie
 int main(int argc, char* argv[]) {
     Arena* a = Arena_malloc(1024);
 
-    Bullet* t = ARENA_ALLOCATE(a, Bullet);
+    Bullet* b = ARENA_ALLOCATE(a, Bullet);
 
-    t->len = 10;
+    b->x = 10.0;
 
     return 0;
 }
