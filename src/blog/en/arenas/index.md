@@ -1,6 +1,6 @@
 ---
 title: Enter the Arena
-pubDate: 2026-07-03
+pubDate: 2026-07-12
 tags: [cs, concepts]
 description: Manual Memory Management Without the Headache
 slug: arenas
