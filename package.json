@@ -1,16 +1,20 @@
 {
-    "name": "blog",
-    "type": "module",
+    "name": "shenawys-blog",
     "version": "0.0.1",
+    "type": "module",
+    "engines": {
+        "node": ">=22"
+    },
     "scripts": {
         "dev": "astro dev",
         "build": "astro build",
         "preview": "astro preview",
         "astro": "astro",
+        "check": "astro check",
+        "lint": "eslint .",
         "format": "prettier --write ."
     },
     "dependencies": {
-        "@astrojs/check": "^0.9.9",
         "@astrojs/markdown-remark": "^7.2.1",
         "@astrojs/mdx": "^7.0.2",
         "@shikijs/transformers": "^4.3.1",
@@ -20,17 +24,12 @@
         "katex": "^0.17.0",
         "manim-web": "0.3.23",
         "marked": "^18.0.5",
-        "sharp": "^0.35.3",
-        "three": "^0.185.1",
-        "typescript": "^6.0.3"
+        "three": "^0.185.1"
     },
     "devDependencies": {
-        "@types/three": "^0.185.0",
-        "astro-seo": "^1.1.0",
-        "sanitize-html": "^2.17.5",
+        "@astrojs/check": "^0.9.9",
         "@astrojs/rss": "4.0.19",
         "@astrojs/sitemap": "3.7.3",
-        "astro-robots-txt": "^1.0.0",
         "@codemirror/lang-javascript": "^6.2.5",
         "@codemirror/language": "^6.12.4",
         "@eslint/js": "^10.0.1",
@@ -40,15 +39,21 @@
         "@tailwindcss/vite": "^4.3.2",
         "@types/markdown-it": "^14.1.2",
         "@types/sanitize-html": "^2.16.1",
+        "@types/three": "^0.185.0",
+        "astro-robots-txt": "^1.0.0",
+        "astro-seo": "^1.1.0",
         "codemirror": "^6.0.2",
         "eslint": "^10.6.0",
         "eslint-plugin-astro": "^2.1.1",
+        "prettier": "^3.6.2",
         "prettier-plugin-astro": "^0.14.1",
         "prettier-plugin-tailwindcss": "^0.8.0",
         "rehype-katex": "^7.0.1",
         "remark-emoji": "^5.0.2",
         "remark-math": "^6.0.0",
+        "sanitize-html": "^2.17.5",
         "tailwindcss": "^4.3.2",
+        "typescript": "^6.0.3",
         "typescript-eslint": "^8.62.1"
     }
 }

@@ -2,7 +2,6 @@
 import {
     defineConfig,
     fontProviders,
-    passthroughImageService,
 } from "astro/config";
 import remarkEmoji from "remark-emoji";
 import remarkMath from "remark-math";
@@ -26,9 +25,6 @@ import sitemap from "@astrojs/sitemap";
 
 export default defineConfig({
     site: "https://shenawy29.github.io",
-    image: {
-        service: passthroughImageService(),
-    },
     fonts: [
         {
             provider: fontProviders.local(),

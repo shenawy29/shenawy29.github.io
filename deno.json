@@ -1,6 +1,0 @@
-{
-    "allowScripts": [],
-    "nodeModulesDir": "auto",
-    "imports": {},
-    "unstable": ["bare-node-builtins"]
-}
