@@ -16,7 +16,10 @@ const title = Astro.props?.title
       ? Astro.props.frontmatter.title + " · " + siteTitle
       : siteTitle;
 
-const description = Astro.props?.description ?? Astro.props?.frontmatter?.description ?? siteDescription;
+const description =
+    Astro.props?.description ??
+    Astro.props?.frontmatter?.description ??
+    siteDescription;
 
 const ogImage = Astro.props?.ogImage ?? Astro.props?.frontmatter?.ogImage;
 const type = Astro.props?.type ?? Astro.props?.frontmatter?.type;
@@ -28,7 +31,7 @@ const htmlLang = locale === "ar" ? "ar" : "en";
 const sidebarMargin = locale === "ar" ? "lg:mr-72" : "lg:ml-72";
 ---
 
-<html lang={htmlLang} dir={htmlDir}>
+<html lang={htmlLang} dir={htmlDir} class="w-full overflow-x-hidden">
     <head>
         <Head
             title={title}
@@ -46,9 +49,7 @@ const sidebarMargin = locale === "ar" ? "lg:mr-72" : "lg:ml-72";
     </head>
 
     <body class="w-full overflow-y-scroll bg-sumi-ink2 text-old-white">
-        <div
-            class="flex w-full flex-col items-center lg:flex-row"
-        >
+        <div class="flex w-full flex-col items-center lg:flex-row">
             <Navigation locale={locale} />
             <main
                 dir={mainDir}
