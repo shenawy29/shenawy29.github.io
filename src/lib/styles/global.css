@@ -19,6 +19,40 @@ code {
     color-scheme: dark;
 }
 
+@font-face {
+    font-family: "FiraCodeNerdFont";
+    src: url("/fonts/FiraCodeNerdFont-Regular.woff2") format("woff2");
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+.ap-player.asciinema-player-theme-kanagawa {
+    --term-font-family: "FiraCodeNerdFont", "Fira Code", monospace;
+    --term-color-foreground: #dcd7ba;
+    --term-color-background: #1f1f28;
+    --term-color-0: #1f1f28;
+    --term-color-1: #c34043;
+    --term-color-2: #76946a;
+    --term-color-3: #c0a36e;
+    --term-color-4: #7e9cd8;
+    --term-color-5: #957fb8;
+    --term-color-6: #6a9589;
+    --term-color-7: #dcd7ba;
+    --term-color-8: #54546d;
+    --term-color-9: #c34043;
+    --term-color-10: #76946a;
+    --term-color-11: #c0a36e;
+    --term-color-12: #7e9cd8;
+    --term-color-13: #957fb8;
+    --term-color-14: #6a9589;
+    --term-color-15: #717c7c;
+}
+
+.ap-player.asciinema-player-theme-kanagawa div.ap-term {
+    width: calc(100% - 1.5ch) !important;
+}
+
 @theme {
     --color-sumi-ink0: oklch(0.2035 0.0139 285.1);
     --color-sumi-ink1: oklch(0.2433 0.017 285.06);
