@@ -1,0 +1,82 @@
+---
+title: لية نيو ڤيم في عصر الاجينتس؟
+pubDate: 2026-07-14
+tags: [tech]
+slug: nvim
+custom: true
+---
+
+import One from "./one.astro";
+import Two from "./two.astro";
+import Three from "./three.astro";
+import Four from "./four.astro";
+
+## Introduction
+
+انا بكتب كود بقالي 4 سنين تقريباً. في الفترة دي, انا بدأت زي اي طالب CS بـVSCode. عايز اكتب كود, هكتبه كأني بكتب اي Text تاني. عايز اعمل Run للكود بتاعي, كنت بدوس Shortcut و VSCode يشغلهولي. مكنتش فاهم اصلاً الكود بيشتغل ازاي. كنت عارف انه It just runs.
+
+## How Neovim and I met
+
+بعدها بفترة, بدأت اتفرج على يوتيوبر اسمه ThePrimeagen. ساعتها كان Software Engineer في Netflix, وكنت كل لما ابص عالـStreams بتاعته على Twitch او YouTube, عيني مكنتش بتعرف تواكب اصلاً هو بيعمل اية. بعيداً عن ان سرعته فالكتابة عالية جداً, وانه بيستعمل Keyboard غير العادية ([dvorak](https://en.wikipedia.org/wiki/Dvorak_keyboard_layout)), بس دا مكنش السبب الرئيسي اللي كان مخليه سريع. السبب الرئيسي كان الـText Editor بتاعه, Neovim.
+
+## What is Neovim
+
+لو معندكش فكرة, Neovim هو Fork من Text Editor تاني اسمه Vim. Vim قديم جداً, اتعمل سنة 1991. وهو ذات نفسه كان تحسين لـText Editor اقدم منه اسمه Vi.
+
+كان في زي حرب بين Vim و Emacs فترة, بس المعارك دي خلصت خلاص, لكنها لسة موجودة فالـProgramming Culture. لو جيت تعمل جوجل لـVim مثلاً, هيقولك Did you mean emacs, والعكس بيحصل برضو.
+
+Neovim شغال على الـTerminal. بمعنى ان يعتبر مفيش GUI, اللي هي Window بتظهرلك الـUI. بيرسم الـUI بتاعه على الـTerminal.
+
+لعده اسباب, Neovim سريع جداً. بيفتح في اقل من 100ms على حسب الـCPU بتاعك, حتى لو حاطت عشرات الـPlugins.
+
+Neovim عبارة عن Modal Text Editor. يعني بتدخل في كذا Mode عشان تعمل حاجات. مينفعش مثلاً تعمل Hold لـShift وتنزل, ويقوم عاملك Selection. محتاج تدخل الـVisual Selection Mode. لو عايز تكتب, لازم تدخل الـInsert Mode. لو عايز تتحرك, لازم تدخل الـNormal Mode وهكذا. عشان كدا, الـLearning Curve ممكن يكون عالي شويتين.
+
+الهدف من الـArticle دي مش انك تعرف تستعمل Neovim. في مقولة بتقول "You don't know what you don't know". تحسها بديهية شوية, لكنها حقيقة. عمرك ماكنت هتجرب Neovim لو محدش قالك عليه, عشان انت متعرفش انها حاجة موجودة اصلاً.
+
+زي مثلاً واحد عمره ما جرب حاجة غير المفكات العادية, مش هيفكر يسأل عن المفكات الكهربائية اصلاً. هو شايف ان المهمة بتتعمل, خلاص. نفس الكلام مع Neovim. لو انت شغال بـVSCode وخلاص, مش هتعرف ان في أسلوب تاني للكتابة خالص, وهتفضل فاكر ان الـVSCode هو الحقيقة المطلقة.
+
+وعشان انا شايف ان A Picture is Worth a Thousand Words, قررت اني اظهر حاجات انت ممكن تعملها بـNeovim, صعب تتعلم بـEditors تانية.
+
+## Practical Examples
+
+هنا مثلاً حاجة Practical. غالباً كنت محتاج حاجة زي دي قبل كدا.
+
+<One />
+
+او لو مثلاً, عايز اغير If statements لـSwitch Statment بسرعة بالـRegex Substitution:
+
+<Two />
+
+ممكن تضيف Plugins جديدة. مثلاً لو عايز تعمل Exchange للـFunction Arguments, ممكن تستعمل Plugin [`mini.ai`](https://github.com/nvim-mini/mini.ai)
+
+<Three />
+
+في Plugin برضو اسمها [`flash.nvim`](https://github.com/folke/flash.nvim). بتخليك تعمل Remote Operations, مثلاً تروح تعمل Delete لحاجة في مكان تاني وترجع تـPasteها مكان ما كنت واقف:
+
+<Four />
+
+## Any Agent Could Do This...
+
+كل الحركات دي جامدة اوي وبتخليك سريع وكل حاجة. لو جيت تكتب Prompt واحدة الحاجات دي هتتعمل كلها عادي. طبعاً, بالوقت اللي انت بتستعمله عشان تكتب الـPrompt غالباً هيبقى اطول من الوقت اللي محتاجه عشان تعمل الحاجة دي اصلأ, ولكنها هتتعمل, ومش هضطر تتعلم Text Editor تاني من الاول.
+
+الـBenefits بتاعت Neovim عمرها ماكانت في السرعة. دا عامل كبير, بس ليا انا شخصياً دا مكنش اكبر Benefit ليا.
+
+الـBenefit الأكبر هو الـEcosystem. اول لما تستعمل الـVim Motions, مش هتعرف متستعملهاش في حاجة تانية. هتلاقيها في كل حاجة: الـBrowser (Vimium), الـFile Manager (ranger/lf/yazi), الـShell (set -o vi في zsh/bash), tmux, git, وحتى الـIDEs التانية (VS Code Vim extension, JetBrains IDEAVim). كلهم فيهم support للـVim Motions. بتكون حركة واحدة موحدة على كل حاجة بتستخدمها في الكمپيوتر.
+
+الـBenefit الأخر هو انك تتعود على الـCLI. يعتبر هتعيش جواه, هتحس ان اي حاجة تانية بطيئة, Bloated. هتبقى عادي عندك تعمل حاجات combine بين أدوات CLI مختلفة بـpipes, تدير sessions بـtmux, تعمل search و replace بـgrep و sed, تتعامل مع git بسرعة, تشتغل على servers بعيدة بـ ssh و nebula من غير ما تفتح حاجة تانية. الـCLI بيديك control كامل على كل حاجة.
+
+حاجة تانية هي الـCommunity. مع اي حاجة بتعملها بتلاقي Support كبير جداً. انا مثلاً كنت عامل [xdg-nvfilechooser](https://github.com/shenawy29/xdg-nvfilechooser.nvim), ورغم ان الـProject مش Complete, الا اني لقيت دعم كبير لأن الناس عجبها الفكرة.
+
+هتلاقي في Overlap كبير في الـCommunity بتاعت Neovim, و الـCommunities الأخرى بتاعت الـProgrammers اللي بيقولوا عليهم "cracked." غالباً هتلاقي اللي بيستعمل Neovim شخص عنده خبرة كبيرة في المجال بتاعه. دي حاجة لاحظتها, والناس دي ممكن تتعلم منها فعلاً.
+
+مثلاً, عمري ماكنت هكون كويس في Rust من غير الـYouTube Channel بتاعت [Jon Gjengset](https://www.YouTube.com/c/JonGjengset), والكتب بتاعته. عايزك تخمن الـEditor بتاعه اية.
+
+في برضو [sphaerophoria](https://www.YouTube.com/@sphaerophoria). بيستعمل Zig و Rust على طول, ومش بفهم 99 فالمية من الكود اللي بيكتبه لأنه على Level اخر بصراحة. خمن الـEditor بتاعه برضو.
+
+هتلاقي برضو Overlap بين الـCommunity بتاعت Neovim و Nix. لو متعرفش, Nix هو Package Manager لـLinux. من الـResources اللي فادتني هي الـYouTube Channel بتاعت [Tweag](https://www.YouTube.com/@tweag). خمن الـEditor اللي بيستعملوه.
+
+مش معنى ان الناس دي كلها بتستعمل Neovim ان انت اول لما تستعمله وتتقنه هتبقى فظيع بقا ومفيش منك اتنين لأ. الفكرة ان الناس اللي بتحب تستعمل Neovim ليها Mindset معينة, والناس اصحاب الـMindset دي بحب اتعلم منها. بيكون عندهم شغف, حُب للي بيعملوه.
+
+## Conclusion
+
+لو عايز تتعلم اكتر عن Neovim, منصحكش تبدأ بالـEditor. ابدأ بأي Extension بتعمل Implementation للـVim Motions في الـEditor اللي انت بتستعمله already. لما تتعود, ممكن تغوص بقا في الـText Editor نفسه.

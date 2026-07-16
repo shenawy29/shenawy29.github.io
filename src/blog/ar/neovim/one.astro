@@ -1,0 +1,11 @@
+<div id="one"></div>
+
+<script>
+    import "asciinema-player/dist/bundle/asciinema-player.css";
+    import * as AsciinemaPlayer from "asciinema-player";
+    import url from "./one.cast?url";
+
+    AsciinemaPlayer.create(url, document.getElementById("one")!, {
+        theme: "kanagawa",
+    });
+</script>

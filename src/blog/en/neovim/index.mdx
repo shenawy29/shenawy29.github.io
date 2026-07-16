@@ -1,0 +1,82 @@
+---
+title: Why Neovim in the Age of Agentic Coding?
+pubDate: 2026-07-14
+tags: [cs, concepts]
+slug: nvim
+custom: true
+---
+
+import One from "./one.astro";
+import Two from "./two.astro";
+import Three from "./three.astro";
+import Four from "./four.astro";
+
+## Introduction
+
+I've been writing code for about 4 years now. In that time, I started like any CS student, with VSCode. If I wanted to write code, I'd type it like any other text. If I wanted to run my code, I'd hit a shortcut and VSCode would run it. I didn't really understand how the code worked. I just knew it ran.
+
+## How Neovim and I met
+
+A while ago, I started watching a YouTuber named ThePrimeagen. He was a Software Engineer at Netflix at the time, and every time I watched his streams on Twitch or YouTube, my eyes couldn't keep up with what he was doing. Aside from his absurdly fast typing speed and his unusual keyboard ([dvorak](https://en.wikipedia.org/wiki/Dvorak_keyboard_layout)), that wasn't the main reason he was fast. The main reason was his text editor: Neovim.
+
+## What is Neovim
+
+In case you don't know, Neovim is a fork of another text editor called Vim. Vim is very old, created in 1991. It was itself an improvement over an even older text editor called Vi.
+
+There used to be a war between Vim and Emacs, but those battles are mostly over, though they still linger in programming culture. If you Google "Vim" for example, it'll ask "Did you mean emacs?", and vice versa.
+
+Neovim runs in the terminal. This means there's essentially no GUI, and it draws its UI on the terminal.
+
+For several reasons, Neovim is very fast. It starts in under 100ms depending on your CPU, even with dozens of plugins installed.
+
+Neovim is a modal text editor. You switch between different modes to do different things. You can't just hold Shift and arrow down to make a selection; you need to enter Visual Selection Mode. If you want to type, you enter Insert Mode. If you want to navigate, you use Normal Mode. That's why the learning curve can be a bit steep.
+
+The goal of this article isn't to teach you how to use Neovim. There's a saying: "You don't know what you don't know." It sounds obvious, but it's true. You would never try Neovim if no one told you about it, because you do not know it exists.
+
+It's like someone who has only ever used a regular screwdriver; they wouldn't think to ask about an electric screwdriver. The job gets done; that's enough. It's the same with Neovim: if you only use VSCode, you won't know there's a completely different way to write code, and you'll keep thinking VSCode is the ultimate truth.
+
+And since I believe a picture is worth a thousand words, I decided to show you some things you can do with Neovim that are hard to do in other editors.
+
+## Practical Examples
+
+Here's something practical. You've probably needed something like this before, using Visual Block Mode to edit multiple lines at once:
+
+<One />
+
+Or, for example, quickly changing if statements to a switch statement using the substitution command:
+
+<Two />
+
+You can also add new plugins. For instance, if you want to exchange function arguments, you can use the [`mini.ai`](https://github.com/nvim-mini/mini.ai) plugin:
+
+<Three />
+
+There's also a plugin called [`flash.nvim`](https://github.com/folke/flash.nvim). It lets you do remote operations, for example, you can go delete something somewhere else and come back to paste it where you were:
+
+<Four />
+
+## Any Agent Could Do This...
+
+All these movements are really cool and make you fast and all. If you were to write a single prompt, all of these things could be done anyway. Of course, by the time you finish writing the prompt, it'd probably take longer than actually doing it yourself, but it would still get done, and you wouldn't have to learn a new text editor from scratch.
+
+The benefits of Neovim are not about speed. That's a big factor, but for me, it was not the biggest benefit.
+
+The biggest benefit is the ecosystem. Once you start using Vim motions, you will not want to use anything that does not support them. You'll find them everywhere: your Browser (Vimium), your File Manager (ranger/lf/yazi), your Shell (`set -o vi` in zsh/bash), tmux, git, and even other IDEs (VS Code Vim extension, JetBrains IDEAVim). They all support Vim motions. It's one unified movement system for everything you do on your computer.
+
+Another benefit is that you get used to the CLI. You basically live in it; you start feeling like anything else is slow and bloated. You'll be comfortable combining different CLI tools with pipes, managing sessions with tmux, searching and replacing with grep and sed, handling git quickly, working on remote servers over SSH without opening another application. The CLI gives you complete control over everything.
+
+Another thing is the community. Whatever you're building, you'll find massive support. I made [xdg-nvfilechooser](https://github.com/shenawy29/xdg-nvfilechooser.nvim), for example, and even though the project isn't complete, I got a lot of support because people liked the idea.
+
+There's a big overlap between the Neovim community and other "cracked" programmer communities. You'll often find that Neovim users are people with deep experience in their field. I've noticed this, and these are people you can actually learn from.
+
+For example, I would never have gotten good at Rust without [Jon Gjengset](https://www.YouTube.com/c/JonGjengset)'s YouTube channel and his books. Guess what editor he uses.
+
+There's also [sphaerophoria](https://www.YouTube.com/@sphaerophoria). He uses Zig and Rust all the time, and I don't understand 99% of the code he writes because he's on another level entirely. Guess his editor too.
+
+You'll also find overlap between the Neovim community and Nix. If you don't know, Nix is a Linux package manager. One resource that helped me was the [Tweag](https://www.YouTube.com/@tweag) YouTube channel. Guess their editor.
+
+This doesn't mean that once you use and master Neovim, you'll automatically become a code master with no equal. The point is that people who like using Neovim tend to have a certain mindset, and I enjoy learning from people with that mindset. They have passion, a love for what they do.
+
+## Conclusion
+
+If you want to learn more about Neovim, I'd advise you not to start with the editor itself. Start with any extension that implements Vim motions in the editor you already use. Once you get used to it, you can dive into the text editor itself.

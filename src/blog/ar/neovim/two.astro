@@ -1,0 +1,11 @@
+<div id="two"></div>
+
+<script>
+    import "asciinema-player/dist/bundle/asciinema-player.css";
+    import * as AsciinemaPlayer from "asciinema-player";
+    import url from "./two.cast?url";
+
+    AsciinemaPlayer.create(url, document.getElementById("two")!, {
+        theme: "kanagawa",
+    });
+</script>
