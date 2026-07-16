@@ -13,7 +13,7 @@ export const { getStaticPaths, GET } = await OGImageRoute({
         "default-en": {
             title: "Shenawy",
             description:
-                "Mohamed Shenawy's blog for programming, tech, and other fun things.",
+                "Mohamed Elshenawy's blog for programming, tech, and other fun things.",
             locale: "en",
         },
     },

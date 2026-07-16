@@ -20,7 +20,7 @@ export const translations: Record<Locale, Record<string, string>> = {
     en: {
         "site.title": "Shenawy",
         "site.description":
-            "Mohamed Shenawy's blog for programming, tech, and other fun things.",
+            "Mohamed Elshenawy's blog for programming, tech, and other fun things.",
         "nav.home": "Home",
         "nav.cv": "CV",
         "nav.syllabus": "Syllabus",
