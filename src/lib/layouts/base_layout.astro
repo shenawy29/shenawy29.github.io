@@ -23,6 +23,8 @@ const description =
 
 const ogImage = Astro.props?.ogImage ?? Astro.props?.frontmatter?.ogImage;
 const type = Astro.props?.type ?? Astro.props?.frontmatter?.type;
+const structuredData =
+    Astro.props?.structuredData ?? Astro.props?.frontmatter?.structuredData;
 
 const site = Astro.url.origin;
 const htmlDir = locale === "ar" ? "rtl" : "ltr";
@@ -40,6 +42,7 @@ const sidebarMargin = locale === "ar" ? "lg:mr-72" : "lg:ml-72";
             site={site}
             ogImage={ogImage}
             locale={locale}
+            structuredData={structuredData}
         />
         <script
             defer

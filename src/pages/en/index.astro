@@ -1,8 +1,10 @@
 ---
 import BaseLayout from "$lib/layouts/base_layout.astro";
 import Posts from "$lib/components/posts.astro";
+import { websiteData } from "$lib/i18n/structured-data";
+const sd = websiteData("en", "Shenawy", "Mohamed Elshenawy's blog for programming, tech, and other fun things.");
 ---
 
-<BaseLayout ogImage="/og/default-en.png">
+<BaseLayout ogImage="/og/default-en.png" structuredData={sd}>
     <Posts locale="en" />
 </BaseLayout>

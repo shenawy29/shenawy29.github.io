@@ -1,8 +1,23 @@
 ---
 import { SEO } from "astro-seo";
-const { title, type, site, description, ogImage, locale } = Astro.props;
+const { title, type, site, description, ogImage, locale, structuredData } = Astro.props;
 const ogLocale = locale === "ar" ? "ar_EG" : "en_US";
 import { Font } from "astro:assets";
+const locales = ["ar", "en"];
+const defaultLocale = "ar" as const;
+const defaultOgImage = locale === "ar" ? "/og/default-ar.png" : "/og/default-en.png";
+const currentPath = Astro.url.pathname;
+let canonicalPath = currentPath;
+for (const loc of locales) {
+    if (currentPath.startsWith(`/${loc}/`)) {
+        canonicalPath = currentPath.slice(`/${loc}`.length) || "/";
+        break;
+    }
+    if (currentPath === `/${loc}`) {
+        canonicalPath = "/";
+        break;
+    }
+}
 ---
 
 <meta charset="utf-8" />
@@ -21,6 +36,18 @@ import { Font } from "astro:assets";
 
 <link rel="sitemap" href="/sitemap-index.xml" />
 
+<link rel="alternate" hreflang="x-default" href={`${site}/${defaultLocale}${canonicalPath}`} />
+{locales.map((loc) => (
+    <link rel="alternate" hreflang={loc} href={`${site}/${loc}${canonicalPath}`} />
+))}
+
+{structuredData && (
+    <script type="application/ld+json" set:html={JSON.stringify({
+        "@context": "https://schema.org",
+        ...structuredData,
+    })} />
+)}
+
 <SEO
     title={title}
     description={description}
@@ -29,7 +56,7 @@ import { Font } from "astro:assets";
         basic: {
             title: title,
             type: type ?? "website",
-            image: site + (ogImage ?? "/og/default-ar.png"),
+            image: site + (ogImage ?? defaultOgImage),
             url: site + Astro.url.pathname,
         },
         optional: {
@@ -42,6 +69,6 @@ import { Font } from "astro:assets";
         card: "summary_large_image",
         title: title,
         description: description,
-        image: site + (ogImage ?? "/og/default-ar.png"),
+        image: site + (ogImage ?? defaultOgImage),
     }}
 />

@@ -2,9 +2,11 @@
 import BaseLayout from "$lib/layouts/base_layout.astro";
 import { getCollection } from "astro:content";
 import { getLocale } from "$lib/i18n/utils";
+import { collectionPageData } from "$lib/i18n/structured-data";
 
 const locale = getLocale(Astro.url.pathname);
 const collectionName = locale === "ar" ? "posts-ar" : "posts-en";
+const sd = collectionPageData(locale, "Tags", Astro.url.pathname);
 
 const pages = await getCollection(collectionName);
 
@@ -29,7 +31,7 @@ for (const [tag, posts] of tagMap) {
 const uniqueTags = [...tagMap.keys()].sort((a, b) => a.localeCompare(b));
 ---
 
-<BaseLayout title={locale === "ar" ? "تاجژ" : "Tags"} ogImage="/og/default-en.png">
+<BaseLayout title={locale === "ar" ? "تاجژ" : "Tags"} ogImage="/og/default-en.png" structuredData={sd}>
     <h1>
         <a href="#tags">{locale === "ar" ? "تاجژ" : "Tags"}</a>
     </h1>

@@ -5,6 +5,7 @@ import type { GetStaticPaths } from "astro";
 import { render } from "astro:content";
 import { getEntry } from "astro:content";
 import { getCollection } from "astro:content";
+import { blogPostingData } from "$lib/i18n/structured-data";
 
 export const getStaticPaths = (async () => {
     const posts = await getCollection("posts-en");
@@ -22,6 +23,16 @@ const { post } = Astro.params;
 let slug = post.split("/")[1];
 const postEntry = await getEntry("posts-en", slug)!;
 const { Content } = await render(postEntry);
+const sd = blogPostingData(
+    locale,
+    postEntry.data.title,
+    postEntry.data.description,
+    `/og/${locale}/${slug}.png`,
+    Astro.url.pathname,
+    postEntry.data.pubDate,
+    postEntry.data.pubDate,
+    postEntry.data.tags,
+);
 ---
 
 <BaseLayout
@@ -29,6 +40,7 @@ const { Content } = await render(postEntry);
     ogImage={`/og/en/${slug}.png`}
     description={postEntry.data.description}
     type="article"
+    structuredData={sd}
 >
     <div>
         <PostHeader post={postEntry} locale={locale} />

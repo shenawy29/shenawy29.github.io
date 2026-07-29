@@ -8,7 +8,7 @@ export const translations: Record<Locale, Record<string, string>> = {
         "site.description":
             "بلوج محمد الشناوي للبرمجة، التكنولوجيا، وأشياء طريفة أخرى.",
         "nav.home": "العمومي",
-        "nav.cv": "سي ڤي",
+        "nav.cv": "CV",
         "nav.syllabus": "منهج",
         "nav.about": "عني",
         "nav.tags": "تاجژ",
