@@ -10,8 +10,8 @@ const person = {
     url: site,
 };
 
-function ref(id: string) {
-    return { "@id": id };
+function fmtDate(d: Date): string {
+    return d.toISOString().substring(0, 10) + "T00:00:00Z";
 }
 
 export function websiteData(locale: string, name: string, description: string) {
@@ -22,8 +22,8 @@ export function websiteData(locale: string, name: string, description: string) {
         description,
         url: `${site}/${locale}/`,
         inLanguage: locale,
-        author: ref(personId),
-        publisher: ref(personId),
+        author: person,
+        publisher: person,
     };
 }
 
@@ -43,13 +43,11 @@ export function blogPostingData(
         ...(description ? { description } : {}),
         image: site + image,
         url: site + url,
-        datePublished: datePublished.toISOString().substring(0, 10),
-        dateModified: (dateModified ?? datePublished)
-            .toISOString()
-            .substring(0, 10),
+        datePublished: fmtDate(datePublished),
+        dateModified: fmtDate(dateModified ?? datePublished),
         keywords: keywords.join(", "),
-        author: ref(personId),
-        publisher: ref(personId),
+        author: person,
+        publisher: person,
         inLanguage: locale,
         mainEntityOfPage: {
             "@type": "WebPage",
@@ -83,7 +81,7 @@ export function profilePageData(
         description,
         url: site + url,
         inLanguage: locale,
-        mainEntity: ref(personId),
+        mainEntity: person,
     };
 }
 
