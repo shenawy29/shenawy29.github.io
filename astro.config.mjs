@@ -1,4 +1,9 @@
 // @ts-check
+import { execSync } from "node:child_process";
+import { readFileSync, readdirSync } from "node:fs";
+import { join } from "node:path";
+import { fileURLToPath } from "node:url";
+
 import {
     defineConfig,
     fontProviders,
@@ -22,6 +27,46 @@ import {
 } from "@shikijs/transformers";
 
 import sitemap from "@astrojs/sitemap";
+import { remarkModifiedTime } from "./remark-modified-time.mjs";
+
+const ROOT = fileURLToPath(new URL(".", import.meta.url));
+
+function buildGitDateMap() {
+    const map = {};
+    for (const locale of ["ar", "en"]) {
+        const dir = join(ROOT, "src", "blog", locale);
+        let entries;
+        try { entries = readdirSync(dir); } catch { continue; }
+        for (const entry of entries) {
+            if (entry.startsWith(".")) continue;
+            const fullPath = join(dir, entry, "index.md");
+            let content;
+            try { content = readFileSync(fullPath, "utf-8"); } catch { continue; }
+
+            const pubDateMatch = content.match(/^pubDate:\s*(.+)$/m);
+            const slugMatch = content.match(/^slug:\s*(.+)$/m);
+            if (!pubDateMatch || !slugMatch) continue;
+
+            const pubDate = pubDateMatch[1].replace(/^["']|["']$/g, "").trim().substring(0, 10);
+            const slug = slugMatch[1].replace(/^["']|["']$/g, "").trim();
+
+            try {
+                const result = execSync(`git log -1 --pretty="format:%cI" "${fullPath}"`, { encoding: "utf-8" });
+                const dateStr = result.trim();
+                if (dateStr) {
+                    const d = new Date(dateStr);
+                    map[`/${locale}/${pubDate}/${slug}/`] = d.toISOString().replace(/\.\d{3}Z$/, "Z");
+                }
+            } catch {
+                // git log failed (e.g. file not tracked, shallow clone) — skip
+            }
+        }
+    }
+    return map;
+}
+
+let gitDateMap = {};
+try { gitDateMap = buildGitDateMap(); } catch {}
 
 export default defineConfig({
     site: "https://shenawy29.github.io",
@@ -96,11 +141,61 @@ export default defineConfig({
         plugins: [tailwindcss()],
     },
 
-    integrations: [mdx(), sitemap(), robotsTxt()],
+    integrations: [
+        mdx(),
+        sitemap({
+            i18n: {
+                defaultLocale: "ar",
+                locales: {
+                    ar: "ar",
+                    en: "en",
+                },
+            },
+            filter: (page) => {
+                const u = new URL(page);
+                const path = u.pathname;
+                if (path === "/") return false;
+                if (path.endsWith("/404/")) return false;
+                if (path.endsWith("/404")) return false;
+                return true;
+            },
+            serialize: (page) => {
+                const u = new URL(page.url);
+                const path = u.pathname;
+                const gitMod = gitDateMap[path];
+                const m = path.match(
+                    /^\/(?:ar|en)\/(\d{4}-\d{2}-\d{2})\//,
+                );
+                const entry = { url: page.url, links: page.links };
+                if (gitMod) {
+                    return {
+                        ...entry,
+                        lastmod: gitMod,
+                        changefreq: "monthly",
+                        priority: 0.8,
+                    };
+                }
+                if (m) {
+                    return {
+                        ...entry,
+                        lastmod: m[1] + "T00:00:00Z",
+                        changefreq: "monthly",
+                        priority: 0.8,
+                    };
+                }
+                return {
+                    ...entry,
+                    changefreq: "weekly",
+                    priority: 0.5,
+                };
+            },
+        }),
+        robotsTxt(),
+    ],
 
     i18n: {
-        locales: ["en", "eg-ar"],
-        defaultLocale: "en",
+        locales: ["ar", "en"],
+        defaultLocale: "ar",
         routing: {
             prefixDefaultLocale: true,
         },
@@ -122,7 +217,7 @@ export default defineConfig({
         },
 
         processor: unified({
-            remarkPlugins: [remarkMath, remarkEmoji],
+            remarkPlugins: [remarkMath, remarkEmoji, remarkModifiedTime],
             rehypePlugins: [[rehypeKatex, { output: "mathml" }]],
         }),
     },

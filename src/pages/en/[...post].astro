@@ -22,7 +22,9 @@ const { locale } = Astro.props;
 const { post } = Astro.params;
 let slug = post.split("/")[1];
 const postEntry = await getEntry("posts-en", slug)!;
-const { Content } = await render(postEntry);
+const { Content, remarkPluginFrontmatter } = await render(postEntry);
+const lastModified = remarkPluginFrontmatter.lastModified
+    ? new Date(remarkPluginFrontmatter.lastModified) : undefined;
 const sd = blogPostingData(
     locale,
     postEntry.data.title,
@@ -30,7 +32,7 @@ const sd = blogPostingData(
     `/og/${locale}/${slug}.png`,
     Astro.url.pathname,
     postEntry.data.pubDate,
-    postEntry.data.pubDate,
+    lastModified,
     postEntry.data.tags,
 );
 ---
