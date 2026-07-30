@@ -39,9 +39,16 @@ function buildGitDateMap() {
         try { entries = readdirSync(dir); } catch { continue; }
         for (const entry of entries) {
             if (entry.startsWith(".")) continue;
-            const fullPath = join(dir, entry, "index.md");
-            let content;
-            try { content = readFileSync(fullPath, "utf-8"); } catch { continue; }
+            let fullPath, content;
+            for (const ext of [".md", ".mdx"]) {
+                const p = join(dir, entry, `index${ext}`);
+                try {
+                    content = readFileSync(p, "utf-8");
+                    fullPath = p;
+                    break;
+                } catch {}
+            }
+            if (!content) continue;
 
             const pubDateMatch = content.match(/^pubDate:\s*(.+)$/m);
             const slugMatch = content.match(/^slug:\s*(.+)$/m);
