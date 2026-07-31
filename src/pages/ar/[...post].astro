@@ -5,7 +5,15 @@ import type { GetStaticPaths } from "astro";
 import { render } from "astro:content";
 import { getEntry } from "astro:content";
 import { getCollection } from "astro:content";
-import { blogPostingData } from "$lib/i18n/structured-data";
+import { useTranslations, type Locale } from "$lib/i18n/utils";
+import {
+    blogPostingData,
+    breadcrumbData,
+    personData,
+    websiteData,
+} from "$lib/i18n/structured-data";
+
+const site = "https://shenawy29.github.io";
 
 export const getStaticPaths = (async () => {
     const posts = await getCollection("posts-ar");
@@ -25,16 +33,29 @@ const postEntry = await getEntry("posts-ar", slug)!;
 const { Content, remarkPluginFrontmatter } = await render(postEntry);
 const lastModified = remarkPluginFrontmatter.lastModified
     ? new Date(remarkPluginFrontmatter.lastModified) : undefined;
-const sd = blogPostingData(
-    locale,
-    postEntry.data.title,
-    postEntry.data.description,
-    `/og/${locale}/${slug}.png`,
-    Astro.url.pathname,
-    postEntry.data.pubDate,
-    lastModified,
-    postEntry.data.tags,
-);
+const t = useTranslations(locale as Locale);
+const wordCount = (postEntry.body ?? "").trim().split(/\s+/).length;
+const sd = [
+    websiteData(locale, t("site.title"), t("site.description")),
+    personData(),
+    blogPostingData(
+        locale,
+        postEntry.data.title,
+        postEntry.data.description,
+        `/og/${locale}/${slug}.png`,
+        Astro.url.pathname,
+        postEntry.data.pubDate,
+        lastModified,
+        postEntry.data.tags,
+        wordCount,
+    ),
+    breadcrumbData(locale, [
+        { name: t("site.title"), url: `/${locale}/` },
+        { name: postEntry.data.title, url: Astro.url.pathname },
+    ]),
+];
+const publishedTime = postEntry.data.pubDate.toISOString();
+const modifiedTime = (lastModified ?? postEntry.data.pubDate).toISOString();
 ---
 
 <BaseLayout
@@ -43,6 +64,11 @@ const sd = blogPostingData(
     description={postEntry.data.description}
     type="article"
     structuredData={sd}
+    publishedTime={publishedTime}
+    modifiedTime={modifiedTime}
+    tags={postEntry.data.tags}
+    articleSection={postEntry.data.tags[0]}
+    authors={[site]}
 >
     <div>
         <PostHeader post={postEntry} locale={locale} />

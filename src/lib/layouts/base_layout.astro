@@ -25,6 +25,17 @@ const ogImage = Astro.props?.ogImage ?? Astro.props?.frontmatter?.ogImage;
 const type = Astro.props?.type ?? Astro.props?.frontmatter?.type;
 const structuredData =
     Astro.props?.structuredData ?? Astro.props?.frontmatter?.structuredData;
+const publishedTime =
+    Astro.props?.publishedTime ?? Astro.props?.frontmatter?.publishedTime;
+const modifiedTime =
+    Astro.props?.modifiedTime ?? Astro.props?.frontmatter?.modifiedTime;
+const tags = Astro.props?.tags ?? Astro.props?.frontmatter?.tags;
+const articleSection =
+    Astro.props?.articleSection ?? Astro.props?.frontmatter?.articleSection;
+const authors = Astro.props?.authors ?? Astro.props?.frontmatter?.authors;
+const noindex = Astro.props?.noindex ?? Astro.props?.frontmatter?.noindex;
+const canonical =
+    Astro.props?.canonical ?? Astro.props?.frontmatter?.canonical;
 
 const site = Astro.url.origin;
 const htmlDir = locale === "ar" ? "rtl" : "ltr";
@@ -43,9 +54,17 @@ const sidebarMargin = locale === "ar" ? "lg:mr-72" : "lg:ml-72";
             ogImage={ogImage}
             locale={locale}
             structuredData={structuredData}
+            publishedTime={publishedTime}
+            modifiedTime={modifiedTime}
+            tags={tags}
+            articleSection={articleSection}
+            authors={authors}
+            noindex={noindex}
+            canonical={canonical}
         />
         <script
             defer
+            is:inline
             src="/count.js"
             data-website-id="03adab5c-e6d1-4a05-bbfe-fcf69f36e716"></script>
     </head>

@@ -1,8 +1,6 @@
 import { OGImageRoute } from "astro-og-canvas";
 
 export const { getStaticPaths, GET } = await OGImageRoute({
-    param: "default",
-
     pages: {
         "default-ar": {
             title: "شناوي",

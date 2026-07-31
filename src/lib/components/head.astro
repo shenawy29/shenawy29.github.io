@@ -1,6 +1,21 @@
 ---
 import { SEO } from "astro-seo";
-const { title, type, site, description, ogImage, locale, structuredData } = Astro.props;
+const {
+    title,
+    type,
+    site,
+    description,
+    ogImage,
+    locale,
+    structuredData,
+    publishedTime,
+    modifiedTime,
+    tags,
+    articleSection,
+    authors,
+    noindex,
+    canonical,
+} = Astro.props;
 const ogLocale = locale === "ar" ? "ar_EG" : "en_US";
 import { Font } from "astro:assets";
 const locales = ["ar", "en"];
@@ -32,6 +47,7 @@ for (const loc of locales) {
 <Font cssVariable="--font-vazirmatn" preload />
 <Font cssVariable="--font-rokkitt" preload />
 <Font cssVariable="--font-fira" preload />
+<Font cssVariable="--font-fira-nerd" />
 <Font cssVariable="--font-cairo" preload />
 
 <link rel="sitemap" href="/sitemap-index.xml" />
@@ -42,33 +58,52 @@ for (const loc of locales) {
 ))}
 
 {structuredData && (
-    <script type="application/ld+json" set:html={JSON.stringify({
-        "@context": "https://schema.org",
-        ...structuredData,
-    })} />
+    <script
+        type="application/ld+json"
+        is:inline
+        set:html={JSON.stringify({
+            "@context": "https://schema.org",
+            ...(Array.isArray(structuredData)
+                ? { "@graph": structuredData }
+                : structuredData),
+        })}
+    />
 )}
 
 <SEO
     title={title}
     description={description}
-    canonical={site + Astro.url.pathname}
+    canonical={canonical ?? site + Astro.url.pathname}
+    noindex={noindex}
     openGraph={{
         basic: {
             title: title,
             type: type ?? "website",
             image: site + (ogImage ?? defaultOgImage),
-            url: site + Astro.url.pathname,
+            url: canonical ?? site + Astro.url.pathname,
         },
         optional: {
             description: description,
             siteName: "شناوي",
             locale: ogLocale,
         },
+        ...(type === "article"
+            ? {
+                  article: {
+                      publishedTime,
+                      modifiedTime,
+                      authors,
+                      section: articleSection,
+                      tags,
+                  },
+              }
+            : {}),
     }}
     twitter={{
         card: "summary_large_image",
         title: title,
         description: description,
         image: site + (ogImage ?? defaultOgImage),
+        creator: "@MoeElshenawy04",
     }}
 />

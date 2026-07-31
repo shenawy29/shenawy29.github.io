@@ -21,7 +21,6 @@ const enPages = Object.fromEntries(
 const pages = { ...arPages, ...enPages };
 
 export const { getStaticPaths, GET } = await OGImageRoute({
-    param: "route",
     pages,
 
     getImageOptions: (_, page) => {
@@ -38,7 +37,7 @@ export const { getStaticPaths, GET } = await OGImageRoute({
                 bgImage: { path: `public/bg/${page.slug}.png`, fit: "cover" },
                 bgGradient: [[31, 31, 40]],
                 title: page.title,
-                description: page.description,
+                description: page.ogSubtitle,
                 fonts,
                 font: {
                     title: {
@@ -62,7 +61,7 @@ export const { getStaticPaths, GET } = await OGImageRoute({
 
         return {
             title: page.title,
-            description: page.description,
+            description: page.ogSubtitle,
             fonts,
             dir,
 

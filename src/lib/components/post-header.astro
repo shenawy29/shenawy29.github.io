@@ -1,16 +1,55 @@
 ---
+import { useTranslations, type Locale } from "$lib/i18n/utils";
+import { wordCountOf, readingTimeMinutes } from "$lib/reading-time";
 let { post, locale = "ar" } = Astro.props;
+const t = useTranslations(locale as Locale);
+const wordCount = wordCountOf(post.body ?? "");
+const minutes = readingTimeMinutes(wordCount);
+
+const arabicPlural = (
+    n: number,
+    singular: string,
+    dual: string,
+    plural: string,
+) => (n === 1 ? singular : n === 2 ? dual : n <= 10 ? plural : singular);
+
+const wordsLabel =
+    locale === "ar"
+        ? arabicPlural(wordCount, "كلمة", "كلمتين", "كلمات")
+        : t("post.words");
+const minutesLabel =
+    locale === "ar"
+        ? arabicPlural(minutes, "دقيقة", "دقيقتين", "دقايق")
+        : t("post.minutes");
 ---
 
 <div class="h-min w-full">
     <div
-        class="flex flex-wrap gap-x-3 divide-dotted font-mono text-xl text-wrap opacity-60"
+        class="flex flex-wrap gap-x-3 divide-dotted font-mono text-lg text-wrap opacity-60"
     >
         <span class="mb-1 text-wrap">
             {post.data.pubDate.toISOString().substring(0, 10)}
         </span>
+        <span class="mb-1 text-wrap">
+            {`• ${wordCount} `}
+            {
+                locale === "ar" ? (
+                    <span class="font-vazirmatn">{wordsLabel}</span>
+                ) : (
+                    wordsLabel
+                )
+            }
+            {` • ${minutes} `}
+            {
+                locale === "ar" ? (
+                    <span class="font-vazirmatn">{minutesLabel}</span>
+                ) : (
+                    minutesLabel
+                )
+            }
+        </span>
         {
-            post.data.tags.map((t) => (
+            post.data.tags.map((t: string) => (
                 <>
                     <span> • </span>
                     <a href={`/${locale}/tags#${t}`}>

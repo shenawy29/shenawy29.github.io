@@ -19,16 +19,8 @@ code {
     color-scheme: dark;
 }
 
-@font-face {
-    font-family: "FiraCodeNerdFont";
-    src: url("/fonts/FiraCodeNerdFont-Regular.woff2") format("woff2");
-    font-weight: 400;
-    font-style: normal;
-    font-display: swap;
-}
-
 .ap-player.asciinema-player-theme-kanagawa {
-    --term-font-family: "FiraCodeNerdFont", "Fira Code", monospace;
+    --term-font-family: var(--font-fira-nerd), "Fira Code", monospace;
     --term-color-foreground: #dcd7ba;
     --term-color-background: #1f1f28;
     --term-color-0: #1f1f28;
@@ -70,6 +62,7 @@ code {
         var(--font-rokkitt), var(--font-vazirmatn), ui-sans-serif, system-ui;
     --font-mono: var(--font-fira), monospace;
     --font-display: var(--font-rokkitt), var(--font-cairo);
+    --font-vazirmatn: var(--font-vazirmatn);
 }
 
 body {

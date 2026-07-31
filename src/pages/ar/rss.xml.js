@@ -1,16 +1,14 @@
 import { experimental_AstroContainer as AstroContainer } from "astro/container";
-import { getContainerRenderer as getMDXRenderer } from "@astrojs/mdx";
+import { getContainerRenderer } from "@astrojs/mdx/container-renderer";
 import { loadRenderers } from "astro:container";
 import { getCollection, render } from "astro:content";
 import sanitizeHtml from "sanitize-html";
 import rss from "@astrojs/rss";
 
 export async function GET(context) {
-    const renderers = await loadRenderers([getMDXRenderer()]);
+    const renderers = await loadRenderers([getContainerRenderer()]);
     const container = await AstroContainer.create({ renderers });
 
-    const url = new URL(context.url);
-    const locale = url.pathname.startsWith("/en") ? "en" : "ar";
     const collectionName = "posts-ar";
 
     const siteUrl = `${context.site?.origin ?? ""}/ar`;

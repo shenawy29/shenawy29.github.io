@@ -15,6 +15,8 @@ export const translations: Record<Locale, Record<string, string>> = {
         "nav.analytics": "أناليتكس",
         "tags.title": "تاجژ",
         "post.translation_pending": "ترجمة قادمة...",
+        "post.words": "كلمة",
+        "post.minutes": "دقيقة",
         lang_switch: "En",
     },
     en: {
@@ -29,6 +31,8 @@ export const translations: Record<Locale, Record<string, string>> = {
         "nav.analytics": "Analytics",
         "tags.title": "Tags",
         "post.translation_pending": "Translation pending...",
+        "post.words": "words",
+        "post.minutes": "minutes",
         lang_switch: "ع",
     },
 };

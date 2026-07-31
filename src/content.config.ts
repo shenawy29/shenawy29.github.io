@@ -1,4 +1,5 @@
-import { defineCollection, z } from "astro:content";
+import { defineCollection } from "astro:content";
+import { z } from "astro/zod";
 import { glob } from "astro/loaders";
 
 const postsAr = defineCollection({
@@ -10,6 +11,7 @@ const postsAr = defineCollection({
         tags: z.array(z.string()),
         slug: z.string(),
         description: z.string().optional(),
+        ogSubtitle: z.string().optional(),
         custom: z.boolean().optional().default(false),
     }),
 });
@@ -23,6 +25,7 @@ const postsEn = defineCollection({
         tags: z.array(z.string()),
         slug: z.string(),
         description: z.string().optional(),
+        ogSubtitle: z.string().optional(),
         custom: z.boolean().optional().default(false),
     }),
 });

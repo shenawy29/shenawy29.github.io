@@ -1,9 +1,18 @@
 import { execSync } from "node:child_process";
 
 export function remarkModifiedTime() {
-    return function (tree, file) {
+    return function (_tree, file) {
         const filepath = file.history[0];
-        const result = execSync(`git log -1 --pretty="format:%cI" "${filepath}"`);
-        file.data.astro.frontmatter.lastModified = result.toString();
+        try {
+            const result = execSync(
+                `git log -1 --pretty="format:%cI" "${filepath}"`,
+            );
+            const date = result.toString().trim();
+            if (date) {
+                file.data.astro.frontmatter.lastModified = date;
+            }
+        } catch {
+            // git log failed (e.g. file not tracked, no commits yet) — skip
+        }
     };
 }

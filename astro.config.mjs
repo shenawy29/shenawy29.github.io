@@ -27,11 +27,13 @@ import {
 } from "@shikijs/transformers";
 
 import sitemap from "@astrojs/sitemap";
+import { EnumChangefreq } from "sitemap";
 import { remarkModifiedTime } from "./remark-modified-time.mjs";
 
 const ROOT = fileURLToPath(new URL(".", import.meta.url));
 
 function buildGitDateMap() {
+    /** @type {Record<string, string>} */
     const map = {};
     for (const locale of ["ar", "en"]) {
         const dir = join(ROOT, "src", "blog", locale);
@@ -62,6 +64,7 @@ function buildGitDateMap() {
                 const dateStr = result.trim();
                 if (dateStr) {
                     const d = new Date(dateStr);
+                    /** @type {Record<string, string>} */
                     map[`/${locale}/${pubDate}/${slug}/`] = d.toISOString().replace(/\.\d{3}Z$/, "Z");
                 }
             } catch {
@@ -72,6 +75,7 @@ function buildGitDateMap() {
     return map;
 }
 
+/** @type {Record<string, string>} */
 let gitDateMap = {};
 try { gitDateMap = buildGitDateMap(); } catch {}
 
@@ -103,6 +107,20 @@ export default defineConfig({
                         weight: "400",
                         style: "normal",
                         src: ["./public/fonts/FiraCode.woff2"],
+                    },
+                ],
+            },
+        },
+        {
+            provider: fontProviders.local(),
+            name: "FiraCodeNerdFont",
+            cssVariable: "--font-fira-nerd",
+            options: {
+                variants: [
+                    {
+                        weight: "400",
+                        style: "normal",
+                        src: ["./public/fonts/FiraCodeNerdFont-Regular.woff2"],
                     },
                 ],
             },
@@ -178,7 +196,7 @@ export default defineConfig({
                     return {
                         ...entry,
                         lastmod: gitMod,
-                        changefreq: "monthly",
+                        changefreq: EnumChangefreq.MONTHLY,
                         priority: 0.8,
                     };
                 }
@@ -186,13 +204,13 @@ export default defineConfig({
                     return {
                         ...entry,
                         lastmod: m[1] + "T00:00:00Z",
-                        changefreq: "monthly",
+                        changefreq: EnumChangefreq.MONTHLY,
                         priority: 0.8,
                     };
                 }
                 return {
                     ...entry,
-                    changefreq: "weekly",
+                    changefreq: EnumChangefreq.WEEKLY,
                     priority: 0.5,
                 };
             },

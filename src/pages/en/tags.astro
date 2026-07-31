@@ -10,21 +10,25 @@ const sd = collectionPageData(locale, "Tags", Astro.url.pathname);
 
 const pages = await getCollection(collectionName);
 
-const tagMap = new Map();
+const tagMap = new Map<string, typeof pages>();
 
 for (const page of pages) {
     for (const tag of page.data.tags) {
-        if (!tagMap.has(tag)) {
-            tagMap.set(tag, []);
+        const list = tagMap.get(tag);
+        if (list) {
+            list.push(page);
+        } else {
+            tagMap.set(tag, [page]);
         }
-        tagMap.get(tag).push(page);
     }
 }
 
 for (const [tag, posts] of tagMap) {
     tagMap.set(
         tag,
-        posts.sort((a, b) => b.data.pubDate - a.data.pubDate),
+        posts.sort(
+            (a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime(),
+        ),
     );
 }
 
@@ -44,7 +48,7 @@ const uniqueTags = [...tagMap.keys()].sort((a, b) => a.localeCompare(b));
                     </a>
                 </h2>
                 <ul class="prose-p:m-0 prose-li:m-0">
-                    {tagMap.get(tag).map((post) => (
+                    {tagMap.get(tag)!.map((post) => (
                         <li>
                             <p class="flex">
                                 <span class="opacity-60">

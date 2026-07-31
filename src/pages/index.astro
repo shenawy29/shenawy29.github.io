@@ -1,18 +1,22 @@
 ---
-const target = "https://shenawy29.github.io/ar/";
+import BaseLayout from "$lib/layouts/base_layout.astro";
+import Posts from "$lib/components/posts.astro";
+import { websiteData, personData } from "$lib/i18n/structured-data";
+const sd = [
+    websiteData(
+        "ar",
+        "شناوي",
+        "بلوج محمد الشناوي للبرمجة، التكنولوجيا، وأشياء طريفة أخرى.",
+    ),
+    personData(),
+];
+const canonical = new URL("/ar/", Astro.site).toString();
 ---
 
-<!doctype html>
-<html lang="ar" dir="rtl">
-    <head>
-        <meta charset="utf-8" />
-        <title>شناوي</title>
-        <meta http-equiv="refresh" content={`0; url=${target}`} />
-        <link rel="canonical" href={target} />
-    </head>
-    <body>
-        <p>
-            <a href={target}>Redirecting</a>
-        </p>
-    </body>
-</html>
+<BaseLayout
+    ogImage="/og/default-ar.png"
+    structuredData={sd}
+    canonical={canonical}
+>
+    <Posts locale="ar" />
+</BaseLayout>
