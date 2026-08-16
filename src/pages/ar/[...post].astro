@@ -32,7 +32,9 @@ let slug = post.split("/")[1];
 const postEntry = await getEntry("posts-ar", slug)!;
 const { Content, remarkPluginFrontmatter } = await render(postEntry);
 const lastModified = remarkPluginFrontmatter.lastModified
-    ? new Date(remarkPluginFrontmatter.lastModified) : undefined;
+    ? new Date(remarkPluginFrontmatter.lastModified)
+    : undefined;
+const description = remarkPluginFrontmatter.excerpt;
 const t = useTranslations(locale as Locale);
 const wordCount = (postEntry.body ?? "").trim().split(/\s+/).length;
 const sd = [
@@ -41,12 +43,13 @@ const sd = [
     blogPostingData(
         locale,
         postEntry.data.title,
-        postEntry.data.description,
+        description,
         `/og/${locale}/${slug}.png`,
         Astro.url.pathname,
         postEntry.data.pubDate,
         lastModified,
-        postEntry.data.tags,
+        postEntry.data.keywords ?? postEntry.data.tags,
+        postEntry.data.tags[0],
         wordCount,
     ),
     breadcrumbData(locale, [
@@ -61,7 +64,7 @@ const modifiedTime = (lastModified ?? postEntry.data.pubDate).toISOString();
 <BaseLayout
     title={postEntry.data.title}
     ogImage={`/og/ar/${slug}.png`}
-    description={postEntry.data.description}
+    description={description}
     type="article"
     structuredData={sd}
     publishedTime={publishedTime}
@@ -73,7 +76,7 @@ const modifiedTime = (lastModified ?? postEntry.data.pubDate).toISOString();
     <div>
         <PostHeader post={postEntry} locale={locale} />
     </div>
-    <div class="leading-8 lg:pr-5">
+    <div class="text-xl leading-9 lg:pr-5">
         <Content />
     </div>
 </BaseLayout>

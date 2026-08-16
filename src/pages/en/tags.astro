@@ -36,21 +36,23 @@ const uniqueTags = [...tagMap.keys()].sort((a, b) => a.localeCompare(b));
 ---
 
 <BaseLayout title={locale === "ar" ? "تاجژ" : "Tags"} ogImage="/og/default-en.png" structuredData={sd}>
-    <h1>
-        <a href="#tags">{locale === "ar" ? "تاجژ" : "Tags"}</a>
-    </h1>
+    <div class="page-title">
+        <h1>
+            <a href="#tags">{locale === "ar" ? "تاجژ" : "Tags"}</a>
+        </h1>
+    </div>
     {
         uniqueTags.map((tag) => (
             <div>
-                <h2 id={tag}>
+                <h2 id={tag} class="section-heading">
                     <a href={`#${tag}`}>
                         <span>#{tag}</span>
                     </a>
                 </h2>
-                <ul class="prose-p:m-0 prose-li:m-0">
+                <ul class="tag-list prose-p:m-0 prose-li:m-0">
                     {tagMap.get(tag)!.map((post) => (
                         <li>
-                            <p class="flex">
+                            <p>
                                 <span class="opacity-60">
                                     {post.data.pubDate
                                         .toISOString()

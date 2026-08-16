@@ -24,7 +24,7 @@ export async function GET(context) {
 
     const items = [];
     for (const post of posts) {
-        const { Content } = await render(post);
+        const { Content, remarkPluginFrontmatter } = await render(post);
         const raw = await container.renderToString(Content);
         const content = sanitizeHtml(raw, {
             allowedTags: [
@@ -42,7 +42,7 @@ export async function GET(context) {
             disallowedTagsMode: "discard",
         });
         const link = `${siteUrl}/${post.data.pubDate.toISOString().substring(0, 10)}/${post.id}`;
-        items.push({ ...post.data, link, content });
+        items.push({ ...post.data, link, content, description: remarkPluginFrontmatter.excerpt });
     }
 
     return rss({

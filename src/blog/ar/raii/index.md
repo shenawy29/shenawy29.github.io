@@ -1,7 +1,9 @@
 ---
 title: طرمبة الـMemory بتسرب
 pubDate: 2025-08-10
-tags: [concepts]
+tags: [cpp, memory-management]
+keywords: ["RAII", "إدارة الذاكرة", "المؤشرات الذكية", "++C"]
+ogSubtitle: Resource Acquisition Is Initialization
 slug: raii
 ---
 

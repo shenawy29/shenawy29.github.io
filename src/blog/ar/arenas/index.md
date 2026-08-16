@@ -1,8 +1,16 @@
 ---
 title: ادخل الحلبة
 pubDate: 2026-07-12
-tags: [cs, concepts]
-description: اتحكم في الميموري بتاعتك من غير صداع
+tags: [systems, cpp, memory-management]
+keywords:
+    [
+        "arena allocator",
+        "memory management",
+        "memory pool",
+        "C++",
+        "programming",
+    ]
+ogSubtitle: اتحكم في الميموري بتاعتك من غير صداع
 slug: arenas
 custom: true
 ---

@@ -1,0 +1,36 @@
+---
+import BaseLayout from "$lib/layouts/base_layout.astro";
+import { getLocale } from "$lib/i18n/utils";
+import { profilePageData } from "$lib/i18n/structured-data";
+
+const locale = getLocale(Astro.url.pathname);
+const title = "عني";
+const description =
+    "انا محمد الشناوي، خريج حاسبات ومعلومات جامعة قناة السويس ودي البلوج بتاعتي.";
+const paragraphs = [
+    "انا محمد الشناوي، خريج حاسبات ومعلومات جامعة قناة السويس ودي البلوج بتاعتي.",
+    "بكتب فيها عن الحاجات اللي بحب اقرأ عنها واتعلمها، منها الـMathematics, Low Level Systems, Distributed Systems, وحاجات الـComputer Science in general.",
+    "انا عملت البلوج دي عشان لاحظت ان معظم الحاجات اللي بحبها في السوفتوير يعتبر ملهاش محتوى بالعربي، او شبة معدوم.",
+];
+const sd = profilePageData(locale, title, description, Astro.url.pathname);
+---
+
+<BaseLayout
+    title={title}
+    description={description}
+    ogImage="/og/default-ar.png"
+    structuredData={sd}
+>
+    <div class="page-title">
+        <h1>
+            <a href="#about">{title}</a>
+        </h1>
+    </div>
+    {paragraphs.map((p) => (
+        <p>{p}</p>
+    ))}
+    <p>
+        لو عجبتك البلوج وحابب نتكلم شوية، ابعتلي{" "}
+        <a href="mailto:alshenawy10203022@gmail.com">ايميل</a>.
+    </p>
+</BaseLayout>

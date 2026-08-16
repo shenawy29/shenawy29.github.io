@@ -1,0 +1,70 @@
+---
+import BaseLayout from "$lib/layouts/base_layout.astro";
+import { getLocale } from "$lib/i18n/utils";
+import { collectionPageData } from "$lib/i18n/structured-data";
+import { syllabus } from "$lib/syllabus";
+
+const locale = getLocale(Astro.url.pathname);
+const title = "منهج";
+const description =
+    "الصفحة دي فيها ماتيريال انا حبيت اقراه وعلمني حاجة انا مكنتش عارفها او فاهمها. المواد مرتبة حسب الموضوع واسم المؤلف.";
+const intro = [
+    "دي مكتبة مراجع للمواد اللي انا حبيت أقراها أو أتفرج عليها وعلّمتني حاجة انا مكنتش عارفها أو فاهمها.",
+    "المواد مرتبة حسب الموضوع، ومترتبة بأسامي المؤلفين جوه كل موضوع، وبتضم مقالات وكتب ومحاضرات وكود.",
+];
+const sd = collectionPageData(locale, title, Astro.url.pathname);
+---
+
+<BaseLayout
+    title={title}
+    description={description}
+    ogImage="/og/default-ar.png"
+    structuredData={sd}
+>
+    <div class="syllabus">
+        <div class="page-title">
+            <h1>
+                <a href="#syllabus">{title}</a>
+            </h1>
+        </div>
+        {intro.map((p) => <p class="text-xl">{p}</p>)}
+    {
+        syllabus.map((cat) => (
+            <div class="syllabus-section">
+                <h2 id={cat.id} class="section-heading">
+                    <a href={`#${cat.id}`}>
+                        <span>{cat.title.ar}</span>
+                    </a>
+                </h2>
+                {cat.note && <p>{cat.note.ar}</p>}
+                <ul class="syllabus-list prose-p:m-0 prose-li:m-0">
+                    {[...cat.items]
+                        .sort((a, b) =>
+                            (a.authors ?? a.title).localeCompare(
+                                b.authors ?? b.title,
+                            ),
+                        )
+                        .map((item) => (
+                            <li>
+                                <p>
+                                    {item.authors && <span>{item.authors}. </span>}
+                                    <a href={item.href ?? "#"}>
+                                        {item.title}
+                                    </a>
+                                    {item.publisher && (
+                                        <span>, {item.publisher}.</span>
+                                    )}
+                                </p>
+                                {item.commentary && (
+                                    <p class="syllabus-commentary-text">
+                                        {item.commentary.ar}
+                                    </p>
+                                )}
+                            </li>
+                        ))}
+                </ul>
+            </div>
+        ))
+    }
+    </div>
+</BaseLayout>

@@ -2,8 +2,8 @@
 let { html } = Astro.props;
 ---
 
-<div class="relative overflow-hidden">
-    <div class="leading-8 opacity-50 lg:pr-5" set:html={html} />
+<div class="post-excerpt relative overflow-hidden text-xl">
+    <div class="leading-9 opacity-30 lg:pr-5" set:html={html} />
     <div
         class="pointer-events-none absolute right-0 bottom-0 left-0 h-1/2 bg-linear-to-t from-sumi-ink2"
     >

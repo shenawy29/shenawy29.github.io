@@ -1,8 +1,16 @@
 ---
 title: Enter the Arena
 pubDate: 2026-07-12
-tags: [cs, concepts]
-description: Manual Memory Management Without the Headache
+tags: [systems, cpp, memory-management]
+keywords:
+    [
+        "arena allocator",
+        "memory management",
+        "memory pool",
+        "C++",
+        "programming",
+    ]
+ogSubtitle: Manual Memory Management Without the Headache
 slug: arenas
 custom: true
 ---

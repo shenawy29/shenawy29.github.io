@@ -3,20 +3,28 @@
 @plugin "@tailwindcss/typography";
 @config "../../../tailwind.config.js";
 
-@layer components {
-    math {
-        @apply text-xl;
-    }
+.katex {
+    font-size: 1em;
 }
 
-pre,
-code {
+pre {
     direction: ltr;
     unicode-bidi: embed;
 }
 
+code {
+    direction: ltr;
+    unicode-bidi: isolate;
+}
+
 :root {
     color-scheme: dark;
+    --title-underline-h1: #c34043; /* autumnRed */
+    --title-underline-h2: #ffa066; /* surimiOrange */
+    --title-underline-h3: #e6c384; /* carpYellow */
+    --title-underline-h4: #98bb6c; /* springGreen (blog link green) */
+    --title-underline-h5: #6a9589; /* waveAqua1 */
+    --title-underline-h6: #7e9cd8; /* crystalBlue */
 }
 
 .ap-player.asciinema-player-theme-kanagawa {
@@ -75,7 +83,7 @@ h3,
 h4,
 h5,
 h6,
-h1 a {
+:is(h1, h2, h3, h4, h5, h6) a {
     @apply font-display font-bold;
 }
 
@@ -83,6 +91,15 @@ code,
 pre,
 kbd {
     @apply font-mono;
+}
+
+:where(p) {
+    text-wrap: pretty;
+}
+
+:where(h1, h2, h3, h4, h5, h6) {
+    text-wrap: balance;
+    scroll-margin-top: 5rem;
 }
 
 .line {
@@ -124,4 +141,102 @@ kbd {
 
 .has-focused .focused {
     filter: blur(0);
+}
+
+.page-title {
+    text-align: center;
+}
+
+main .page-title h1,
+[dir="rtl"] main .page-title h1 {
+    font-size: clamp(3.5rem, 8vw, 6rem);
+}
+
+main :is(h1, h2, h3, h4, h5, h6) a {
+    text-decoration-line: underline;
+}
+
+main h1 a {
+    text-decoration-color: var(--title-underline-h1);
+}
+
+main h2 a {
+    text-decoration-color: var(--title-underline-h2);
+}
+
+main h3 a {
+    text-decoration-color: var(--title-underline-h3);
+}
+
+main h4 a {
+    text-decoration-color: var(--title-underline-h4);
+}
+
+main h5 a {
+    text-decoration-color: var(--title-underline-h5);
+}
+
+main h6 a {
+    text-decoration-color: var(--title-underline-h6);
+}
+
+main :is(h1, h2, h3, h4, h5, h6) a:hover {
+    color: var(--color-fuji-white);
+    text-decoration-color: var(--color-fuji-white);
+}
+
+.tag-list li > p {
+    margin-block: 0;
+}
+
+main .section-heading {
+    font-size: clamp(2.25rem, 4.5vw, 4rem);
+}
+
+.post-excerpt :is(h1, h2, h3, h4, h5, h6) {
+    text-decoration-line: underline;
+}
+
+.post-excerpt h1 {
+    text-decoration-color: var(--title-underline-h1);
+}
+
+.post-excerpt h2 {
+    text-decoration-color: var(--title-underline-h2);
+}
+
+.post-excerpt h3 {
+    text-decoration-color: var(--title-underline-h3);
+}
+
+.post-excerpt h4 {
+    text-decoration-color: var(--title-underline-h4);
+}
+
+.post-excerpt h5 {
+    text-decoration-color: var(--title-underline-h5);
+}
+
+.post-excerpt h6 {
+    text-decoration-color: var(--title-underline-h6);
+}
+
+.post-excerpt :is(h1, h2, h3, h4, h5, h6):hover {
+    color: var(--color-fuji-white);
+    text-decoration-color: var(--color-fuji-white);
+}
+
+.syllabus-list li p {
+    margin: 0;
+}
+
+.syllabus-list li {
+    margin-bottom: 2rem;
+}
+
+.syllabus-list li .syllabus-commentary-text {
+    margin: 0 0 0.25rem;
+    opacity: 0.6;
+    font-style: italic;
+    font-size: 0.9em;
 }

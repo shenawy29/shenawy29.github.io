@@ -42,6 +42,7 @@ export function blogPostingData(
     datePublished: Date,
     dateModified: Date | undefined,
     keywords: string[],
+    articleSection: string | undefined,
     wordCount: number,
 ) {
     const minutes = readingTimeMinutes(wordCount);
@@ -58,7 +59,7 @@ export function blogPostingData(
         wordCount,
         timeRequired: `PT${minutes}M`,
         keywords: keywords.join(", "),
-        articleSection: keywords[0],
+        articleSection: articleSection ?? keywords[0],
         author: person,
         publisher: person,
         inLanguage: locale,

@@ -2,6 +2,7 @@
 import { SEO } from "astro-seo";
 const {
     title,
+    ogTitle,
     type,
     site,
     description,
@@ -77,7 +78,7 @@ for (const loc of locales) {
     noindex={noindex}
     openGraph={{
         basic: {
-            title: title,
+            title: ogTitle ?? title,
             type: type ?? "website",
             image: site + (ogImage ?? defaultOgImage),
             url: canonical ?? site + Astro.url.pathname,
@@ -101,7 +102,7 @@ for (const loc of locales) {
     }}
     twitter={{
         card: "summary_large_image",
-        title: title,
+        title: ogTitle ?? title,
         description: description,
         image: site + (ogImage ?? defaultOgImage),
         creator: "@MoeElshenawy04",

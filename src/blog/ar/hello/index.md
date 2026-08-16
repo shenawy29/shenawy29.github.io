@@ -1,7 +1,9 @@
 ---
 title: هيللو وورلد!
 pubDate: 2025-08-09
-tags: [tech]
+tags: [web, astro]
+keywords: ["Astro", "أسترو", "بلوج", "مواقع ثابتة"]
+ogSubtitle: ليه البلوج على Astro
 slug: astro
 ---
 

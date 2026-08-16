@@ -13,7 +13,9 @@ import remarkMath from "remark-math";
 import tailwindcss from "@tailwindcss/vite";
 import { unified } from "@astrojs/markdown-remark";
 import mdx from "@astrojs/mdx";
+import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import rehypeKatex from "rehype-katex";
+import rehypeSlug from "rehype-slug";
 import robotsTxt from "astro-robots-txt";
 
 import {
@@ -29,6 +31,7 @@ import {
 import sitemap from "@astrojs/sitemap";
 import { EnumChangefreq } from "sitemap";
 import { remarkModifiedTime } from "./remark-modified-time.mjs";
+import { rehypeExcerpt } from "./rehype-excerpt.mjs";
 
 const ROOT = fileURLToPath(new URL(".", import.meta.url));
 
@@ -243,7 +246,15 @@ export default defineConfig({
 
         processor: unified({
             remarkPlugins: [remarkMath, remarkEmoji, remarkModifiedTime],
-            rehypePlugins: [[rehypeKatex, { output: "mathml" }]],
+            rehypePlugins: [
+                rehypeSlug,
+                [
+                    rehypeAutolinkHeadings,
+                    { behavior: "wrap", ariaHidden: true },
+                ],
+                [rehypeKatex, { output: "mathml" }],
+                rehypeExcerpt,
+            ],
         }),
     },
 });

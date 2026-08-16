@@ -1,7 +1,9 @@
 ---
 title: The Memory Canister is Leaking
 pubDate: 2025-08-10
-tags: [concepts]
+tags: [cpp, memory-management]
+keywords: ["RAII", "C++", "smart pointers", "memory safety", "destructors"]
+ogSubtitle: Resource Acquisition Is Initialization
 slug: raii
 ---
 

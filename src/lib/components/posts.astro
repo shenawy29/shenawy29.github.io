@@ -1,7 +1,5 @@
 ---
-import { getCollection } from "astro:content";
-import { marked } from "marked";
-import katex from "katex";
+import { getCollection, render } from "astro:content";
 import PostHeader from "./post-header.astro";
 import PostExcerpt from "./post-excerpt.astro";
 
@@ -9,79 +7,19 @@ const { locale = "ar" } = Astro.props;
 const collectionName = locale === "ar" ? "posts-ar" : "posts-en";
 const posts = await getCollection(collectionName);
 
-function stripImports(body: string): string {
-    return body
-        .split("\n")
-        .filter((line) => !line.trimStart().startsWith("import "))
-        .join("\n");
-}
-
-function truncateBody(body: string, maxLen: number): { text: string } {
-    if (body.length <= maxLen) return { text: body };
-
-    const lines = body.split("\n");
-    let result = "";
-    for (const line of lines) {
-        const candidate = result ? `${result}\n${line}` : line;
-        if (candidate.length > maxLen) break;
-        result = candidate;
-    }
-
-    if (!result) {
-        const lastSpace = lines[0].lastIndexOf(" ", maxLen);
-        const cut =
-            lastSpace > 0
-                ? lines[0].slice(0, lastSpace)
-                : lines[0].slice(0, maxLen);
-        return { text: cut };
-    }
-
-    return { text: result };
-}
-
-function renderLatex(text: string): string {
-    text = text.replace(/\$\$([^$]+)\$\$/g, (_, latex) => {
-        try {
-            return katex.renderToString(latex.trim(), {
-                displayMode: true,
-                output: "mathml",
-                throwOnError: false,
-            });
-        } catch {
-            return `$$${latex}$$`;
-        }
-    });
-    text = text.replace(/\$([^$]+)\$/g, (_, latex) => {
-        try {
-            return katex.renderToString(latex.trim(), {
-                displayMode: false,
-                output: "mathml",
-                throwOnError: false,
-            });
-        } catch {
-            return `$${latex}$`;
-        }
-    });
-    return text;
-}
-
-function renderExcerpt(body: string): { html: string } {
-    const clean = stripImports(body);
-    const { text } = truncateBody(clean, 600);
-    const withLatex = renderLatex(text);
-    const html = marked.parse(withLatex, { async: false }) as string;
-    return { html };
-}
-
-const postEntries = posts
-    .map((post) => {
-        const { html } = renderExcerpt(post.body ?? "");
-        return { entry: post, excerpt: html };
-    })
-    .sort(
-        (a, b) =>
-            b.entry.data.pubDate.getTime() - a.entry.data.pubDate.getTime(),
-    );
+const postEntries = (
+    await Promise.all(
+        posts.map(async (post) => {
+            const { remarkPluginFrontmatter } = await render(post);
+            return {
+                entry: post,
+                excerpt: remarkPluginFrontmatter.excerptHtml ?? "",
+            };
+        }),
+    )
+).sort(
+    (a, b) => b.entry.data.pubDate.getTime() - a.entry.data.pubDate.getTime(),
+);
 ---
 
 <div class="flex h-full w-full flex-col gap-y-12">

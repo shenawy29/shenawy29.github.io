@@ -1,7 +1,9 @@
 ---
 title: Hello World!
 pubDate: 2025-08-09
-tags: [tech]
+tags: [web, astro]
+keywords: ["astro", "static site", "blog", "react"]
+ogSubtitle: Why this blog runs on Astro
 slug: astro
 ---
 
