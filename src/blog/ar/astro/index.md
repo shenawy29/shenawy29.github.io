@@ -138,7 +138,7 @@ const { post } = Astro.props;
 
 <div class="w-full">
     <div
-        class="flex flex-wrap gap-x-3 divide-dotted text-xl text-wrap opacity-70"
+        class="flex flex-wrap gap-x-3 text-xl text-wrap opacity-70"
     >
         <span class="text-wrap">
             {post.data.pubDate.toISOString().substring(0, 10)}

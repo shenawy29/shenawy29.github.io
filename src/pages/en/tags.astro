@@ -35,7 +35,7 @@ for (const [tag, posts] of tagMap) {
 const uniqueTags = [...tagMap.keys()].sort((a, b) => a.localeCompare(b));
 ---
 
-<BaseLayout title={locale === "ar" ? "تاجژ" : "Tags"} ogImage="/og/default-en.png" structuredData={sd}>
+<BaseLayout title={locale === "ar" ? "تاجژ" : "Tags"} ogImage="/og/en/tags.png" structuredData={sd}>
     <div class="page-title">
         <h1>
             <a href="#tags">{locale === "ar" ? "تاجژ" : "Tags"}</a>

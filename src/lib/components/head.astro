@@ -21,7 +21,7 @@ const ogLocale = locale === "ar" ? "ar_EG" : "en_US";
 import { Font } from "astro:assets";
 const locales = ["ar", "en"];
 const defaultLocale = "ar" as const;
-const defaultOgImage = locale === "ar" ? "/og/default-ar.png" : "/og/default-en.png";
+const defaultOgImage = locale === "ar" ? "/og/ar/index.png" : "/og/en/index.png";
 const currentPath = Astro.url.pathname;
 let canonicalPath = currentPath;
 for (const loc of locales) {

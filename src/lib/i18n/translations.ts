@@ -13,6 +13,8 @@ export const translations: Record<Locale, Record<string, string>> = {
         "nav.about": "عني",
         "nav.tags": "تاجژ",
         "nav.analytics": "أناليتكس",
+        "footer.analytics": "أناليتكس",
+        "footer.attribution": "محمد الشناوي",
         "tags.title": "تاجژ",
         "post.translation_pending": "ترجمة قادمة...",
         "post.words": "كلمة",
@@ -20,7 +22,7 @@ export const translations: Record<Locale, Record<string, string>> = {
         lang_switch: "En",
     },
     en: {
-        "site.title": "Shenawy",
+        "site.title": "shenawy",
         "site.description":
             "Mohamed Elshenawy's blog for programming, tech, and other fun things.",
         "nav.home": "Home",
@@ -29,6 +31,8 @@ export const translations: Record<Locale, Record<string, string>> = {
         "nav.about": "About",
         "nav.tags": "Tags",
         "nav.analytics": "Analytics",
+        "footer.analytics": "Site Analytics",
+        "footer.attribution": "Mohamed Elshenawy",
         "tags.title": "Tags",
         "post.translation_pending": "Translation pending...",
         "post.words": "words",

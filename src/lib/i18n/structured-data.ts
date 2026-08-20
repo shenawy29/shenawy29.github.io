@@ -10,7 +10,7 @@ const person = {
     "@id": personId,
     name: authorName,
     url: site,
-    image: `${site}/og/default-en.png`,
+    image: `${site}/og/en/index.png`,
     sameAs: ["https://github.com/shenawy29/", "https://x.com/MoeElshenawy04"],
 };
 

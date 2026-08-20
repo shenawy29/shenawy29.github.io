@@ -6,9 +6,9 @@ import { profilePageData } from "$lib/i18n/structured-data";
 const locale = getLocale(Astro.url.pathname);
 const title = "About";
 const description =
-    "I'm Mohamed Elshenawy, a Computer Science graduate from Suez Canal University, and this is my blog.";
+    "I'm Mohamed Elshenawy, a Computer Science graduate from Suez Canal University, and a Software Engineer Intern at Sylndr. This is my blog.";
 const paragraphs = [
-    "I'm Mohamed Elshenawy, a Computer Science graduate from Suez Canal University, and this is my blog.",
+    "I'm Mohamed Elshenawy, a Computer Science graduate from Suez Canal University, and a Software Engineer Intern at Sylndr. This is my blog.",
     "I write about things I love to read about and learn, including Mathematics, Low Level Systems, Distributed Systems, and Computer Science in general.",
     "I created this blog because I noticed that most of the software topics I love have little to no content in Arabic.",
 ];
@@ -18,7 +18,7 @@ const sd = profilePageData(locale, title, description, Astro.url.pathname);
 <BaseLayout
     title={title}
     description={description}
-    ogImage="/og/default-en.png"
+    ogImage="/og/en/about.png"
     structuredData={sd}
 >
     <div class="page-title">
@@ -26,9 +26,7 @@ const sd = profilePageData(locale, title, description, Astro.url.pathname);
             <a href="#about">{title}</a>
         </h1>
     </div>
-    {paragraphs.map((p) => (
-        <p>{p}</p>
-    ))}
+    {paragraphs.map((p) => <p>{p}</p>)}
     <p>
         If you enjoyed the blog and want to chat, send me an{" "}
         <a href="mailto:alshenawy10203022@gmail.com">email</a>.
